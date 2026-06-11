@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Numetal — agent accelerator studio</title>
+<meta name="description" content="Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Chain-agnostic: Base, Ethereum, Solana, Hyperliquid, XRP Ledger." />
+<meta property="og:title" content="Numetal — agent accelerator studio" />
+<meta property="og:description" content="An Atelier Gökhan studio. We ship machines that ship themselves." />
+<link rel="canonical" href="https://numetal.xyz/" />
+<link rel="alternate" type="application/rss+xml" title="Numetal" href="/feed.xml" />
+<link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+<style>
+  :root{--ikb:#002FA7;--paper:#FAFAF8;--ink:#0A0A0A;--orange:#FF5A1F;--cyan:#06B6D4;--gold:#C9A227;--line:#E5E7EB;--muted:#6B7280;
+    --mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+  a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{width:100%;max-width:1040px;margin:0 auto;padding:0 24px}
+  header{border-bottom:1px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:5}
+  .bar{display:flex;align-items:center;justify-content:space-between;height:56px;max-width:1040px;margin:0 auto;padding:0 24px}
+  .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.06em}
+  .mark .sq{width:13px;height:13px;background:var(--ikb)}
+  nav{display:flex;gap:22px;font-size:13px;align-items:center}
+  nav a{color:var(--ink)}
+  nav .upd{color:var(--muted)}
+  .ticker{background:#050507;border-bottom:1px solid var(--ink);overflow:hidden;white-space:nowrap;padding:8px 0}
+  .ticker .run{display:inline-block;padding-left:100%;animation:tick 26s linear infinite;font-family:var(--mono);font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:600}
+  .ticker .run span{margin:0 .8em}
+  .ticker .c1{color:#39ff14;text-shadow:0 0 7px rgba(57,255,20,.75)}
+  .ticker .c2{color:#00e5ff;text-shadow:0 0 7px rgba(0,229,255,.75)}
+  .ticker .c3{color:#ff2bd6;text-shadow:0 0 7px rgba(255,43,214,.75)}
+  .ticker .sep{color:#33363b}
+  @keyframes tick{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-100%,0,0)}}
+  @media(prefers-reduced-motion:reduce){.ticker .run{animation:none;padding-left:0}}
+  main{flex:1}
+  .hero{padding:72px 0 56px;border-bottom:1px solid var(--ink)}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  h1{font-size:clamp(44px,7.5vw,80px);line-height:1.0;font-weight:700;letter-spacing:-.03em}
+  h1 .dot{color:var(--ikb)}
+  .lede{font-family:var(--sans);font-size:19px;line-height:1.55;color:#333;max-width:64ch;margin-top:24px}
+  .cta{display:flex;gap:16px;align-items:center;margin-top:34px;flex-wrap:wrap}
+  .btn{background:var(--orange);color:#fff;padding:14px 24px;font-weight:500;font-size:14px;border:1px solid var(--orange)}
+  .btn:hover{filter:brightness(.94);text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+  .btn.dis{background:var(--muted);border-color:var(--muted);cursor:default}
+  .btn.dis.ghost{background:transparent;color:var(--muted);cursor:default}
+  .sec{padding:56px 0;border-bottom:1px solid var(--ink)}
+  .sh{display:flex;align-items:center;gap:11px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:30px}
+  .sh .ibar{width:4px;height:17px;background:var(--ikb)}
+  .grid4{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid var(--ink)}
+  .cell{padding:26px 22px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cell:nth-child(2n){border-right:0}
+  .cell:nth-last-child(-n+2){border-bottom:0}
+  .cell .k{font-size:18px;font-weight:700;margin-bottom:10px}
+  .cell .k.o{color:var(--orange)}.cell .k.b{color:var(--ikb)}.cell .k.c{color:var(--cyan)}.cell .k.g{color:var(--gold)}
+  .cell p{font-family:var(--sans);font-size:14px;color:#444;line-height:1.55}
+  .chains{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--ink)}
+  .chain{flex:1 1 18%;min-width:120px;padding:20px 18px;border-right:1px solid var(--line)}
+  .chain:last-child{border-right:0}
+  .chain .cn{font-size:15px;font-weight:700}
+  .chain .cr{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:6px}
+  .chain.hub{background:var(--ikb);color:#fff}.chain.hub .cr{color:rgba(255,255,255,.7)}
+  .leg{display:flex;align-items:center;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:14px}
+  .leg .lg{display:flex;align-items:center;gap:7px}.leg .d{width:9px;height:9px}
+  .d-team{background:var(--orange)}.d-trez{background:var(--ikb)}.d-burn{background:var(--ink)}
+  .side{margin-top:20px}
+  .side-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+  .side-head .nm{font-size:14px;font-weight:700}.side-head .tot{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .barx{display:flex;height:38px;border:1px solid var(--ink)}
+  .seg{display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;white-space:nowrap;overflow:hidden;border-right:1px solid rgba(255,255,255,.3)}
+  .seg:last-child{border-right:0}
+  .s-team{background:var(--orange)}.s-trez{background:var(--ikb)}.s-burn{background:var(--ink);color:var(--paper)}
+  .note{font-family:var(--sans);font-size:14px;color:#444;margin-top:18px}
+  footer{background:#fff}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);padding:22px 24px;max-width:1040px;margin:0 auto}
+  .foot a{color:var(--muted)}
+  .flinks{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+  @media(max-width:760px){.grid4{grid-template-columns:1fr}.cell{border-right:0}.cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.cell:last-child{border-bottom:0}.chain{flex:1 1 100%;border-right:0;border-bottom:1px solid var(--line)}.chain:last-child{border-bottom:0}nav{display:none}}
+</style>
+</head>
+<body>
+<div class="ticker"><div class="run"><span class="c1">Capital with a will of its own.</span><span class="sep">◆</span><span class="c2">Capital with a will of its own.</span><span class="sep">◆</span><span class="c3">Capital with a will of its own.</span><span class="sep">◆</span><span class="c1">Capital with a will of its own.</span><span class="sep">◆</span><span class="c2">Capital with a will of its own.</span><span class="sep">◆</span><span class="c3">Capital with a will of its own.</span><span class="sep">◆</span></div></div>
+<header><div class="bar">
+  <div class="mark"><span class="sq"></span>NUMETAL</div>
+  <nav>
+    <span class="upd">App · updating</span>
+    <a href="https://numetal.xyz/fees">Fee engine</a>
+    <span class="upd">Docs · updating</span>
+    <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a>
+  </nav>
+</div></header>
+
+<main>
+  <section class="wrap hero">
+    <div class="eyebrow">Numetal — an agent studio under <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a></div>
+    <h1>We ship machines that ship themselves<span class="dot">.</span></h1>
+    <p class="lede">An accelerator that builds and backs autonomous agents across four markets — onchain, compute, artistic &amp; culture, and frontier-lab model toolkits. Chain-agnostic by design: home on Base, working across Ethereum, Solana, Hyperliquid, and the XRP Ledger. A few agents are already in the queue.</p>
+    <div class="cta">
+      <span class="btn dis">App — updating</span>
+      <span class="btn dis ghost">Docs — updating</span>
+      <a class="btn ghost" href="https://numetal.xyz/fees">Fee engine →</a>
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <div class="sh"><span class="ibar"></span>What we ship — agents across four markets</div>
+    <div class="grid4">
+      <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy — intelligence, trading, and x402 services across the Base / Bankr agent economy and beyond. MOAT, a Bankr-native intelligence agent, is first off the line.</p></div>
+      <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference — paying for what they consume and charging for what they serve, settled machine-to-machine over x402.</p></div>
+      <div class="cell"><div class="k g">Artistic &amp; cultural</div><p>Agents working in art, culture, and hyperstition — generative, speculative, accelerationist. Markets where taste and myth compound, not just liquidity.</p></div>
+      <div class="cell"><div class="k c">Frontier-lab toolkits</div><p>Runtimes, skills, and harnesses built on frontier-lab models — the tooling that turns raw models into autonomous operators that earn.</p></div>
+    </div>
+  </section>
+
+  <section class="wrap sec">
+    <div class="sh"><span class="ibar"></span>Chain-agnostic — home on Base, working everywhere</div>
+    <div class="chains">
+      <div class="chain hub"><div class="cn">Base</div><div class="cr">Hub · home</div></div>
+      <div class="chain"><div class="cn">Ethereum</div><div class="cr">Mainnet</div></div>
+      <div class="chain"><div class="cn">Solana</div><div class="cr">High-throughput</div></div>
+      <div class="chain"><div class="cn">Hyperliquid</div><div class="cr">Onchain perps</div></div>
+      <div class="chain"><div class="cn">XRP Ledger</div><div class="cr">x402 · RLUSD</div></div>
+    </div>
+    <p class="note">Base is home — where the token, treasury, and settlement live. Our agents reach into demand wherever it is and bring value back, settling over x402 and native USDC rails. New chains attach the moment an agent has a reason to be there.</p>
+  </section>
+
+  <section class="wrap sec">
+    <div class="sh"><span class="ibar"></span>$NUMETAL fee distribution policy</div>
+    <div class="leg"><span class="lg"><span class="d d-team"></span>team</span><span class="lg"><span class="d d-trez"></span>treasury</span><span class="lg"><span class="d d-burn"></span>burn (incl. buyback)</span></div>
+    <div class="side">
+      <div class="side-head"><span class="nm">WETH side</span><span class="tot">100% of claimed WETH</span></div>
+      <div class="barx"><span class="seg s-team" style="flex:80 0 0">80% team</span><span class="seg s-trez" style="flex:10 0 0">10%</span><span class="seg s-burn" style="flex:10 0 0">10%</span></div>
+    </div>
+    <div class="side">
+      <div class="side-head"><span class="nm">$NUMETAL side</span><span class="tot">100% of claimed $NUMETAL</span></div>
+      <div class="barx"><span class="seg s-team" style="flex:40 0 0">40% team</span><span class="seg s-trez" style="flex:30 0 0">30% treasury</span><span class="seg s-burn" style="flex:30 0 0">30% burn</span></div>
+    </div>
+    <p class="note">Every creator-fee claim splits to team, treasury, and burn — executed onchain. Buyback &amp; burn feeds value back to the community. Watch it live on the <a href="https://numetal.xyz/fees">fee engine →</a></p>
+  </section>
+</main>
+
+<footer><div class="foot">
+  <span>Numetal · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio · agents across onchain, compute &amp; culture</span>
+  <span class="flinks">
+    <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>
+    <a href="https://github.com/gokhan-vc" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://gokhanturhan.com" target="_blank" rel="noopener">gokhanturhan.com</a>
+    <a href="/feed.xml">RSS</a>
+    <a href="/sitemap.xml">Sitemap</a>
+    <a href="/llms.txt">llms.txt</a>
+    <a href="https://numetal.xyz/terms">Terms</a>
+    <a href="https://numetal.xyz/privacy">Privacy</a>
+  </span>
+</div></footer>
+</body>
+</html>
