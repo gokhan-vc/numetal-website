@@ -94,7 +94,7 @@ async function getBurns(env) {
   return out;
 }
 const SECBASE = {
-  "strict-transport-security": "max-age=15768000; includeSubDomains",
+  "strict-transport-security": "max-age=31536000; includeSubDomains; preload",
   "x-content-type-options": "nosniff",
   "x-frame-options": "DENY",
   "referrer-policy": "strict-origin-when-cross-origin",
@@ -116,7 +116,7 @@ function jsonRes(obj, status) {
     "content-type": "application/json; charset=utf-8", "cache-control": "no-store",
     "access-control-allow-origin": "*", "access-control-allow-methods": "GET, OPTIONS",
     "x-content-type-options": "nosniff", "cross-origin-resource-policy": "cross-origin",
-    "x-frame-options": "DENY", "strict-transport-security": "max-age=15768000; includeSubDomains" } });
+    "x-frame-options": "DENY", "strict-transport-security": "max-age=31536000; includeSubDomains; preload" } });
 }
 export default {
   async fetch(req, env) {
