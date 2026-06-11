@@ -1,0 +1,44 @@
+name: Sync Wiki
+
+# Live wiki: edit docs/wiki/*.md in the repo and push — this mirrors them to the
+# GitHub Wiki. No third-party actions; just the built-in GITHUB_TOKEN.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/wiki/**'
+      - '.github/workflows/wiki.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wiki-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync docs/wiki -> GitHub Wiki
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          set -e
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          WIKI="https://x-access-token:${GH_TOKEN}@github.com/${REPO}.wiki.git"
+          if ! git clone --quiet "$WIKI" wiki 2>/dev/null; then
+            mkdir wiki && cd wiki && git init -q && git remote add origin "$WIKI" && cd ..
+          fi
+          rm -f wiki/*.md
+          cp docs/wiki/*.md wiki/
+          cd wiki
+          git add -A
+          if git diff --cached --quiet; then echo "Wiki already up to date."; exit 0; fi
+          git commit -q -m "Sync wiki from docs/wiki @ ${SHA:0:7}"
+          git push origin HEAD:master
