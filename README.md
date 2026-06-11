@@ -10,6 +10,7 @@ We ship machines that ship themselves — autonomous agents across **onchain, co
 ![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
 ![Base](https://img.shields.io/badge/Base-0052FF?logo=coinbase&logoColor=white)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 [Website](https://numetal.xyz) · [Fee engine](https://numetal.xyz/fees) · [Atelier Gökhan](https://gokhan.vc) · [X](https://x.com/goekhan) · [Telegram](https://t.me/goekhanturhan) · [Wiki](../../wiki)
 
@@ -92,6 +93,12 @@ npm run deploy                      # = astro build + postbuild + wrangler deplo
 ## Docs
 
 Long-form docs live in the **[Wiki](../../wiki)** (architecture, deployment, security, development). The wiki is kept in sync from [`docs/wiki/`](docs/wiki/) on every push — edit the markdown there, the wiki updates itself.
+
+## License
+
+The **code** in this repository is [MIT licensed](LICENSE) — use it freely.
+
+The **Numetal** name, logos, brand, site copy, and visual assets (including `og.png`) are © Atelier Gökhan and are **not** licensed for reuse. Build with the code; build your own brand.
 
 ---
 
