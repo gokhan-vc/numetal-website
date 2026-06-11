@@ -1,0 +1,54 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  robots?: string;
+  jsonLd?: string;
+}
+const {
+  title, description, canonical,
+  ogTitle, ogDescription, ogImage,
+  robots = 'index, follow, max-image-preview:large',
+  jsonLd,
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content={robots} />
+  <meta name="theme-color" content="#002FA7" />
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" type="application/rss+xml" title="Numetal" href="/feed.xml" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <meta property="og:title" content={ogTitle ?? title} />
+  <meta property="og:description" content={ogDescription ?? description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Numetal" />
+  {ogImage && (
+    <>
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:type" content="image/png" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content="Numetal — agent accelerator studio. We ship machines that ship themselves." />
+    </>
+  )}
+  <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+  <meta name="twitter:title" content={ogTitle ?? title} />
+  <meta name="twitter:description" content={ogDescription ?? description} />
+  {ogImage && <meta name="twitter:image" content={ogImage} />}
+  {jsonLd && <script type="application/ld+json" set:html={jsonLd} is:inline />}
+</head>
+<body>
+  <slot />
+</body>
+</html>

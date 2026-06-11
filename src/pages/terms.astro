@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Terms of Service — Numetal</title>
-<meta name="description" content="Terms of Service for numetal.xyz, the Numetal Discord application, and the Numetal protocol." />
-<meta name="robots" content="index,follow" />
-<style>
+---
+import Base from '../layouts/Base.astro';
+export const prerender = true;
+const title = "Terms of Service \u2014 Numetal";
+const description = "Terms of Service for numetal.xyz, the Numetal Discord application, and the Numetal protocol.";
+const canonical = "https://numetal.xyz/";
+const bodyHtml = `<style>
   :root{--ikb:#002FA7;--paper:#FAFAF8;--ink:#0A0A0A;--orange:#FF5A1F;--line:#E5E7EB;--muted:#6B7280;--mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-font-smoothing:antialiased}
@@ -32,8 +30,7 @@
   .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 0}
   .foot a{color:var(--muted)}
 </style>
-</head>
-<body>
+
 <header><div class="bar0">
   <div class="mark"><span class="sq"></span><a href="https://numetal.xyz">NUMETAL</a></div>
   <div class="tagh">Terms</div>
@@ -99,5 +96,8 @@
   <span>Numetal · verification protocol · Base</span>
   <span><a href="/privacy">Privacy</a> · <a href="/cookies">Cookies</a> · <a href="https://numetal.xyz">numetal.xyz</a></span>
 </div></footer>
-</body>
-</html>
+`;
+---
+<Base title={title} description={description} canonical={canonical}>
+  <Fragment set:html={bodyHtml} />
+</Base>

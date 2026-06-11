@@ -1,0 +1,142 @@
+---
+export const prerender = true;
+import Base from '../layouts/Base.astro';
+const title = "Numetal \u2014 fee engine \u00b7 burns &amp; buybacks";
+const description = "Numetal fee engine \u2014 live burns, buybacks, and fee distribution on Base.";
+const canonical = 'https://numetal.xyz/fees';
+const bodyHtml = `<style>
+  :root{--ikb:#002FA7;--paper:#FAFAF8;--ink:#0A0A0A;--orange:#FF5A1F;--cyan:#06B6D4;--line:#E5E7EB;--muted:#6B7280;
+    --mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+  a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{width:100%;max-width:880px;margin:0 auto;padding:0 24px}
+  header{border-bottom:1px solid var(--ink)}
+  .bar0{display:flex;align-items:center;justify-content:space-between;height:56px;max-width:880px;margin:0 auto;padding:0 24px}
+  .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.06em}
+  .mark .sq{width:13px;height:13px;background:var(--ikb)}
+  .mark a{color:var(--ink)}
+  .status-tag{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+  .dotpulse{width:7px;height:7px;border-radius:50%;background:var(--cyan);animation:pulse 1.8s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+  main{flex:1}
+  .intro{padding:54px 0 30px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  h1{font-size:54px;line-height:1.02;font-weight:700;letter-spacing:-.02em}
+  h1 .dot{color:var(--ikb)}
+  .sub{font-family:var(--sans);font-size:16px;color:#444;margin-top:16px;max-width:56ch;line-height:1.55}
+
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink)}
+  .m{padding:20px 18px;border-right:1px solid var(--line)}
+  .m:last-child{border-right:0}
+  .m .k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .m .v{font-size:26px;font-weight:700;margin-top:10px;letter-spacing:-.01em}
+  .m .v.burn{color:var(--orange)}
+  .m .s{font-size:12px;color:var(--muted);margin-top:6px}
+  .m .s.cy{color:var(--cyan)}
+
+  .dist{padding:40px 0 8px}
+  .dist-h{display:flex;align-items:center;gap:11px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .dist-h .ibar{width:4px;height:17px;background:var(--ikb)}
+  .side{margin-top:24px}
+  .side-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:10px}
+  .side-head .nm{font-size:14px;font-weight:700}
+  .side-head .tot{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+  .barx{display:flex;height:36px;border:1px solid var(--ink)}
+  .seg{display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;white-space:nowrap;overflow:hidden;border-right:1px solid rgba(255,255,255,.3)}
+  .seg:last-child{border-right:0}
+  .s-team{background:var(--orange)}.s-trez{background:var(--ikb)}.s-burn{background:var(--ink);color:var(--paper)}
+  .leg{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:12px 0 4px}
+  .leg .lg{display:flex;align-items:center;gap:7px}
+  .leg .d{width:9px;height:9px}
+  .d-team{background:var(--orange)}.d-trez{background:var(--ikb)}.d-burn{background:var(--ink)}
+
+  .upd{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);padding:30px 0 0}
+  .upd a{color:var(--ikb)}
+  .live{width:7px;height:7px;border-radius:50%;background:var(--cyan);display:inline-block;animation:pulse 1.8s ease-in-out infinite}
+
+  footer{border-top:1px solid var(--line);margin-top:40px}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--muted);padding:18px 0}
+  .stream{padding:40px 0 8px}
+  .stream-box{margin-top:18px;border:1px solid var(--ink);max-height:430px;overflow-y:auto}
+  table.strm{width:100%;border-collapse:collapse;font-size:13px}
+  table.strm thead th{position:sticky;top:0;background:var(--paper);text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:11px 14px;border-bottom:1px solid var(--ink)}
+  table.strm td{padding:11px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+  table.strm tbody tr:last-child td{border-bottom:0}
+  table.strm tbody tr:hover td{background:#f4f4f1}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;letter-spacing:.03em;text-transform:uppercase}
+  .tag.buyback{background:var(--orange);color:#fff}
+  .tag.manual{background:var(--ink);color:var(--paper)}
+  .strm a{color:var(--ikb)}
+  .strm .amt{font-weight:700}
+  .strm .lbl{color:var(--muted);font-size:11px}
+  .empty{text-align:center;color:var(--muted);padding:26px}
+  .strm-foot{font-size:12px;color:var(--muted);margin-top:11px;display:flex;gap:8px;align-items:center}
+  @media(max-width:680px){h1{font-size:38px}.metrics{grid-template-columns:1fr 1fr}.m{border-bottom:1px solid var(--line)}table.strm{font-size:12px}table.strm td,table.strm th{padding:8px 10px}}
+</style>
+
+<header><div class="bar0">
+  <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
+  <div class="status-tag"><span class="dotpulse"></span>fee engine · live</div>
+</div></header>
+
+<main>
+  <section class="wrap intro">
+    <div class="eyebrow">Fee engine · burns &amp; buybacks</div>
+    <h1>Burns &amp; buybacks<span class="dot">.</span></h1>
+    <p class="sub">Every creator-fee claim splits to team, treasury, and burn — executed onchain on Base. Live, straight from the contracts.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="metrics">
+      <div class="m"><div class="k">$NUMETAL burned</div><div class="v burn" id="burned">—</div><div class="s" id="burnedPct">buyback + claim burn</div></div>
+      <div class="m"><div class="k">Treasury</div><div class="v" id="treasury">—</div><div class="s">$NUMETAL held</div></div>
+      <div class="m"><div class="k">Team</div><div class="v" id="team">—</div><div class="s">$NUMETAL held</div></div>
+      <div class="m"><div class="k">Price</div><div class="v" id="price">—</div><div class="s cy" id="fdv"></div></div>
+    </div>
+  </section>
+
+  <section class="wrap stream">
+    <div class="dist-h"><span class="ibar"></span>Buybacks &amp; burns · live</div>
+    <div class="stream-box">
+      <table class="strm">
+        <thead><tr><th>Time</th><th>Type</th><th>NUMETAL</th><th>From</th><th>Tx</th></tr></thead>
+        <tbody id="burnrows"><tr><td colspan="5" class="empty">loading…</td></tr></tbody>
+      </table>
+    </div>
+    <div class="strm-foot"><span class="live"></span><span id="burncount"></span><span>· every burn to 0x…dEaD · auto-refreshes</span></div>
+  </section>
+
+  <section class="wrap dist">
+    <div class="dist-h"><span class="ibar"></span>Distribution policy</div>
+    <div class="leg"><span class="lg"><span class="d d-team"></span>team</span><span class="lg"><span class="d d-trez"></span>treasury</span><span class="lg"><span class="d d-burn"></span>burn (incl. buyback)</span></div>
+    <div class="side">
+      <div class="side-head"><span class="nm">WETH side</span><span class="tot">100% of claimed WETH</span></div>
+      <div class="barx"><span class="seg s-team" style="flex:80 0 0">80% team</span><span class="seg s-trez" style="flex:10 0 0">10%</span><span class="seg s-burn" style="flex:10 0 0">10%</span></div>
+    </div>
+    <div class="side">
+      <div class="side-head"><span class="nm">$NUMETAL side</span><span class="tot">100% of claimed $NUMETAL</span></div>
+      <div class="barx"><span class="seg s-team" style="flex:40 0 0">40% team</span><span class="seg s-trez" style="flex:30 0 0">30% treasury</span><span class="seg s-burn" style="flex:30 0 0">30% burn</span></div>
+    </div>
+  </section>
+
+  <div class="wrap upd">
+    <span class="live"></span><span id="updated">loading live data…</span>
+    <span>· auto-refreshes every 60s ·</span>
+    <a href="#" id="refresh">refresh now</a>
+  </div>
+</main>
+
+<footer><div class="wrap foot">
+  <span>Numetal · fee engine · Base</span>
+  <span>onchain · USDC · $NUMETAL</span>
+</div></footer>
+
+
+`;
+---
+<Base title={title} description={description} canonical={canonical}>
+  <Fragment set:html={bodyHtml} />
+  <script src="/fees.js" defer is:inline></script>
+</Base>
