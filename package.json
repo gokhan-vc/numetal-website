@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "test": "node --import tsx --test tests/*.test.ts",
     "preview": "astro preview",
     "postbuild": "node scripts/fix-wrangler.mjs",
     "deploy": "npm run build && wrangler deploy"
@@ -12,5 +13,8 @@
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
     "astro": "^6.4.6"
+  },
+  "devDependencies": {
+    "tsx": "^4.22.4"
   }
 }
