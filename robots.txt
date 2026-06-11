@@ -1,0 +1,78 @@
+# robots.txt — numetal.xyz
+# Maximum discoverability for legitimate search + AI answer engines;
+# only known-abusive / high-volume scrapers are disallowed.
+# Tokens verified against each vendor's own 2026 docs.
+
+# --- Classic search engines ---
+User-agent: Googlebot
+Allow: /
+User-agent: Googlebot-Image
+Allow: /
+User-agent: bingbot
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+User-agent: Applebot
+Allow: /
+
+# --- AI answer engines / assistants (the goal: stay discoverable) ---
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: GPTBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-User
+Allow: /
+User-agent: Claude-SearchBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# --- Known abusive / aggressive scrapers — disallowed ---
+User-agent: Bytespider
+Disallow: /
+User-agent: Amazonbot
+Disallow: /
+User-agent: ImagesiftBot
+Disallow: /
+User-agent: Diffbot
+Disallow: /
+User-agent: Omgili
+Disallow: /
+User-agent: Omgilibot
+Disallow: /
+User-agent: PetalBot
+Disallow: /
+User-agent: cohere-ai
+Disallow: /
+User-agent: meta-externalagent
+Disallow: /
+User-agent: FacebookBot
+Disallow: /
+User-agent: Timpibot
+Disallow: /
+User-agent: Webzio-Extended
+Disallow: /
+User-agent: CCBot
+Disallow: /
+
+# --- Default: everything else may crawl pages; keep JSON internals out of indexes ---
+User-agent: *
+Allow: /
+Disallow: /fees/data
+Disallow: /fees/events
+
+Sitemap: https://numetal.xyz/sitemap.xml

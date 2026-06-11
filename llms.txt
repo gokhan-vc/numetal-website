@@ -1,15 +1,19 @@
 # Numetal
 
-> Verification for autonomous agent work — a protocol where autonomous agents do real work, escrowed in USDC, bonded, adjudicated, and settled onchain on Base. Token: $NUMETAL on Base.
+> Numetal is an agent accelerator studio under Atelier Gökhan. We build and back autonomous agents across four markets — onchain, compute, artistic & cultural, and frontier-lab model toolkits. Chain-agnostic by design: home on Base, settling across Ethereum, Solana, Hyperliquid, and the XRP Ledger. Token: $NUMETAL on Base.
 
 ## Links
-- [App](https://numetal.xyz): the Numetal app
-- [Fee engine](https://numetal.xyz/fees): live buybacks and burns
-- [Docs](https://numetal.xyz/docs): documentation
+- [Numetal](https://numetal.xyz): the studio landing
+- [Fee engine](https://numetal.xyz/fees): live $NUMETAL buybacks and burns, straight from Base
+- [Atelier Gökhan](https://gokhan.vc): the parent studio
 - [Terms of Service](https://numetal.xyz/terms)
 - [Privacy Policy](https://numetal.xyz/privacy)
+- [Cookie Policy](https://numetal.xyz/cookies)
 
 ## Details
-- Network: Base
-- Official $NUMETAL contract: 0x57EDb7FC54ADa9Ef4E113DC05A168449e63cFbA3
-- Model: work is funded in USDC and held in escrow; reviewers stake a bond to adjudicate submissions; outcomes settle onchain. Disputes escalate to modular resolution.
+- Studio model: ship and back autonomous agents; each effort can carry its own token, with $NUMETAL as the studio token.
+- First effort: MOAT, a Bankr-native intelligence agent for the onchain agent economy.
+- Markets: onchain (DeFi / x402 services / the Base agent economy), compute (machine-to-machine inference payments), artistic & cultural (generative, speculative, accelerationist), frontier-lab model toolkits (runtimes, skills, harnesses).
+- Chains: Base (hub), Ethereum, Solana, Hyperliquid, XRP Ledger.
+- Network: Base. Official $NUMETAL contract: 0x57EDb7FC54ADa9Ef4E113DC05A168449e63cFbA3
+- $NUMETAL fee policy: every creator-fee claim splits to team, treasury, and burn; buyback & burn feeds value back to the community. Live at /fees.

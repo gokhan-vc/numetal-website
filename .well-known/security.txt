@@ -1,0 +1,6 @@
+Contact: mailto:legal@numetal.xyz
+Contact: mailto:contact@numetal.xyz
+Expires: 2027-06-11T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://numetal.xyz/.well-known/security.txt
+Policy: https://numetal.xyz/terms

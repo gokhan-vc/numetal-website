@@ -67,7 +67,7 @@ async function getData() {
 function _abbr(n){ if(n==null||isNaN(n)) return "—"; const a=Math.abs(n); if(a>=1e9) return (n/1e9).toFixed(2)+"B"; if(a>=1e6) return (n/1e6).toFixed(2)+"M"; if(a>=1e3) return (n/1e3).toFixed(1)+"K"; return Math.round(n).toLocaleString(); }
 function _tok(raw,dec){ if(raw==null) return "—"; try{ return _abbr(Number(BigInt(raw))/Math.pow(10,dec)); }catch(e){ return "—"; } }
 function _price(p){ if(p==null) return "—"; p=Number(p); if(p>=1) return "$"+p.toFixed(2); if(p>=0.001) return "$"+p.toPrecision(3); var sub="₀₁₂₃₄₅₆₇₈₉"; var str=p.toFixed(20); var dec=str.slice(str.indexOf(".")+1); var z=0; while(z<dec.length&&dec[z]==="0")z++; var sig=dec.slice(z,z+4); var zc=String(z).split("").map(function(d){return sub[+d];}).join(""); return "$0.0"+zc+sig; }
-function _inject(html,id,val){ if(val==null||val==="—") return html; return html.replace(new RegExp('(id="'+id+'"[^>]*>)[^<]*<'), '$1'+val+'<'); }
+function _inject(html,id,val){ if(val==null||val==="—") return html; return html.replace(new RegExp('(id="'+id+'"[^>]*>)[^<]*<'), function(m,p1){return p1+val+'<';}); }
 async function _cachedData(){ try{ const hit=await caches.default.match(new Request("https://numetal.xyz/__lastgood")); if(hit) return await hit.json(); }catch(e){} return null; }
 async function renderPage(html, landing){ try{ const d=await _cachedData(); if(d){ const dec=d.decimals||18; const ids=landing?{"cs-burned":_tok(d.burned,dec),"cs-treasury":_tok(d.treasury,dec),"cs-team":_tok(d.team,dec),"cs-price":_price(d.price)}:{"burned":_tok(d.burned,dec),"treasury":_tok(d.treasury,dec),"team":_tok(d.team,dec),"price":_price(d.price)}; for(const id in ids) html=_inject(html,id,ids[id]); } }catch(e){} return html; }
 const FEE_ENGINE = "0x8f49d4d782488e8576c8c54288027c57f4acf521";
@@ -89,22 +89,51 @@ async function getBurns(env) {
       return { ts: (t.metadata && t.metadata.blockTimestamp) || null, from: t.from, label: BURN_LABELS[from] || null, amount: t.value, tx: t.hash, type: buyback ? "buyback-burn" : "manual-burn" };
     }));
   } catch (e) {}
+  out = out.filter(function (e) { return /^0x[0-9a-fA-F]{40}$/.test(e.from || "") && /^0x[0-9a-fA-F]{64}$/.test(e.tx || ""); });
   if (out.length) { try { await cache.put(key, new Response(JSON.stringify(out), { headers: { "cache-control": "public, max-age=120" } })); } catch (e) {} }
   return out;
+}
+const SECBASE = {
+  "strict-transport-security": "max-age=15768000; includeSubDomains",
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "DENY",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "permissions-policy": "accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()",
+  "cross-origin-opener-policy": "same-origin",
+};
+const CSP_BASE = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self'; manifest-src 'self'; upgrade-insecure-requests";
+const CSP_FEES = CSP_BASE + "; script-src 'self' 'sha256-R/tJfYJsGstBUoD2Y7v79PtbV/kyDaIu6gI67FGtm4w='";
+const CSP_HTML = CSP_BASE + "; script-src 'self'";
+function htmlSec(res, fees) {
+  const r = new Response(res.body, res);
+  for (const k in SECBASE) r.headers.set(k, SECBASE[k]);
+  r.headers.set("content-security-policy", fees ? CSP_FEES : CSP_HTML);
+  r.headers.set("cross-origin-resource-policy", "same-origin");
+  return r;
+}
+function jsonRes(obj, status) {
+  return new Response(typeof obj === "string" ? obj : JSON.stringify(obj), { status: status || 200, headers: {
+    "content-type": "application/json; charset=utf-8", "cache-control": "no-store",
+    "access-control-allow-origin": "*", "access-control-allow-methods": "GET, OPTIONS",
+    "x-content-type-options": "nosniff", "cross-origin-resource-policy": "cross-origin",
+    "x-frame-options": "DENY", "strict-transport-security": "max-age=15768000; includeSubDomains" } });
 }
 export default {
   async fetch(req, env) {
     const u = new URL(req.url);
-    const H = { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store" };
     if (u.pathname === "/fees/data") {
-      try { const d = await getData(); return new Response(JSON.stringify(d), { headers: { "content-type": "application/json", "cache-control": "no-store", "access-control-allow-origin": "*" } }); }
-      catch (e) { return new Response(JSON.stringify({ error: String(e) }), { status: 502, headers: { "content-type": "application/json" } }); }
+      try { const d = await getData(); if (d && typeof d === "object") delete d.dexErr; return jsonRes(d); }
+      catch (e) { return jsonRes({ error: "upstream_unavailable" }, 502); }
     }
     if (u.pathname === "/fees/events") {
-      try { const b = await getBurns(env); return new Response(JSON.stringify(b), { headers: { "content-type": "application/json", "cache-control": "no-store", "access-control-allow-origin": "*" } }); }
-      catch (e) { return new Response("[]", { headers: { "content-type": "application/json" } }); }
+      try { return jsonRes(await getBurns(env)); }
+      catch (e) { return jsonRes("[]"); }
     }
-    if (u.pathname === "/fees" || u.pathname === "/fees/") return new Response(await renderPage(FEES, false), { headers: H });
-    return env.ASSETS.fetch(req);
+    if (u.pathname === "/fees" || u.pathname === "/fees/") {
+      const res = new Response(await renderPage(FEES, false), { headers: { "content-type": "text/html;charset=UTF-8", "cache-control": "no-store" } });
+      return htmlSec(res, true);
+    }
+    const asset = await env.ASSETS.fetch(req);
+    return htmlSec(asset, false);
   },
 };
