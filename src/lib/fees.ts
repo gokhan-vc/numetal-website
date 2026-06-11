@@ -13,6 +13,9 @@ const BURN = '0x000000000000000000000000000000000000dEaD';
 const TEAM = '0xB13Fb67859bC818a7b9Eb7f1380274492B6D648F';
 const TREZ = '0x3D9bB085b7E2fd15827d174f20375be385c121c0';
 const PAIR = '0xf0ba727d596861455b31d6e444ed3ee41c77709a27f7d787ccf609f6c34dbbd8';
+const ZERO = '0x0000000000000000000000000000000000000000';
+// $NUMETAL is burned to dEaD, to the zero address, AND to the token contract itself.
+const BURN_DESTS = [BURN, NUM, ZERO];
 const BURN_LABELS: Record<string, string> = {
   '0x8f49d4d782488e8576c8c54288027c57f4acf521': 'bankr wallet',
   '0xb13fb67859bc818a7b9eb7f1380274492b6d648f': 'team',
@@ -72,18 +75,21 @@ async function getDex(): Promise<any> {
 }
 
 async function getDataFresh(): Promise<any> {
-  const [burned, team, trez, decRes, supRes, dex] = await Promise.all([
+  const [bDead, bContract, bZero, team, trez, decRes, supRes, dex] = await Promise.all([
     ethCall('0x70a08231' + pad(BURN)),
+    ethCall('0x70a08231' + pad(NUM)),
+    ethCall('0x70a08231' + pad(ZERO)),
     ethCall('0x70a08231' + pad(TEAM)),
     ethCall('0x70a08231' + pad(TREZ)),
     ethCall('0x313ce567'),
     ethCall('0x18160ddd'),
     getDex(),
   ]);
+  const big = (h: string | null) => (h ? BigInt(h) : 0n);
   const toStr = (h: string | null) => (h ? BigInt(h).toString() : null);
   return {
     decimals: decRes ? Number(BigInt(decRes)) : 18,
-    burned: toStr(burned), team: toStr(team), treasury: toStr(trez), supply: toStr(supRes),
+    burned: (big(bDead) + big(bContract) + big(bZero)).toString(), team: toStr(team), treasury: toStr(trez), supply: toStr(supRes),
     price: dex.price, fdv: dex.fdv, vol24: dex.vol24, mcap: dex.mcap, liq: dex.liq, src: dex.src, dexErr: dex.dexErr,
     ts: Date.now(),
   };
@@ -104,7 +110,7 @@ export async function getData(): Promise<any> {
 
 export async function getBurns(env: any): Promise<any[]> {
   const cache = cacheStore();
-  const key = new Request('https://numetal.xyz/__burns_v5');
+  const key = new Request('https://numetal.xyz/__burns_v6');
   if (cache) { const hit = await cache.match(key); if (hit) { try { return await hit.json(); } catch {} } }
   const WETH = '0x4200000000000000000000000000000000000006';
   const SWAPS = ['0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67', '0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822'];
@@ -114,8 +120,11 @@ export async function getBurns(env: any): Promise<any[]> {
   };
   let out: any[] = [];
   try {
-    const tr: any = await rpc('alchemy_getAssetTransfers', [{ fromBlock: '0x0', toBlock: 'latest', toAddress: BURN, contractAddresses: [NUM], category: ['erc20'], withMetadata: true, maxCount: '0x3e8', order: 'desc' }]);
-    const list = (((tr && tr.transfers) || []).filter((t: any) => Number(t.value) >= 1)).slice(0, 50);
+    const lists: any[] = await Promise.all(BURN_DESTS.map((dest) => rpc('alchemy_getAssetTransfers', [{ fromBlock: '0x0', toBlock: 'latest', toAddress: dest, contractAddresses: [NUM], category: ['erc20'], withMetadata: true, maxCount: '0x3e8', order: 'desc' }])));
+    const merged: any[] = [];
+    for (const tr of lists) merged.push(...(((tr && tr.transfers) || []).filter((t: any) => Number(t.value) >= 1)));
+    merged.sort((a, b) => String(b.metadata?.blockTimestamp || '').localeCompare(String(a.metadata?.blockTimestamp || '')));
+    const list = merged.slice(0, 50);
     out = await Promise.all(list.map(async (t: any) => {
       const from = (t.from || '').toLowerCase();
       let buyback = false;
