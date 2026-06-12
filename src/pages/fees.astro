@@ -4,129 +4,150 @@ import Base from '../layouts/Base.astro';
 const title = "Numetal — fee engine · machine report";
 const description = "Numetal fee engine — live burns, buybacks, and fee distribution on Base, as a machine report.";
 const canonical = 'https://numetal.xyz/fees';
+const NUM = '0x57EDb7FC54ADa9Ef4E113DC05A168449e63cFbA3';
 const bodyHtml = `<style>
-  :root{--ikb:#002FA7;--paper:#FAFAF8;--ink:#141414;--orange:#FF5A1F;--cyan:#0791a6;--green:#0F8A4C;--gold:#9a7d12;--line:#cfcfcf;--hard:#8c8c8c;--muted:#7c7c7c;
+  :root{--ikb:#002FA7;--bgray:#ffffff;--ink:#141414;--orange:#FF5A1F;--cyan:#0791a6;--gold:#9a7d12;--line:#c4c4c4;--muted:#6f6f6f;
     --mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-font-smoothing:antialiased}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+  body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
   a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
-  .wrap{width:100%;max-width:1060px;margin:0 auto;padding:0 28px}
+  .sheet{max-width:1080px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:100vh;display:flex;flex-direction:column}
   .dither{height:11px;background-image:radial-gradient(#191919 .62px,transparent .72px);background-size:3px 3px}
-  header{border-bottom:1px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:5}
-  .bar{display:flex;align-items:center;justify-content:space-between;height:54px;max-width:1060px;margin:0 auto;padding:0 28px}
+  /* doc-stamp header */
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 32px 0}
   .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.04em;font-size:17px}
   .mark a{color:var(--ink)}.mark .sq{width:13px;height:13px;background:var(--ikb)}
-  nav{display:flex;gap:20px;font-size:13px;align-items:center}
-  nav a{color:var(--ink)}nav .upd{color:var(--muted)}
+  nav{display:flex;gap:18px;font-size:13px;align-items:center}
+  nav a{color:var(--ink)}nav a.on{color:var(--ikb);font-weight:700}nav .upd{color:var(--muted)}
+  .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:6px 32px 14px}
+  .stamp b{color:var(--ikb);font-weight:700}
   main{flex:1}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-  /* report */
-  .report{border:1.5px solid var(--ink);background:var(--paper);font-family:var(--mono);font-size:13.5px;margin:30px 0 42px}
-  .rhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 16px;background:var(--ink);color:var(--paper)}
-  .rhead .rt{font-weight:700;letter-spacing:.05em;font-size:13px}
-  .rhead .rlive{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.12em;color:#7fe0ff}
-  .dotp{width:7px;height:7px;border-radius:50%;background:var(--cyan);display:inline-block;animation:pulse 1.8s ease-in-out infinite}
-  .rhead .rlive .dotp{background:#7fe0ff}
-  .rsec{padding:7px 16px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:#ececea;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
-  .rsec .cnt{color:var(--muted);font-weight:400;letter-spacing:.04em}
-  .rl{display:flex;align-items:center;gap:9px;padding:7px 16px;border-bottom:1px solid var(--line)}
-  .rl:last-child{border-bottom:0}
-  .rl .k{text-transform:uppercase;letter-spacing:.03em;color:#333;white-space:nowrap}
-  .rl.sub .k{color:#6a6a6a}
-  .lead{flex:1;border-bottom:1px dotted #b5b5b5;height:11px;min-width:14px}
-  .rl .v{font-weight:700;white-space:nowrap;text-align:right}
-  .v.o{color:var(--orange)}.v.b{color:var(--ikb)}.v.c{color:var(--cyan)}.v.g{color:var(--green)}
-  .gz{display:inline-flex;align-items:center;color:#9a9a9a;white-space:nowrap}
-  .trk{display:inline-block;width:148px;height:13px;border:1px solid var(--ink);background:#fff;margin:0 4px;position:relative;vertical-align:middle}
-  .fil{position:absolute;left:0;top:0;bottom:0;width:0;transition:width .5s ease}
-  .fil.o{background:var(--orange)}.fil.c{background:var(--cyan)}.fil.k{background:var(--ink)}.fil.b{background:var(--ikb)}
-  .pct{font-weight:700;min-width:58px;text-align:right}
-  /* distribution split bars */
-  .dwrap{padding:14px 16px;border-bottom:1px solid var(--line)}
-  .dh{display:flex;justify-content:space-between;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#555;margin-bottom:7px}
-  .barx{display:flex;height:30px;border:1px solid var(--ink)}
-  .seg{display:flex;align-items:center;justify-content:center;font-size:10.5px;color:#fff;white-space:nowrap;overflow:hidden;border-right:1px solid rgba(255,255,255,.4)}
-  .seg:last-child{border-right:0}
-  .s-team{background:var(--orange)}.s-trez{background:var(--ikb)}.s-burn{background:var(--ink)}
-  /* burn log */
-  .rlog{max-height:430px;overflow-y:auto}
-  table.lg{width:100%;border-collapse:collapse;font-size:12.5px}
-  table.lg th{position:sticky;top:0;background:#ececea;text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#555;padding:8px 14px;border-bottom:1px solid var(--ink)}
-  table.lg td{padding:8px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
-  table.lg tbody tr:last-child td{border-bottom:0}
-  table.lg tbody tr:hover td{background:#f3f3ef}
-  .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;letter-spacing:.03em;text-transform:uppercase}
-  .tag.buyback{background:var(--cyan);color:#fff}
-  .tag.manual{background:var(--ink);color:var(--paper)}
-  .tag.retro{background:var(--ikb);color:#fff}
-  .lg a{color:var(--ikb)}.lg .amt{font-weight:700}.lg .lbl{color:var(--muted);font-size:11px}
-  .empty{text-align:center;color:var(--muted);padding:24px}
-  .rfoot{padding:10px 16px;border-top:1.5px solid var(--ink);font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .rfoot a{color:var(--ikb)}.rfoot .live{width:7px;height:7px;border-radius:50%;background:var(--cyan);display:inline-block;animation:pulse 1.8s ease-in-out infinite}
-  .intro{padding:34px 0 0}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-  h1{font-size:clamp(32px,5vw,48px);line-height:1.02;font-weight:700;letter-spacing:-.025em}
+  /* compact centered intro */
+  .intro{text-align:center;padding:30px 24px 4px;max-width:680px;margin:0 auto}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  h1{font-size:30px;line-height:1.04;font-weight:700;letter-spacing:-.02em}
   h1 .dot{color:var(--ikb)}
-  .sub{font-size:15px;color:#444;margin-top:14px;max-width:62ch}
-  footer{background:#fff;border-top:1px solid var(--ink)}
-  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:20px 28px;max-width:1060px;margin:0 auto}
-  .foot a{color:var(--muted)}.flinks{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:760px){.bar,.foot{padding:0 18px}.foot{padding:20px 18px}.wrap{padding:0 14px}nav{display:none}.report{font-size:12px}.trk{width:74px}.rl{gap:6px}.rl .k{font-size:11px}table.lg{font-size:11px}table.lg td,table.lg th{padding:7px 9px}}
+  .sub{font-size:14px;color:#555;margin-top:9px}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+  /* ── machine report · light paper teletext ── */
+  .crt{max-width:640px;margin:22px auto 40px;background:#fff;
+    background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.016) 0 1px,transparent 1px 3px);
+    font-family:var(--mono);font-size:13px;color:#1d1d1b;border:1.5px solid var(--ink);box-shadow:2px 2px 0 rgba(0,0,0,.32)}
+  .crt .mast{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 14px;background:var(--ikb);color:#fff}
+  .crt .mast .mt{font-weight:700;letter-spacing:.06em;font-size:12px}
+  .crt .mast .lv{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.16em}
+  .dotp{width:7px;height:7px;border-radius:50%;background:#7fe6ff;display:inline-block;animation:pulse 1.7s ease-in-out infinite;box-shadow:0 0 6px rgba(127,230,255,.9)}
+  .csec{display:flex;align-items:center;gap:8px;padding:6px 14px;background:#f0f0ed;border-top:1px solid #d8d8d3;border-bottom:1px solid #d8d8d3;
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#555;justify-content:space-between}
+  .csec .lab{display:flex;align-items:center;gap:8px}
+  .csec .blk{font-size:12px;line-height:1}
+  .csec .cnt{color:#999;letter-spacing:.04em}
+  .row{display:flex;align-items:center;gap:8px;padding:5px 14px;border-bottom:1px solid #ededea}
+  .row .k{text-transform:uppercase;letter-spacing:.04em;color:#555;white-space:nowrap;font-size:11.5px}
+  .row.sub .k{color:#888}
+  .lead{flex:1;border-bottom:1px dotted #c2c2bc;height:10px;min-width:12px}
+  .row .v{font-weight:700;white-space:nowrap;text-align:right}
+  .v.o{color:#FF5A1F}.v.b{color:#002FA7}.v.c{color:#0791a6}.v.g{color:#9a7d12}.v.w{color:#141414}
+  .row .v a{color:#002FA7}
+  .gz{display:inline-flex;align-items:center;color:#aaa;white-space:nowrap}
+  .trk{display:inline-block;width:120px;height:12px;border:1px solid var(--ink);background:#fff;margin:0 4px;position:relative;vertical-align:middle}
+  .fil{position:absolute;left:0;top:0;bottom:0;width:0;transition:width .5s ease}
+  .fil.o{background:#FF5A1F}.fil.c{background:#0791a6}.fil.k{background:#2a2a2a}
+  .pct{min-width:44px;text-align:right;font-size:11px;color:#777}
+  /* distribution */
+  .dwrap{padding:9px 14px;border-bottom:1px solid #ededea}
+  .dh{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#777;margin-bottom:6px}
+  .barx{display:flex;height:22px;border:1px solid var(--ink)}
+  .seg{display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;font-weight:700;white-space:nowrap;overflow:hidden;border-right:1px solid rgba(255,255,255,.45)}
+  .seg:last-child{border-right:0}
+  .s-team{background:#FF5A1F}.s-trez{background:#002FA7}.s-burn{background:#2a2a2a}
+  /* log */
+  .rlog{max-height:360px;overflow:auto}
+  table.lg{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed}
+  table.lg th:nth-child(1),table.lg td:nth-child(1){width:21%}
+  table.lg th:nth-child(2),table.lg td:nth-child(2){width:20%}
+  table.lg th:nth-child(3),table.lg td:nth-child(3){width:18%;text-align:right}
+  table.lg th:nth-child(4),table.lg td:nth-child(4){width:25%;overflow:hidden;text-overflow:ellipsis}
+  table.lg th:nth-child(5),table.lg td:nth-child(5){width:16%}
+  table.lg th{position:sticky;top:0;background:#f0f0ed;text-align:left;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#666;padding:7px 12px;border-bottom:1px solid var(--ink)}
+  table.lg td{padding:6px 12px;border-bottom:1px solid #ededea;white-space:nowrap;color:#333}
+  table.lg tbody tr:last-child td{border-bottom:0}
+  table.lg tbody tr:hover td{background:#f7f7f4}
+  .tag{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;letter-spacing:.03em;text-transform:uppercase}
+  .tag.buyback{background:#0791a6;color:#fff}
+  .tag.manual{background:#2a2a2a;color:#fff}
+  .tag.retro{background:#002FA7;color:#fff}
+  .lg a{color:#002FA7}.lg .amt{font-weight:700;color:#141414}.lg .lbl{color:#999;font-size:10px}
+  .empty{text-align:center;color:#999;padding:20px}
+  .cfoot{padding:8px 14px;border-top:1px solid #d8d8d3;font-size:10.5px;color:#777;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .cfoot a{color:#002FA7}.cfoot .live{width:6px;height:6px;border-radius:50%;background:#0791a6;display:inline-block;animation:pulse 1.7s ease-in-out infinite}
+  /* footer */
+  .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
+  .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
+  @media(max-width:760px){.top,.stamp,.ft{padding-left:18px;padding-right:18px}nav{display:none}.crt{font-size:12px;margin:18px 14px 32px}.trk{width:64px}.row{gap:6px}.row .k{font-size:10.5px}table.lg{font-size:10.5px}table.lg td,table.lg th{padding:6px 8px}}
+  .social{display:inline-flex;align-items:center;gap:14px}
+  .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
+  .social a:hover{color:var(--ikb)}
+  .social svg{width:17px;height:17px;fill:currentColor;display:block}
 </style>
 
-<header><div class="bar">
-  <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
-  <nav>
-    <span class="upd">App · updating</span>
-    <a href="/">Studio</a>
-    <a href="/airdrops">Airdrops</a>
-    <span class="upd">Docs · updating</span>
-    <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a>
-  </nav>
-</div></header>
-<div class="dither"></div>
+<div class="sheet">
+  <div class="top">
+    <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
+    <nav>
+      <span class="upd">App · updating</span>
+      <a href="/">Studio</a>
+      <a href="/airdrops">Airdrops</a>
+      <span class="upd">Docs · updating</span>
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a>
+    </nav>
+  </div>
+  <div class="stamp">Doc · <b>Fee engine</b> · Base · live from the contracts</div>
+  <div class="dither"></div>
 
-<main>
-  <section class="wrap intro">
-    <div class="eyebrow">Doc · Fee engine · Base · live from the contracts</div>
-    <h1>Burns &amp; buybacks<span class="dot">.</span></h1>
-    <p class="sub">Every creator-fee claim splits to team, treasury, and burn — executed onchain on Base. This is the live machine report.</p>
-  </section>
+  <main>
+    <section class="intro">
+      <div class="eyebrow">Fee engine · Base · live</div>
+      <h1>Burns &amp; buybacks<span class="dot">.</span></h1>
+      <p class="sub">Every fee claim splits to team, treasury, and burn — onchain.</p>
+    </section>
 
-  <section class="wrap">
-    <div class="report">
-      <div class="rhead">
-        <span class="rt">NUMETAL · FEE ENGINE — MACHINE REPORT</span>
-        <span class="rlive"><span class="dotp"></span>LIVE</span>
+    <div class="crt">
+      <div class="mast">
+        <span class="mt">NUMETAL · FEE ENGINE</span>
+        <span class="lv"><span class="dotp"></span>LIVE</span>
       </div>
-      <div class="rl"><span class="k">Date</span><span class="lead"></span><span class="v" id="rdate">—</span></div>
-      <div class="rl"><span class="k">Chain</span><span class="lead"></span><span class="v">Base · 8453</span></div>
-      <div class="rl"><span class="k">Token</span><span class="lead"></span><span class="v">0x57ED…CFbA3</span></div>
+      <div class="row"><span class="k">Date</span><span class="lead"></span><span class="v w" id="rdate">—</span></div>
+      <div class="row"><span class="k">Chain</span><span class="lead"></span><span class="v w">Base · 8453</span></div>
+      <div class="row"><span class="k">Token</span><span class="lead"></span><span class="v"><a href="https://basescan.org/token/${NUM}" target="_blank" rel="noopener">0x57ED…CFbA3 ↗</a></span></div>
 
-      <div class="rsec"><span>Supply &amp; burn</span></div>
-      <div class="rl"><span class="k">Total supply</span><span class="lead"></span><span class="v">100,000,000,000</span></div>
-      <div class="rl"><span class="k">Burned</span><span class="gz">[<span class="trk"><span class="fil o" id="burnedBar"></span></span>]</span><span class="pct" id="burnedPct">—</span><span class="lead"></span><span class="v o" id="burned">—</span></div>
-      <div class="rl sub"><span class="k">├ buyback-burn</span><span class="gz">[<span class="trk"><span class="fil c" id="bbBar"></span></span>]</span><span class="lead"></span><span class="v c" id="bbVal">—</span></div>
-      <div class="rl sub"><span class="k">└ manual-burn</span><span class="gz">[<span class="trk"><span class="fil k" id="mbBar"></span></span>]</span><span class="lead"></span><span class="v" id="mbVal">—</span></div>
-      <div class="rl"><span class="k">Treasury</span><span class="lead"></span><span class="v b" id="treasury">—</span></div>
-      <div class="rl"><span class="k">Team</span><span class="lead"></span><span class="v" id="team">—</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:#ff6a33">█</span>Supply &amp; burn</span></div>
+      <div class="row"><span class="k">Total supply</span><span class="lead"></span><span class="v w">100,000,000,000</span></div>
+      <div class="row"><span class="k">Current supply</span><span class="lead"></span><span class="v w" id="supplyNow">—</span></div>
+      <div class="row"><span class="k">Burned</span><span class="gz">[<span class="trk"><span class="fil o" id="burnedBar"></span></span>]</span><span class="pct" id="burnedPct">—</span><span class="lead"></span><span class="v o" id="burned">—</span></div>
+      <div class="row sub"><span class="k">├ buyback-burn</span><span class="gz">[<span class="trk"><span class="fil c" id="bbBar"></span></span>]</span><span class="lead"></span><span class="v c" id="bbVal">—</span></div>
+      <div class="row sub"><span class="k">└ manual-burn</span><span class="gz">[<span class="trk"><span class="fil k" id="mbBar"></span></span>]</span><span class="lead"></span><span class="v w" id="mbVal">—</span></div>
 
-      <div class="rsec"><span>Market</span></div>
-      <div class="rl"><span class="k">Price</span><span class="lead"></span><span class="v b" id="price">—</span></div>
-      <div class="rl"><span class="k">FDV · 24h vol</span><span class="lead"></span><span class="v" id="fdv">—</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:#5a8bff">█</span>Current studio holdings</span></div>
+      <div class="row"><span class="k">Treasury</span><span class="lead"></span><span class="v b" id="treasury">—</span></div>
+      <div class="row"><span class="k">Team</span><span class="lead"></span><span class="v w" id="team">—</span></div>
 
-      <div class="rsec"><span>Distribution policy</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:#34c6e6">█</span>Market</span></div>
+      <div class="row"><span class="k">Price</span><span class="lead"></span><span class="v c" id="price">—</span></div>
+      <div class="row"><span class="k">FDV · 24h vol</span><span class="lead"></span><span class="v w" id="fdv">—</span></div>
+
+      <div class="csec"><span class="lab"><span class="blk" style="color:#e6bb3f">█</span>Distribution</span></div>
       <div class="dwrap">
-        <div class="dh"><span>WETH side · 100% of claimed WETH</span></div>
+        <div class="dh">WETH side</div>
         <div class="barx"><span class="seg s-team" style="flex:80 0 0">80% team</span><span class="seg s-trez" style="flex:10 0 0">10%</span><span class="seg s-burn" style="flex:10 0 0">10%</span></div>
       </div>
       <div class="dwrap">
-        <div class="dh"><span>$NUMETAL side · 100% of claimed $NUMETAL</span></div>
+        <div class="dh">$NUMETAL side</div>
         <div class="barx"><span class="seg s-team" style="flex:40 0 0">40% team</span><span class="seg s-trez" style="flex:30 0 0">30% treasury</span><span class="seg s-burn" style="flex:30 0 0">30% burn</span></div>
       </div>
 
-      <div class="rsec"><span>Burn &amp; buyback log</span><span class="cnt" id="burncount"></span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:#cfcfcf">█</span>Burn &amp; buyback log</span><span class="cnt" id="burncount"></span></div>
       <div class="rlog">
         <table class="lg">
           <thead><tr><th>Time</th><th>Type</th><th>NUMETAL</th><th>From</th><th>Tx</th></tr></thead>
@@ -134,26 +155,27 @@ const bodyHtml = `<style>
         </table>
       </div>
 
-      <div class="rfoot"><span class="live"></span><span id="updated">loading live data…</span><span>· auto-refreshes ·</span><a href="#" id="refresh">refresh now</a></div>
+      <div class="cfoot"><span class="live"></span><span id="updated">loading…</span><span>· auto-refresh ·</span><a href="#" id="refresh">refresh</a></div>
     </div>
-  </section>
-</main>
+  </main>
 
-<div class="dither"></div>
-<footer><div class="foot">
-  <span>Numetal · fee engine · Base · <a href="/airdrops">retrodrop → BOUNTY + PLATES holders ↗</a></span>
-  <span class="flinks">
-    <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>
-    <a href="https://github.com/gokhan-vc" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://gokhanturhan.com" target="_blank" rel="noopener">gokhanturhan.com</a>
-    <a href="/feed.xml">RSS</a>
-    <a href="/sitemap.xml">Sitemap</a>
-    <a href="/llms.txt">llms.txt</a>
-    <a href="https://numetal.xyz/terms">Terms</a>
-    <a href="https://numetal.xyz/privacy">Privacy</a>
-    <a href="/cookies">Cookies</a>
-  </span>
-</div></footer>
+  <div class="dither"></div>
+  <footer class="ft">
+    <span>Numetal · an Atelier Gökhan studio · on Base</span>
+    <span class="social"><a href="https://t.me/numetalxyz" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a href="https://discord.gg/MC4DYumPMz" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a><a href="https://x.com/numetalxyz" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></span>
+      <span class="flinks">
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>
+      <a href="https://github.com/gokhan-vc" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://gokhanturhan.com" target="_blank" rel="noopener">gokhanturhan.com</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="/sitemap.xml">Sitemap</a>
+      <a href="/llms.txt">llms.txt</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/cookies">Cookies</a>
+    </span>
+  </footer>
+</div>
 `;
 ---
 <Base title={title} description={description} canonical={canonical}>

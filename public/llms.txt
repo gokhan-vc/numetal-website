@@ -12,7 +12,6 @@
 
 ## Details
 - Studio model: ship and back autonomous agents; each effort can carry its own token, with $NUMETAL as the studio token.
-- First effort: MOAT, a Bankr-native intelligence agent for the onchain agent economy.
 - Markets: onchain (DeFi / x402 services / the Base agent economy), compute (machine-to-machine inference payments), artistic & cultural (generative, speculative, accelerationist), frontier-lab model toolkits (runtimes, skills, harnesses).
 - Chains: Base (hub), Ethereum, Solana, Hyperliquid, XRP Ledger.
 - Network: Base. Official $NUMETAL contract: 0x57EDb7FC54ADa9Ef4E113DC05A168449e63cFbA3

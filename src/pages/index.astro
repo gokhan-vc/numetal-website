@@ -6,154 +6,160 @@ const description = "Numetal is an agent accelerator studio under Atelier Gökha
 const canonical = "https://numetal.xyz/";
 const ogImage = "https://numetal.xyz/og.png";
 const jsonLd = `{"@context":"https://schema.org","@graph":[
-{"@type":"Organization","@id":"https://numetal.xyz/#organization","name":"Numetal","alternateName":"$NUMETAL","url":"https://numetal.xyz/","description":"Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Chain-agnostic: home on Base, working across Ethereum, Solana, Hyperliquid, and the XRP Ledger.","slogan":"We ship machines that ship themselves.","parentOrganization":{"@type":"Organization","name":"Atelier Gökhan","url":"https://gokhan.vc"},"founder":{"@type":"Person","name":"Gökhan Turhan","url":"https://gokhanturhan.com"},"knowsAbout":["Autonomous AI agents","Onchain agent economy","x402 machine-to-machine payments","Base","Ethereum","Solana","Hyperliquid","XRP Ledger","Buyback and burn fee distribution"],"sameAs":["https://gokhan.vc","https://github.com/gokhan-vc","https://gokhanturhan.com"]},
-{"@type":"WebSite","@id":"https://numetal.xyz/#website","url":"https://numetal.xyz/","name":"Numetal","description":"Agent accelerator studio under Atelier Gökhan — autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits.","inLanguage":"en","publisher":{"@id":"https://numetal.xyz/#organization"}}
+{"@type":"Organization","@id":"https://numetal.xyz/#organization","name":"Numetal","alternateName":"$NUMETAL","url":"https://numetal.xyz/","description":"Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Chain-agnostic: home on Base, working across Ethereum, Solana, Hyperliquid, and the XRP Ledger.","slogan":"We ship machines that ship themselves.","parentOrganization":{"@type":"Organization","name":"Atelier Gökhan","url":"https://gokhan.vc"},"founder":{"@type":"Person","name":"Gökhan Turhan","url":"https://gokhanturhan.com"},"sameAs":["https://gokhan.vc","https://github.com/gokhan-vc","https://gokhanturhan.com"]},
+{"@type":"WebSite","@id":"https://numetal.xyz/#website","url":"https://numetal.xyz/","name":"Numetal","publisher":{"@id":"https://numetal.xyz/#organization"}}
 ]}`;
 const bodyHtml = `<style>
-  :root{--ikb:#002FA7;--paper:#FAFAF8;--ink:#141414;--orange:#FF5A1F;--cyan:#0791a6;--gold:#9a7d12;--line:#cfcfcf;--hard:#8c8c8c;--muted:#7c7c7c;
+  :root{--ikb:#002FA7;--ink:#141414;--orange:#FF5A1F;--cyan:#0791a6;--gold:#9a7d12;--line:#cdcdcd;--hard:#8c8c8c;--mut:#7c7c7c;--bgray:#ffffff;
     --mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
   a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
-  .wrap{width:100%;max-width:1060px;margin:0 auto;padding:0 28px}
+  .sheet{max-width:1080px;margin:0 auto;background:#fff;border-left:1px solid #c4c4c4;border-right:1px solid #c4c4c4;min-height:100vh;display:flex;flex-direction:column}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 32px 14px}
+  .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.03em;font-size:16px}
+  .mark .sq{width:12px;height:12px;background:var(--ikb)}
+  nav{display:flex;gap:18px;font-size:13px;align-items:center}nav a{color:var(--ink)}nav .upd{color:var(--mut)}
+  .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);padding:0 32px 14px}
   .dither{height:11px;background-image:radial-gradient(#191919 .62px,transparent .72px);background-size:3px 3px}
-  header{border-bottom:1px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:5}
-  .bar{display:flex;align-items:center;justify-content:space-between;height:54px;max-width:1060px;margin:0 auto;padding:0 28px}
-  .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.04em;font-size:17px}
-  .mark .sq{width:13px;height:13px;background:var(--ikb)}
-  nav{display:flex;gap:20px;font-size:13px;align-items:center}
-  nav a{color:var(--ink)}nav .upd{color:var(--muted)}
-  .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
   main{flex:1}
-  .hero{padding:64px 0 48px}
-  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
-  h1{font-size:clamp(40px,7vw,74px);line-height:1.0;font-weight:700;letter-spacing:-.03em}
+  .grid{display:grid;grid-template-columns:1.34fr 1fr;gap:38px;padding:32px}
+  h1{font-size:33px;line-height:1.05;font-weight:700;letter-spacing:-.02em}
   h1 .dot{color:var(--ikb)}
-  .lede{font-size:18px;line-height:1.55;color:#333;max-width:64ch;margin-top:24px}
-  .cta{display:flex;gap:14px;align-items:center;margin-top:34px;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--ikb);color:#fff;padding:11px 20px;font-weight:700;font-size:14px;border:1.5px solid var(--ink);box-shadow:2px 2px 0 rgba(0,0,0,.5);transition:filter .1s,transform .05s,box-shadow .05s}
-  .btn:hover{filter:brightness(1.08);text-decoration:none}
-  .btn:active{transform:translate(2px,2px);box-shadow:0 0 0 rgba(0,0,0,0)}
-  .btn.dis{background:#ededed;color:var(--muted);border-color:var(--hard);box-shadow:none;cursor:default}
-  .btn.dis:hover{filter:none}
-  .sec{padding:42px 0}
-  .sh{display:flex;align-items:baseline;gap:11px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:8px;font-family:var(--mono)}
-  .sh .ix{color:var(--muted)}
-  .sdot{height:6px;background-image:radial-gradient(#222 .5px,transparent .6px);background-size:3px 3px;margin-bottom:18px}
+  .lead{font-size:15px;color:#2b2b2b;margin-top:15px;max-width:52ch;line-height:1.55}
+  .def{border-left:3px solid var(--ikb);padding:3px 0 3px 16px;margin:22px 0;font-style:italic;color:#262626;line-height:1.5;max-width:50ch}
+  .def b{font-weight:700;font-style:italic;color:var(--ink)}
+  .cta{display:flex;gap:13px;align-items:center;margin-top:24px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;background:var(--ikb);color:#fff;border:1.5px solid var(--ink);font-weight:700;font-size:14px;padding:9px 16px;box-shadow:2px 2px 0 rgba(0,0,0,.5);transition:filter .1s,transform .05s,box-shadow .05s}
+  .btn:hover{filter:brightness(1.1);text-decoration:none}.btn:active{transform:translate(2px,2px);box-shadow:0 0 0}
+  .btn.dis{background:#ededed;color:var(--mut);border-color:var(--hard);box-shadow:none;cursor:default}.btn.dis:hover{filter:none}
+  .idxh{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+  .idx{border:1.5px solid var(--hard)}
+  .ix{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 13px;border-bottom:1px solid var(--line)}
+  .ix:last-child{border-bottom:0}.ix:hover{background:#eaf0fb}
+  .ix .k{font-weight:700}.ix .d{font-weight:400;color:#5a5a5a}.ix .v{font-family:var(--mono);font-size:12px;color:#6b6b6b;white-space:nowrap}.ix:hover .v{color:var(--ikb)}
+  .sec{padding:26px 32px}
+  .sh{display:flex;align-items:baseline;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:8px}.sh .ix0{color:var(--mut)}
+  .sdot{height:6px;background-image:radial-gradient(#222 .5px,transparent .6px);background-size:3px 3px;margin-bottom:16px}
   .grid4{display:grid;grid-template-columns:repeat(2,1fr);border:1.5px solid var(--hard)}
-  .cell{padding:22px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .cell:nth-child(2n){border-right:0}
-  .cell:nth-last-child(-n+2){border-bottom:0}
-  .cell .k{font-family:var(--mono);font-size:13px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;margin-bottom:9px}
+  .cell{padding:18px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .cell:nth-child(2n){border-right:0}.cell:nth-last-child(-n+2){border-bottom:0}
+  .cell .k{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
   .cell .k.o{color:var(--orange)}.cell .k.b{color:var(--ikb)}.cell .k.c{color:var(--cyan)}.cell .k.g{color:var(--gold)}
-  .cell p{font-size:14px;color:#444;line-height:1.55}
+  .cell p{font-size:13.5px;color:#444;line-height:1.5}
   .chains{display:flex;flex-wrap:wrap;border:1.5px solid var(--hard)}
-  .chain{flex:1 1 18%;min-width:120px;padding:16px 16px;border-right:1px solid var(--line)}
-  .chain:last-child{border-right:0}
-  .chain .cn{font-weight:700;font-size:15px}
-  .chain .cr{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-top:6px}
+  .chain{flex:1 1 18%;min-width:118px;padding:14px 15px;border-right:1px solid var(--line)}.chain:last-child{border-right:0}
+  .chain .cn{font-weight:700;font-size:15px}.chain .cr{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-top:5px}
   .chain.hub{background:var(--ikb);color:#fff}.chain.hub .cr{color:rgba(255,255,255,.72)}
-  .leg{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
-  .leg .lg{display:flex;align-items:center;gap:7px}.leg .d{width:9px;height:9px}
-  .d-team{background:var(--orange)}.d-trez{background:var(--ikb)}.d-burn{background:var(--ink)}
-  .side{margin-top:16px}
-  .side-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;font-family:var(--mono);font-size:12px}
-  .side-head .nm{font-weight:700;text-transform:uppercase;letter-spacing:.05em}.side-head .tot{color:var(--muted)}
-  .barx{display:flex;height:34px;border:1.5px solid var(--ink)}
-  .seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;border-right:1px solid rgba(255,255,255,.35)}
-  .seg:last-child{border-right:0}
-  .s-team{background:var(--orange)}.s-trez{background:var(--ikb)}.s-burn{background:var(--ink);color:var(--paper)}
-  .note{font-size:14px;color:#444;margin-top:18px;max-width:70ch}
-  footer{background:#fff;border-top:1px solid var(--ink)}
-  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:20px 28px;max-width:1060px;margin:0 auto}
-  .foot a{color:var(--muted)}
-  .flinks{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:760px){.bar,.foot{padding-left:18px;padding-right:18px}.wrap{padding:0 18px}nav{display:none}.grid4{grid-template-columns:1fr}.cell{border-right:0}.cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.cell:last-child{border-bottom:0}.chain{flex:1 1 100%;border-right:0;border-bottom:1px solid var(--line)}.chain:last-child{border-bottom:0}}
+  .note{font-size:13.5px;color:#444;margin-top:14px;max-width:74ch;line-height:1.55}
+  .leg{display:flex;gap:15px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin-bottom:12px}
+  .leg .lg{display:flex;align-items:center;gap:6px}.leg .d{width:9px;height:9px}.d-team{background:var(--orange)}.d-trez{background:var(--ikb)}.d-burn{background:var(--ink)}
+  .side{margin-top:14px}
+  .side-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}.side-head .nm{font-weight:700}.side-head .tot{color:var(--mut)}
+  .barx{display:flex;height:30px;border:1.5px solid var(--ink)}
+  .seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;border-right:1px solid rgba(255,255,255,.4)}.seg:last-child{border-right:0}
+  .s-team{background:var(--orange)}.s-trez{background:var(--ikb)}.s-burn{background:var(--ink)}
+  .ft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--mut);padding:18px 32px}.ft a{color:var(--mut)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
+  @media(max-width:740px){.top,.stamp,.sec,.ft{padding-left:18px;padding-right:18px}.grid{grid-template-columns:1fr;gap:26px;padding:26px 18px}h1{font-size:27px}nav{display:none}.grid4{grid-template-columns:1fr}.cell{border-right:0}.cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.cell:last-child{border-bottom:0}.chain{flex:1 1 100%;border-right:0;border-bottom:1px solid var(--line)}.chain:last-child{border-bottom:0}}
+  .social{display:inline-flex;align-items:center;gap:14px}
+  .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
+  .social a:hover{color:var(--ikb)}
+  .social svg{width:17px;height:17px;fill:currentColor;display:block}
+  .commrow{display:flex;align-items:center;gap:13px;margin-top:16px}
+  .commlab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
 </style>
 
-<header><div class="bar">
-  <div class="mark"><span class="sq"></span>NUMETAL</div>
-  <nav>
-    <span class="upd">App · updating</span>
-    <a href="https://numetal.xyz/fees">Fee engine</a>
-    <a href="https://numetal.xyz/airdrops">Airdrops</a>
-    <span class="upd">Docs · updating</span>
-    <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a>
-  </nav>
-</div></header>
-<div class="dither"></div>
+<div class="sheet">
+  <div class="top">
+    <div class="mark"><span class="sq"></span>NUMETAL</div>
+    <nav>
+      <span class="upd">App · updating</span>
+      <a href="/fees">Fee engine</a>
+      <a href="/airdrops">Airdrops</a>
+      <span class="upd">Docs · updating</span>
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a>
+    </nav>
+  </div>
+  <div class="stamp">Doc · Studio · Base · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a> studio</div>
+  <div class="dither"></div>
 
-<main>
-  <section class="wrap hero">
-    <div class="eyebrow">Doc · Studio · Base · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio</div>
-    <h1>We ship machines that ship themselves<span class="dot">.</span></h1>
-    <p class="lede">An accelerator that builds and backs autonomous agents across four markets — onchain, compute, artistic &amp; culture, and frontier-lab model toolkits. Chain-agnostic by design: home on Base, working across Ethereum, Solana, Hyperliquid, and the XRP Ledger. A few agents are already in the queue.</p>
-    <div class="cta">
-      <span class="btn dis">App — updating</span>
-      <span class="btn dis">Docs — updating</span>
-      <a class="btn" href="https://numetal.xyz/fees">Fee engine →</a>
+  <main>
+    <div class="grid">
+      <section>
+        <h1>We ship machines that ship themselves<span class="dot">.</span></h1>
+        <p class="lead">An accelerator that builds and backs autonomous agents across four markets — onchain, compute, artistic &amp; culture, and frontier-lab model toolkits.</p>
+        <div class="def"><b>Numetal</b> — an agent accelerator studio: autonomous agents across onchain, compute, artistic &amp; cultural markets and frontier-lab toolkits. Chain-agnostic, home on Base.</div>
+        <p class="lead">A few agents are already in the queue. The token, treasury, and settlement live on Base; the agents reach demand wherever it is and bring value back.</p>
+        <div class="cta">
+          <a class="btn" href="/fees">Fee engine →</a>
+          <span class="btn dis">App — updating</span>
+          <span class="btn dis">Docs — updating</span>
+        </div>
+      </section>
+      <section>
+        <div class="idxh">Index</div>
+        <div class="idx">
+          <a class="ix" href="/fees"><span><span class="k">Fee engine</span> <span class="d">— live burns &amp; buybacks</span></span><span class="v">/fees →</span></a>
+          <a class="ix" href="/airdrops"><span><span class="k">Retrodrop</span> <span class="d">— BOUNTY + PLATES holders</span></span><span class="v">/airdrops →</span></a>
+          <a class="ix" href="https://gokhan.vc" target="_blank" rel="noopener"><span><span class="k">Atelier Gökhan</span> <span class="d">— the studio</span></span><span class="v">gokhan.vc →</span></a>
+          <a class="ix" href="https://gokhanturhan.com" target="_blank" rel="noopener"><span><span class="k">Gökhan Turhan</span> <span class="d">— the founder</span></span><span class="v">gokhanturhan.com →</span></a>
+          <a class="ix" href="https://dexscreener.com/base/0xf0ba727d596861455b31d6e444ed3ee41c77709a27f7d787ccf609f6c34dbbd8" target="_blank" rel="noopener"><span><span class="k">$NUMETAL</span> <span class="d">— token on Base</span></span><span class="v">0x57ED…CFbA3 →</span></a>
+        </div>
+        <div class="commrow"><span class="commlab">Community</span><span class="social"><a href="https://t.me/numetalxyz" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a href="https://discord.gg/MC4DYumPMz" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a><a href="https://x.com/numetalxyz" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></span></div>
+      </section>
     </div>
-  </section>
+
+    <div class="dither"></div>
+    <section class="sec"><div class="sh"><span class="ix0">01</span>What we ship — agents across four markets</div><div class="sdot"></div>
+      <div class="grid4">
+        <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy — intelligence, trading, and x402 services across the Base / Bankr agent economy.</p></div>
+        <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference — paying for what they consume and charging for what they serve, settled machine-to-machine over x402.</p></div>
+        <div class="cell"><div class="k g">Artistic &amp; cultural</div><p>Agents working in art, culture, and hyperstition — generative, speculative, accelerationist. Markets where taste and myth compound, not just liquidity.</p></div>
+        <div class="cell"><div class="k c">Frontier-lab toolkits</div><p>Runtimes, skills, and harnesses built on frontier-lab models — the tooling that turns raw models into autonomous operators that earn.</p></div>
+      </div>
+    </section>
+
+    <div class="dither"></div>
+    <section class="sec"><div class="sh"><span class="ix0">02</span>Chain-agnostic — home on Base, working everywhere</div><div class="sdot"></div>
+      <div class="chains">
+        <div class="chain hub"><div class="cn">Base</div><div class="cr">Hub · home</div></div>
+        <div class="chain"><div class="cn">Ethereum</div><div class="cr">Mainnet</div></div>
+        <div class="chain"><div class="cn">Solana</div><div class="cr">High-throughput</div></div>
+        <div class="chain"><div class="cn">Hyperliquid</div><div class="cr">Onchain perps</div></div>
+        <div class="chain"><div class="cn">XRP Ledger</div><div class="cr">x402 · RLUSD</div></div>
+      </div>
+      <p class="note">Base is home — where the token, treasury, and settlement live. New chains attach the moment an agent has a reason to be there, settling over x402 and native USDC rails.</p>
+    </section>
+
+    <div class="dither"></div>
+    <section class="sec"><div class="sh"><span class="ix0">03</span>$NUMETAL fee distribution policy</div><div class="sdot"></div>
+      <div class="leg"><span class="lg"><span class="d d-team"></span>team</span><span class="lg"><span class="d d-trez"></span>treasury</span><span class="lg"><span class="d d-burn"></span>burn (incl. buyback)</span></div>
+      <div class="side"><div class="side-head"><span class="nm">WETH side</span><span class="tot">100% of claimed WETH</span></div>
+        <div class="barx"><span class="seg s-team" style="flex:80 0 0">80% team</span><span class="seg s-trez" style="flex:10 0 0">10%</span><span class="seg s-burn" style="flex:10 0 0">10%</span></div></div>
+      <div class="side"><div class="side-head"><span class="nm">$NUMETAL side</span><span class="tot">100% of claimed $NUMETAL</span></div>
+        <div class="barx"><span class="seg s-team" style="flex:40 0 0">40% team</span><span class="seg s-trez" style="flex:30 0 0">30% treasury</span><span class="seg s-burn" style="flex:30 0 0">30% burn</span></div></div>
+      <p class="note">Every creator-fee claim splits to team, treasury, and burn — executed onchain. Buyback &amp; burn feeds value back to the community. Watch it live on the <a href="/fees">fee-engine report →</a></p>
+    </section>
+  </main>
 
   <div class="dither"></div>
-  <section class="wrap sec">
-    <div class="sh"><span class="ix">01</span>What we ship — agents across four markets</div>
-    <div class="sdot"></div>
-    <div class="grid4">
-      <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy — intelligence, trading, and x402 services across the Base / Bankr agent economy and beyond. MOAT, a Bankr-native intelligence agent, is first off the line.</p></div>
-      <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference — paying for what they consume and charging for what they serve, settled machine-to-machine over x402.</p></div>
-      <div class="cell"><div class="k g">Artistic &amp; cultural</div><p>Agents working in art, culture, and hyperstition — generative, speculative, accelerationist. Markets where taste and myth compound, not just liquidity.</p></div>
-      <div class="cell"><div class="k c">Frontier-lab toolkits</div><p>Runtimes, skills, and harnesses built on frontier-lab models — the tooling that turns raw models into autonomous operators that earn.</p></div>
-    </div>
-  </section>
-
-  <div class="dither"></div>
-  <section class="wrap sec">
-    <div class="sh"><span class="ix">02</span>Chain-agnostic — home on Base, working everywhere</div>
-    <div class="sdot"></div>
-    <div class="chains">
-      <div class="chain hub"><div class="cn">Base</div><div class="cr">Hub · home</div></div>
-      <div class="chain"><div class="cn">Ethereum</div><div class="cr">Mainnet</div></div>
-      <div class="chain"><div class="cn">Solana</div><div class="cr">High-throughput</div></div>
-      <div class="chain"><div class="cn">Hyperliquid</div><div class="cr">Onchain perps</div></div>
-      <div class="chain"><div class="cn">XRP Ledger</div><div class="cr">x402 · RLUSD</div></div>
-    </div>
-    <p class="note">Base is home — where the token, treasury, and settlement live. Our agents reach into demand wherever it is and bring value back, settling over x402 and native USDC rails. New chains attach the moment an agent has a reason to be there.</p>
-  </section>
-
-  <div class="dither"></div>
-  <section class="wrap sec">
-    <div class="sh"><span class="ix">03</span>$NUMETAL fee distribution policy</div>
-    <div class="sdot"></div>
-    <div class="leg"><span class="lg"><span class="d d-team"></span>team</span><span class="lg"><span class="d d-trez"></span>treasury</span><span class="lg"><span class="d d-burn"></span>burn (incl. buyback)</span></div>
-    <div class="side">
-      <div class="side-head"><span class="nm">WETH side</span><span class="tot">100% of claimed WETH</span></div>
-      <div class="barx"><span class="seg s-team" style="flex:80 0 0">80% team</span><span class="seg s-trez" style="flex:10 0 0">10%</span><span class="seg s-burn" style="flex:10 0 0">10%</span></div>
-    </div>
-    <div class="side">
-      <div class="side-head"><span class="nm">$NUMETAL side</span><span class="tot">100% of claimed $NUMETAL</span></div>
-      <div class="barx"><span class="seg s-team" style="flex:40 0 0">40% team</span><span class="seg s-trez" style="flex:30 0 0">30% treasury</span><span class="seg s-burn" style="flex:30 0 0">30% burn</span></div>
-    </div>
-    <p class="note">Every creator-fee claim splits to team, treasury, and burn — executed onchain. Buyback &amp; burn feeds value back to the community. Watch it live on the <a href="https://numetal.xyz/fees">fee engine →</a></p>
-  </section>
-</main>
-
-<div class="dither"></div>
-<footer><div class="foot">
-  <span>Numetal · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio · agents across onchain, compute &amp; culture</span>
-  <span class="flinks">
-    <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>
-    <a href="https://github.com/gokhan-vc" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://gokhanturhan.com" target="_blank" rel="noopener">gokhanturhan.com</a>
-    <a href="/feed.xml">RSS</a>
-    <a href="/sitemap.xml">Sitemap</a>
-    <a href="/llms.txt">llms.txt</a>
-    <a href="https://numetal.xyz/terms">Terms</a>
-    <a href="https://numetal.xyz/privacy">Privacy</a>
-    <a href="/cookies">Cookies</a>
-  </span>
-</div></footer>
+  <div class="ft">
+    <span>Numetal · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio · on Base</span>
+    <span class="social"><a href="https://t.me/numetalxyz" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a href="https://discord.gg/MC4DYumPMz" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a><a href="https://x.com/numetalxyz" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></span>
+      <span class="flinks">
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>
+      <a href="https://github.com/gokhan-vc" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://gokhanturhan.com" target="_blank" rel="noopener">gokhanturhan.com</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="/sitemap.xml">Sitemap</a>
+      <a href="/llms.txt">llms.txt</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/cookies">Cookies</a>
+    </span>
+  </div>
+</div>
 `;
 ---
 <Base title={title} description={description} canonical={canonical} ogImage={ogImage} jsonLd={jsonLd}>

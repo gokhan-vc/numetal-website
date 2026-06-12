@@ -14,7 +14,9 @@ var $=function(id){return document.getElementById(id);};
     fetch("/fees/data",{cache:"no-store"}).then(function(r){return r.json();}).then(function(d){
       if(d.error){ $("updated").textContent="data source error — retrying"; return; }
       var dec=d.decimals||18;
-      if(d.burned!=null){ $("burned").textContent=tok(d.burned,dec); if(d.supply){ try{ var pct=Number(BigInt(d.burned)*10000n/BigInt(d.supply))/100; var pe=$("burnedPct"); if(pe)pe.textContent=pct.toFixed(2)+"% supply"; var bbar=$("burnedBar"); if(bbar)bbar.style.width=Math.max(.8,Math.min(100,pct)).toFixed(2)+"%"; }catch(e){} } }
+      var TOTAL=1e11;
+      if(d.burned!=null){ $("burned").textContent=tok(d.burned,dec); if(d.supply){ try{ var pct=Number(BigInt(d.burned)*10000n/BigInt(d.supply))/100; var pe=$("burnedPct"); if(pe)pe.textContent=pct.toFixed(2)+"%"; var bbar=$("burnedBar"); if(bbar)bbar.style.width=Math.max(.8,Math.min(100,pct)).toFixed(2)+"%"; }catch(e){} }
+        try{ var bt=Number(BigInt(d.burned))/Math.pow(10,dec); var cur=TOTAL-bt; var se=$("supplyNow"); if(se)se.textContent=cur.toLocaleString(undefined,{maximumFractionDigits:0}); }catch(e){} }
       var rd=$("rdate"); if(rd) rd.textContent=new Date(d.ts||Date.now()).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
       if(d.treasury!=null) $("treasury").textContent=tok(d.treasury,dec);
       if(d.team!=null) $("team").textContent=tok(d.team,dec);

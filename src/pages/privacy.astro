@@ -5,15 +5,18 @@ const title = "Privacy Policy \u2014 Numetal";
 const description = "Privacy Policy for numetal.xyz and the Numetal Discord application.";
 const canonical = "https://numetal.xyz/";
 const bodyHtml = `<style>
-  :root{--ikb:#002FA7;--paper:#FAFAF8;--ink:#141414;--cyan:#0791a6;--hard:#8c8c8c;--orange:#FF5A1F;--line:#cfcfcf;--muted:#7c7c7c;--mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
+  :root{--bgray:#ffffff;--ikb:#002FA7;--paper:#FAFAF8;--ink:#141414;--cyan:#0791a6;--hard:#8c8c8c;--orange:#FF5A1F;--line:#cfcfcf;--muted:#7c7c7c;--mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-font-smoothing:antialiased}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+  body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
   a{color:var(--ikb)}
   .wrap{width:100%;max-width:760px;margin:0 auto;padding:0 24px}
   .dither{height:11px;background-image:radial-gradient(#191919 .62px,transparent .72px);background-size:3px 3px}
-  header{border-bottom:1px solid var(--ink)}
-  .bar0{display:flex;align-items:center;justify-content:space-between;height:56px;max-width:760px;margin:0 auto;padding:0 24px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 0}
+  nav{display:flex;gap:16px;font-size:13px;align-items:center}
+  nav a{color:var(--ink);text-decoration:none}
+  .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 24px 0}
+  .stamp b{color:var(--ikb);font-weight:700}
   .mark{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:700;letter-spacing:.06em}
   .mark a{color:var(--ink);text-decoration:none}
   .mark .sq{width:13px;height:13px;background:var(--ikb)}
@@ -26,40 +29,48 @@ const bodyHtml = `<style>
   p,li{margin-bottom:12px;color:#222}
   ul{padding-left:20px}
   strong{color:var(--ink)}
-  footer{background:#fff;margin-top:48px}
+  footer{background:#fff;margin-top:40px;border-top:1px solid var(--ink)}
   .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);padding:22px 0}
   .foot a{color:var(--muted)}
   .flinks{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
   .foot a{color:var(--muted)}
+  .sheet{max-width:800px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:100vh;display:flex;flex-direction:column}
+  .social{display:inline-flex;align-items:center;gap:14px}
+  .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
+  .social a:hover{color:var(--ikb)}
+  .social svg{width:17px;height:17px;fill:currentColor;display:block}
 </style>
 
-<header><div class="bar0">
-  <div class="mark"><span class="sq"></span><a href="https://numetal.xyz">NUMETAL</a></div>
-  <div class="tagh">Privacy</div>
-</div></header>
+<div class="sheet">
+  <div class="top">
+    <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
+    <nav><a href="/">Studio</a><a href="/fees">Fee engine</a><a href="/airdrops">Airdrops</a><a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a></nav>
+  </div>
+  <div class="stamp">Doc · <b>Privacy</b> · Base · legal</div>
 <div class="dither"></div>
 
 <main><div class="wrap">
   <h1>Privacy Policy</h1>
-  <div class="upd">Last updated: 11 June 2026</div>
+  <div class="upd">Last updated: 12 June 2026</div>
 
-  <p>This Privacy Policy explains how Numetal (“Numetal”, “we”, “us”) handles information in connection with the website at <strong>numetal.xyz</strong> and the <strong>Numetal Discord application</strong> (the “bot”), together the “Services”. We collect as little as possible.</p>
+  <p>This Privacy Policy explains how Numetal (“Numetal”, “we”, “us”) handles information in connection with the website at <strong>numetal.xyz</strong> and the <strong>Numetal Discord and Telegram bots</strong> (each, a “bot”), together the “Services”. We collect as little as possible.</p>
 
   <h2><span class="n">01</span>Information we collect</h2>
   <p><strong>Website.</strong> We do not ask for or collect personal information through numetal.xyz. The site serves static content and reads public on-chain data from the Base network. Our infrastructure provider (Cloudflare) processes standard technical request data (such as IP address and browser metadata) to deliver and secure the site.</p>
   <p><strong>Discord bot.</strong> When a server moderator runs one of the bot’s commands, the bot processes the Discord identifiers necessary to carry out that action — the target user, the acting moderator, the server, and the relevant message — solely to perform the requested moderation (timeout, ban, message removal) and to write an entry to that server’s moderation-log channel. The bot does <strong>not</strong> read or store general message content, does not build user profiles, and does not retain personal data beyond what is needed to perform the requested action.</p>
+  <p><strong>Telegram verification bot.</strong> Access to the official Numetal Telegram community is token-gated by our verification bot (<strong>@numetalguard_bot</strong>). To enforce the holding requirement, the bot links your <strong>Telegram user ID</strong> to the <strong>wallet address you verify</strong> through a free, off-chain signature. Verification is <strong>not a transaction</strong> — it moves no funds, grants no token approvals, and never takes custody; we never ask for your seed phrase, private keys, or any payment. We store only this Telegram-ID ↔ wallet mapping and your membership state, solely to grant and maintain token-gated access, and re-check balances periodically. We do <strong>not</strong> sell or share it.</p>
 
   <h2><span class="n">02</span>How we use information</h2>
   <p>We use the limited information above only to operate, maintain, and secure the Services. Our <strong>lawful basis</strong> is our legitimate interest in operating, securing, and delivering the Services (GDPR Art 6(1)(f)). We do <strong>not</strong> sell or share personal information, and we do not use it for advertising, targeted advertising, or profiling (including under the CCPA/CPRA).</p>
 
   <h2><span class="n">03</span>Service providers</h2>
-  <p>We rely on third-party infrastructure to run the Services: <strong>Cloudflare</strong> (hosting, security, delivery), <strong>Discord</strong> (the platform the bot operates on, governed by Discord’s own policies), and public <strong>blockchain RPC providers</strong> used to read on-chain data. On-chain data on Base is inherently public.</p>
+  <p>We rely on third-party infrastructure to run the Services: <strong>Cloudflare</strong> (hosting, security, delivery), <strong>Discord</strong> and <strong>Telegram</strong> (the platforms the bots operate on, each governed by its own policies), and public <strong>blockchain RPC providers</strong> used to read on-chain data. On-chain data on Base is inherently public.</p>
 
   <h2><span class="n">04</span>Cookies &amp; tracking</h2>
   <p>numetal.xyz does not use advertising or analytics tracking cookies. Cloudflare may set strictly necessary cookies for security and to operate the site.</p>
 
   <h2><span class="n">05</span>Data retention</h2>
-  <p>We retain technical/security logs only as long as needed for security and operation. Moderation-log entries created by the bot live in your own Discord server and are controlled by you, the server owner.</p>
+  <p>We retain technical/security logs only as long as needed for security and operation. Moderation-log entries created by the Discord bot live in your own Discord server and are controlled by you, the server owner. The Telegram-ID ↔ wallet mapping held by the verification bot is kept only while you remain a member and is deleted when you leave or are removed.</p>
 
   <h2><span class="n">06</span>Your choices &amp; rights</h2>
   <p>Under the GDPR and UK GDPR you have the right to <strong>access, rectify, erase, restrict, and port</strong> your personal data, to <strong>object</strong> to processing, and to <strong>lodge a complaint with your data-protection supervisory authority</strong> (GDPR Art 77). To exercise any of these, contact <strong>contact@numetal.xyz</strong>. Server owners control the bot’s configuration and the moderation-log channel within their own servers.</p>
@@ -75,19 +86,20 @@ const bodyHtml = `<style>
 </div></main>
 
 <footer><div class="wrap foot">
-  <span>Numetal · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio · agents across onchain, compute &amp; culture</span>
-  <span class="flinks">
+  <span>Numetal · an Atelier Gökhan studio · on Base</span>
+  <span class="social"><a href="https://t.me/numetalxyz" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a href="https://discord.gg/MC4DYumPMz" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a><a href="https://x.com/numetalxyz" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></span>
+      <span class="flinks">
     <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>
     <a href="https://github.com/gokhan-vc" target="_blank" rel="noopener">GitHub</a>
     <a href="https://gokhanturhan.com" target="_blank" rel="noopener">gokhanturhan.com</a>
     <a href="/feed.xml">RSS</a>
     <a href="/sitemap.xml">Sitemap</a>
     <a href="/llms.txt">llms.txt</a>
-    <a href="https://numetal.xyz/terms">Terms</a>
-    <a href="https://numetal.xyz/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/privacy">Privacy</a>
     <a href="/cookies">Cookies</a>
   </span>
-</div></footer>
+</div></footer></div>
 `;
 ---
 <Base title={title} description={description} canonical={canonical}>
