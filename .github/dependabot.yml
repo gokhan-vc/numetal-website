@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # Keep npm dependencies (astro, @astrojs/cloudflare) patched.
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      astro:
+        patterns:
+          - "astro"
+          - "@astrojs/*"
+  # Keep GitHub Actions (pinned by SHA) updated when new releases ship.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

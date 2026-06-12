@@ -147,6 +147,10 @@ export async function getBurns(env: any): Promise<any[]> {
     // server-side XSS hardening: only keep canonical hex addresses + tx hashes
     out = out.filter((e: any) => /^0x[0-9a-fA-F]{40}$/.test(e.from || '') && /^0x[0-9a-fA-F]{64}$/.test(e.tx || ''));
   } catch {}
-  if (out.length && cache) { try { await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=120' } })); } catch {} }
+  // 5-min edge cache bounds how often this unauthenticated, CORS-open route hits the
+  // metered Alchemy key (env.BASE_RPC_URL) — limits cost-amplification. Pair with a
+  // Cloudflare WAF rate-limit rule on /fees/events for a hard ceiling. Burns are
+  // infrequent, so a longer TTL costs no meaningful freshness.
+  if (out.length && cache) { try { await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=300' } })); } catch {} }
   return out;
 }
