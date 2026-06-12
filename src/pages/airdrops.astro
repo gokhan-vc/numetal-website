@@ -46,9 +46,9 @@ const bodyHtml = `<style>
   .qin{width:100%;font-family:var(--mono);font-size:13px;background:#fff;border:1.5px solid var(--ink);border-radius:0;padding:11px 14px;color:var(--ink)}
   .qin:focus{outline:2px solid var(--ikb);outline-offset:-1px}
   .qhint{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
-  .mlist{padding-left:0;list-style:none;text-align:center;max-width:72ch;margin:0 auto;color:#333;line-height:1.6;font-size:14px}
-  .mlist li{margin-bottom:7px}
-  .enact{color:#333;line-height:1.6;font-size:14px;max-width:72ch;text-align:center;margin-left:auto;margin-right:auto}
+  .mlist{padding-left:0;list-style:none;text-align:justify;text-align-last:center;max-width:62ch;margin:0 auto;color:#333;line-height:1.5;font-size:14px}
+  .mlist li{margin-bottom:8px}
+  .enact{color:#333;line-height:1.5;font-size:14px;max-width:62ch;text-align:justify;text-align-last:center;margin-left:auto;margin-right:auto}
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.pad,.ft{padding-left:18px;padding-right:18px}nav{display:none}.mets{grid-template-columns:1fr 1fr}.met:nth-child(2n){border-right:0}table.tb{font-size:11px}table.tb td,table.tb th{padding:9px 9px}}
@@ -98,9 +98,10 @@ const bodyHtml = `<style>
 
     <div class="dither"></div>
     <section class="pad"><div class="sh"><span class="ix">02</span>Check your allocation</div>
-      <input class="qin" id="q" placeholder="paste your address (0x…)" autocomplete="off" spellcheck="false" aria-label="Your wallet address" style="max-width:540px;margin:0 auto"/>
+      <input class="qin" id="q" placeholder="paste your address (0x…)" autocomplete="off" spellcheck="false" aria-label="Your wallet address" style="max-width:540px;margin:0 auto;display:block"/>
       <div class="qhint" style="text-align:center">No wallet connection — read-only lookup. Try <span id="ex" style="color:var(--ikb);cursor:pointer;text-decoration:underline">0xb1fd2b…</span></div>
       <div id="result" style="margin:14px auto 0;max-width:540px"></div>
+      <div class="qhint" style="text-align:center;margin-top:13px">Full list — every address, holdings &amp; allocation: <a href="https://raw.githubusercontent.com/gokhan-vc/numetal-website/main/public/recipients.csv" target="_blank" rel="noopener" style="color:var(--ikb);text-decoration:underline">raw CSV&nbsp;↗</a> · <a href="https://github.com/gokhan-vc/numetal-website/blob/main/public/recipients.csv" target="_blank" rel="noopener" style="color:var(--ikb);text-decoration:underline">table&nbsp;view&nbsp;↗</a></div>
     </section>
 
     <div class="dither"></div>
@@ -117,7 +118,7 @@ const bodyHtml = `<style>
 
     <div class="dither"></div>
     <section class="pad"><div class="sh"><span class="ix">04</span>Methodology</div>
-      <ul class="mlist" style="max-width:72ch">
+      <ul class="mlist">
         <li>Balances reconstructed from the full onchain transfer history of both tokens up to the launch block — every token accounted for.</li>
         <li>Real people only — 10 infra/bot wallets stripped (AMM pools, Clanker fee locker, MEV bots, CoW, routers); 152 personal smart wallets (Coinbase, Safe, MetaMask) kept.</li>
         <li>Liquidity-adjusted weighting — BOUNTY valued ~71× PLATES, since PLATES had near-zero real float and volume.</li>

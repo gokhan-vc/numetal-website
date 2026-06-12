@@ -15,7 +15,7 @@ var $=function(id){return document.getElementById(id);};
       if(d.error){ $("updated").textContent="data source error — retrying"; return; }
       var dec=d.decimals||18;
       var TOTAL=1e11;
-      if(d.burned!=null){ $("burned").textContent=tok(d.burned,dec); if(d.supply){ try{ var pct=Number(BigInt(d.burned)*10000n/BigInt(d.supply))/100; var pe=$("burnedPct"); if(pe)pe.textContent=pct.toFixed(2)+"%"; var bbar=$("burnedBar"); if(bbar)bbar.style.width=Math.max(.8,Math.min(100,pct)).toFixed(2)+"%"; }catch(e){} }
+      if(d.burned!=null){ $("burned").textContent=tok(d.burned,dec); if(d.supply){ try{ var pct=Number(BigInt(d.burned)*10000n/BigInt(d.supply))/100; var pe=$("burnedPct"); if(pe)pe.textContent=pct.toFixed(2)+"% supply"; var bbar=$("burnedBar"); if(bbar)bbar.style.width=Math.max(.8,Math.min(100,pct)).toFixed(2)+"%"; }catch(e){} }
         try{ var bt=Number(BigInt(d.burned))/Math.pow(10,dec); var cur=TOTAL-bt; var se=$("supplyNow"); if(se)se.textContent=cur.toLocaleString(undefined,{maximumFractionDigits:0}); }catch(e){} }
       var rd=$("rdate"); if(rd) rd.textContent=new Date(d.ts||Date.now()).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
       if(d.treasury!=null) $("treasury").textContent=tok(d.treasury,dec);
@@ -53,6 +53,7 @@ var $=function(id){return document.getElementById(id);};
       var bbs=0,mbs=0; burns.forEach(function(e){var a=Number(e.amount)||0; if(e.type==="buyback-burn")bbs+=a; else mbs+=a;}); var btot=bbs+mbs;
       var _b=$("bbVal"); if(_b)_b.textContent=abbr(bbs); var _m=$("mbVal"); if(_m)_m.textContent=abbr(mbs);
       var _bb=$("bbBar"); if(_bb)_bb.style.width=(btot?bbs/btot*100:0).toFixed(1)+"%"; var _mb=$("mbBar"); if(_mb)_mb.style.width=(btot?mbs/btot*100:0).toFixed(1)+"%";
+      var _bp=$("bbPct"); if(_bp)_bp.textContent=(btot?bbs/btot*100:0).toFixed(0)+"% burns"; var _mp=$("mbPct"); if(_mp)_mp.textContent=(btot?mbs/btot*100:0).toFixed(0)+"% burns";
       var S=arr[1]||{status:[]};var dep=S.deployer||'';
       var retros=(S.status||[]).filter(function(x){return x.state==="completed"&&x.tx;});
       var items=burns.map(function(e){return {k:0,ts:e.ts,e:e};}).concat(retros.map(function(x){return {k:1,ts:x.ts,x:x};}));
