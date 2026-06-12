@@ -46,12 +46,12 @@ const bodyHtml = `<style>
   .qin{width:100%;font-family:var(--mono);font-size:13px;background:#fff;border:1.5px solid var(--ink);border-radius:0;padding:11px 14px;color:var(--ink)}
   .qin:focus{outline:2px solid var(--ikb);outline-offset:-1px}
   .qhint{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:8px;text-align:center}
-  .mlist{padding-left:0;list-style:none;text-align:justify;text-align-last:center;max-width:62ch;margin:0 auto;color:#333;line-height:1.5;font-size:14px}
+  .mlist{padding-left:0;list-style:none;text-align:justify;text-align-last:left;-webkit-hyphens:auto;hyphens:auto;hyphenate-limit-chars:6 3 3;text-wrap:pretty;max-width:64ch;margin:0 auto;color:#333;line-height:1.5;font-size:14px}
   .mlist li{margin-bottom:8px}
-  .enact{color:#333;line-height:1.5;font-size:14px;max-width:62ch;text-align:justify;text-align-last:center;margin-left:auto;margin-right:auto}
+  .enact{color:#333;line-height:1.5;font-size:14px;max-width:64ch;text-align:justify;text-align-last:left;-webkit-hyphens:auto;hyphens:auto;hyphenate-limit-chars:6 3 3;text-wrap:pretty;margin-left:auto;margin-right:auto}
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:760px){.top,.stamp,.pad,.ft{padding-left:18px;padding-right:18px}nav{display:none}.mets{grid-template-columns:1fr 1fr}.met:nth-child(2n){border-right:0}table.tb{font-size:11px}table.tb td,table.tb th{padding:9px 9px}}
+  @media(max-width:760px){.top,.stamp,.pad,.ft{padding-left:18px;padding-right:18px}nav{display:none}.mets{grid-template-columns:1fr 1fr}.met:nth-child(2n){border-right:0}table.tb{font-size:11px}table.tb td,table.tb th{padding:9px 9px}.mlist,.enact{text-align:left}}
   .social{display:inline-flex;align-items:center;gap:14px}
   .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
   .social a:hover{color:var(--ikb)}
