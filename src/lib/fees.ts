@@ -42,6 +42,7 @@ async function ethCall(data: string): Promise<string | null> {
 async function getDex(): Promise<any> {
   const cache = cacheStore();
   const key = new Request('https://numetal.xyz/__dexcache');
+  const lastKey = new Request('https://numetal.xyz/__dexlastgood');
   if (cache) {
     const hit = await cache.match(key);
     if (hit) { try { return await hit.json(); } catch {} }
@@ -70,7 +71,15 @@ async function getDex(): Promise<any> {
       } else out.dexErr = (out.dexErr ? out.dexErr + ';' : '') + 'ds:' + r.status;
     } catch (e) { out.dexErr = (out.dexErr ? out.dexErr + ';' : '') + 'ds:' + String(e); }
   }
-  if (out.price && cache) { try { await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=60' } })); } catch {} }
+  if (out.price && cache) {
+    try {
+      await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=60' } }));
+      // keep a long-lived last-good price so a transient DEX miss doesn't flicker the tile to "—"
+      await cache.put(lastKey, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=86400' } }));
+    } catch {}
+  } else if (!out.price && cache) {
+    try { const lg = await cache.match(lastKey); if (lg) { const j: any = await lg.json(); j.stalePrice = true; j.dexErr = out.dexErr; return j; } } catch {}
+  }
   return out;
 }
 

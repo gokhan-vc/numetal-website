@@ -107,3 +107,7 @@ The **Numetal** name, logos, brand, site copy, and visual assets (including `og.
 Built by **[Gökhan Turhan](https://gokhanturhan.com)** · an [Atelier Gökhan](https://gokhan.vc) studio · on [Base](https://base.org)
 
 </div>
+
+## Credits
+
+The `/fees` dashboard is presented as a live machine report — a dense, boxed, monospace readout (dot-leader rows and `[████  ]` bar gauges) in Numetal's colors. The report format is inspired by and credits the open-source [usgraphics/usgc-machine-report](https://github.com/usgraphics/usgc-machine-report) (TR-100). Numetal's implementation, colors, live data, and copy are its own.
