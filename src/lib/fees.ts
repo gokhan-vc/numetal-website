@@ -24,6 +24,11 @@ const BURN_LABELS: Record<string, string> = {
 const pad = (a: string) => a.slice(2).toLowerCase().padStart(64, '0');
 const cacheStore = (): any => (globalThis as any).caches?.default;
 
+export function sumHexBalances(values: readonly (string | null)[]): string | null {
+  if (values.some((value) => value == null)) return null;
+  return values.reduce((total, value) => total + BigInt(value as string), 0n).toString();
+}
+
 async function ethCall(data: string): Promise<string | null> {
   for (const rpc of RPCS) {
     try {
@@ -94,11 +99,10 @@ async function getDataFresh(): Promise<any> {
     ethCall('0x18160ddd'),
     getDex(),
   ]);
-  const big = (h: string | null) => (h ? BigInt(h) : 0n);
   const toStr = (h: string | null) => (h ? BigInt(h).toString() : null);
   return {
     decimals: decRes ? Number(BigInt(decRes)) : 18,
-    burned: (big(bDead) + big(bContract) + big(bZero)).toString(), team: toStr(team), treasury: toStr(trez), supply: toStr(supRes),
+    burned: sumHexBalances([bDead, bContract, bZero]), team: toStr(team), treasury: toStr(trez), supply: toStr(supRes),
     price: dex.price, fdv: dex.fdv, vol24: dex.vol24, mcap: dex.mcap, liq: dex.liq, src: dex.src, dexErr: dex.dexErr,
     ts: Date.now(),
   };
