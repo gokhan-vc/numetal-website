@@ -26,19 +26,33 @@ var $=function(id){return document.getElementById(id);};
     }).catch(function(){ $("updated").textContent="update failed — retrying"; });
   }
   function shortA(a){return a?a.slice(0,6)+"…"+a.slice(-4):"?";}
+  var ICO={
+    bankr:'<svg class="wico" viewBox="0 0 24 24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z"/></svg>',
+    agentbounty:'<svg class="wico" viewBox="0 0 24 24"><path d="M9.19 6.35c-2.04 2.29-3.44 5.58-3.57 5.89L2 10.69l4.05-4.05c.47-.47 1.15-.68 1.81-.55l1.33.26zM11.17 17s3.74-1.55 5.89-3.7c5.4-5.4 4.5-9.62 4.21-10.57-.95-.3-5.17-1.19-10.57 4.21C8.55 9.09 7 12.83 7 12.83L11.17 17zm6.48-2.19c-2.29 2.04-5.58 3.44-5.89 3.57L13.31 22l4.05-4.05c.47-.47.68-1.15.55-1.81l-.26-1.33zM9 18c0 .83-.34 1.58-.88 2.12C6.94 21.3 2 22 2 22s.7-4.94 1.88-6.12A2.996 2.996 0 0 1 9 18zm4-9c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z"/></svg>',
+    team:'<svg class="wico" viewBox="0 0 24 24"><path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58A2.01 2.01 0 0 0 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 3.43c0-.81-.48-1.53-1.22-1.85A6.95 6.95 0 0 0 20 14c-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg>',
+    treasury:'<svg class="wico" viewBox="0 0 24 24"><path d="M4 10h3v7H4zm6.5 0h3v7h-3zM2 19h20v3H2zm15-9h3v7h-3zm-5-9L2 6v2h20V6z"/></svg>'
+  };
+  function walletCell(addr,label){
+    var l=(label||"").toLowerCase(),nm,ic="";
+    if(l.indexOf("bankr")>=0){nm="Bankr";ic=ICO.bankr;}
+    else if(l.indexOf("agentbounty")>=0){nm="agentbountydev.eth";ic=ICO.agentbounty;}
+    else if(l.indexOf("team")>=0){nm="Team";ic=ICO.team;}
+    else if(l.indexOf("treasury")>=0){nm="Treasury";ic=ICO.treasury;}
+    else nm=shortA(addr);
+    return '<a href="https://basescan.org/address/'+addr+'" target="_blank" rel="noopener">'+ic+nm+'</a>';
+  }
   function whenTs(ts){if(!ts)return "";try{return new Date(ts).toLocaleString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});}catch(e){return "";}}
   function rowBurn(e){
     var isBuy=e.type==="buyback-burn";
     var tag='<span class="tag '+(isBuy?"buyback":"manual")+'">'+(isBuy?"buyback-burn":"manual-burn")+'</span>';
-    var lbl=e.label?' <span class="lbl">('+e.label+')</span>':'';
-    var from='<a href="https://basescan.org/address/'+e.from+'" target="_blank" rel="noopener">'+shortA(e.from)+'</a>'+lbl;
+    var from=walletCell(e.from,e.label);
     var tx=e.tx?'<a href="https://basescan.org/tx/'+e.tx+'" target="_blank" rel="noopener">'+e.tx.slice(0,8)+'…</a>':'';
     var amt=Number(e.amount).toLocaleString(undefined,{maximumFractionDigits:0});
     return '<tr><td>'+whenTs(e.ts)+'</td><td>'+tag+'</td><td class="amt">'+amt+'</td><td>'+from+'</td><td>'+tx+'</td></tr>';
   }
   function rowRetro(x,dep,depLabel){
     var tag='<span class="tag retro">retrodrop '+x.label+'</span>';
-    var from='<a href="https://basescan.org/address/'+dep+'" target="_blank" rel="noopener">'+(depLabel||shortA(dep))+'</a> <span class="lbl">→ '+(x.recipients||0)+' wallets · distribution, not a burn</span>';
+    var from=walletCell(dep,depLabel)+' <span class="lbl">→ '+(x.recipients||0)+'</span>';
     var txl=x.txs||(x.tx?[x.tx]:[]);
     var tx=txl.map(function(t,i){return '<a href="https://basescan.org/tx/'+t+'" target="_blank" rel="noopener">'+(txl.length>1?'p'+(i+1):t.slice(0,8)+'…')+'</a>';}).join(' · ');
     var amt=Number(x.amount).toLocaleString(undefined,{maximumFractionDigits:0});
