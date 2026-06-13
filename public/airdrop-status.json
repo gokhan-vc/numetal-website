@@ -10,8 +10,8 @@
   "snapshotBlock": 46958289,
   "snapshotDate": "2026-06-06",
   "status": [
-    {"n": 1, "label": "1/3", "when": "Jun 11", "amount": 100000000, "recipients": 657, "state": "completed", "tx": "0x8cec5adb81e84d7e3c923388384f96d1ddbfa5572d2358858da4d32081a368d9", "txs": ["0x8cec5adb81e84d7e3c923388384f96d1ddbfa5572d2358858da4d32081a368d9", "0xe631b122680bb4938c001416cce86cca3068d2de11bae6d774e55da4568e25d9"], "ts": "2026-06-11T23:44:39Z"},
-    {"n": 2, "label": "2/3", "when": "today", "amount": 180000000, "recipients": 657, "state": "scheduled", "tx": null, "ts": null},
-    {"n": 3, "label": "3/3", "when": "final", "amount": 220000000, "recipients": 657, "state": "scheduled", "tx": null, "ts": null}
+    {"n": 1, "label": "1/3", "when": "Jun 11", "amount": 100000000, "recipients": 657, "state": "completed", "tx": "0x8cec5adb81e84d7e3c923388384f96d1ddbfa5572d2358858da4d32081a368d9", "txs": ["0x8cec5adb81e84d7e3c923388384f96d1ddbfa5572d2358858da4d32081a368d9", "0xe631b122680bb4938c001416cce86cca3068d2de11bae6d774e55da4568e25d9"], "ts": "2026-06-11T23:44:39.000Z"},
+    {"n": 2, "label": "2/3", "when": "Jun 13", "amount": 180000000, "recipients": 657, "state": "completed", "tx": "0x9c8c36d8b7f32f7cb9cc3e4a58aeb05784d3b35aa34184b78c17907c50c33c6a", "txs": ["0x9c8c36d8b7f32f7cb9cc3e4a58aeb05784d3b35aa34184b78c17907c50c33c6a", "0x3332d9e9a4301b72c2f034f60fc40270265f40fe3519f4acdc28d4b3876a7476"], "ts": "2026-06-13T20:11:13.000Z"},
+    {"n": 3, "label": "3/3", "when": "TBD", "amount": 220000000, "recipients": 657, "state": "scheduled", "tx": null, "ts": null}
   ]
 }
