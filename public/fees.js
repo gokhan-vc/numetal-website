@@ -36,9 +36,9 @@ var $=function(id){return document.getElementById(id);};
     var amt=Number(e.amount).toLocaleString(undefined,{maximumFractionDigits:0});
     return '<tr><td>'+whenTs(e.ts)+'</td><td>'+tag+'</td><td class="amt">'+amt+'</td><td>'+from+'</td><td>'+tx+'</td></tr>';
   }
-  function rowRetro(x,dep){
+  function rowRetro(x,dep,depLabel){
     var tag='<span class="tag retro">retrodrop '+x.label+'</span>';
-    var from='<a href="https://basescan.org/address/'+dep+'" target="_blank" rel="noopener">'+shortA(dep)+'</a> <span class="lbl">→ '+(x.recipients||0)+' wallets · distribution, not a burn</span>';
+    var from='<a href="https://basescan.org/address/'+dep+'" target="_blank" rel="noopener">'+(depLabel||shortA(dep))+'</a> <span class="lbl">→ '+(x.recipients||0)+' wallets · distribution, not a burn</span>';
     var txl=x.txs||(x.tx?[x.tx]:[]);
     var tx=txl.map(function(t,i){return '<a href="https://basescan.org/tx/'+t+'" target="_blank" rel="noopener">'+(txl.length>1?'p'+(i+1):t.slice(0,8)+'…')+'</a>';}).join(' · ');
     var amt=Number(x.amount).toLocaleString(undefined,{maximumFractionDigits:0});
@@ -54,13 +54,13 @@ var $=function(id){return document.getElementById(id);};
       var _b=$("bbVal"); if(_b)_b.textContent=abbr(bbs); var _m=$("mbVal"); if(_m)_m.textContent=abbr(mbs);
       var _bb=$("bbBar"); if(_bb)_bb.style.width=(btot?bbs/btot*100:0).toFixed(1)+"%"; var _mb=$("mbBar"); if(_mb)_mb.style.width=(btot?mbs/btot*100:0).toFixed(1)+"%";
       var _bp=$("bbPct"); if(_bp)_bp.textContent=(btot?bbs/btot*100:0).toFixed(0)+"% burns"; var _mp=$("mbPct"); if(_mp)_mp.textContent=(btot?mbs/btot*100:0).toFixed(0)+"% burns";
-      var S=arr[1]||{status:[]};var dep=S.deployer||'';
+      var S=arr[1]||{status:[]};var dep=S.deployer||'';var depLabel=S.deployerLabel||'';
       var retros=(S.status||[]).filter(function(x){return x.state==="completed"&&x.tx;});
       var items=burns.map(function(e){return {k:0,ts:e.ts,e:e};}).concat(retros.map(function(x){return {k:1,ts:x.ts,x:x};}));
       items.sort(function(a,b){return String(b.ts||"").localeCompare(String(a.ts||""));});
       var tb=$("burnrows");if(!tb)return;
       if(!items.length){tb.innerHTML='<tr><td colspan="5" class="empty">No burns recorded yet.</td></tr>';return;}
-      tb.innerHTML=items.slice(0,200).map(function(it){return it.k?rowRetro(it.x,dep):rowBurn(it.e);}).join('');
+      tb.innerHTML=items.slice(0,200).map(function(it){return it.k?rowRetro(it.x,dep,depLabel):rowBurn(it.e);}).join('');
       var c=$("burncount");if(c)c.textContent=burns.length+' burn'+(burns.length===1?'':'s')+(retros.length?' · '+retros.length+' retrodrop'+(retros.length===1?'':'s'):'')+' recorded';
     }).catch(function(){});
   }

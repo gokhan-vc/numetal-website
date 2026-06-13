@@ -1,6 +1,7 @@
 (function () {
   var $ = function (id) { return document.getElementById(id); };
   var f = function (n) { return Number(n).toLocaleString("en-US"); };
+  var abbr = function (n) { n = Number(n); var a = Math.abs(n); if (a >= 1e9) return (n / 1e9).toFixed(2) + "B"; if (a >= 1e6) return (n / 1e6).toFixed(2) + "M"; if (a >= 1e3) return (n / 1e3).toFixed(1) + "K"; return (Math.round(n * 100) / 100).toString(); };
   var DATA = [];
 
   function short(a) { return a.slice(0, 12) + "…" + a.slice(-6); }
@@ -43,7 +44,7 @@
       '<span class="tag" style="background:#06B6D4;color:#06303a">eligible · #' + hit.r + '</span></div>' +
       '<div style="display:grid;grid-template-columns:1fr 1fr">' +
       cell("Bounty held", f(hit.b), 0) + cell("Plates held", f(hit.p), 1) +
-      cell("$NUMETAL total", f(hit.t), 0, "#002FA7") + cell("Per batch ×5", f(hit.pb), 1) +
+      cell("$NUMETAL total", f(hit.t), 0, "#002FA7") + cell("Batches 1·2·3", abbr(hit.t * 0.20) + " · " + abbr(hit.t * 0.36) + " · " + abbr(hit.t * 0.44), 1) +
       '</div></div>';
   }
 
@@ -68,11 +69,12 @@
     var done = comp.length;
     var sent = comp.reduce(function (s, x) { return s + (x.amount || 0); }, 0);
     var total = S.total || 500000000;
+    var nb = S.batches || (S.status || []).length || 3;
     var hs = $("hstatus");
     if (hs) {
-      var msg = done >= 5
+      var msg = done >= nb
         ? "Complete — " + f(total) + " $NUMETAL dispersed to " + f(S.recipients || 657) + " wallets"
-        : done + " / 5 batches dispersed · " + f(sent) + " $NUMETAL sent · " + f(total - sent) + " scheduled";
+        : done + " / " + nb + " batches dispersed · " + f(sent) + " $NUMETAL sent · " + f(total - sent) + " scheduled";
       hs.innerHTML = '<span class="dotp"></span><span>' + msg + '</span>';
     }
   }).catch(function () {});
