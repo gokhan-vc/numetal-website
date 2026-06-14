@@ -20,7 +20,7 @@ const BURN_LABELS: Record<string, string> = {
   '0x8f49d4d782488e8576c8c54288027c57f4acf521': 'bankr wallet',
   '0xb13fb67859bc818a7b9eb7f1380274492b6d648f': 'team',
   '0x3d9bb085b7e2fd15827d174f20375be385c121c0': 'treasury',
-  '0x15813fbeac0ac58fa087c459639f8dc64a9b93c3': 'agentbounty.dev',
+  '0x15813fbeac0ac58fa087c459639f8dc64a9b93c3': 'agentbountydev.eth',
 };
 const pad = (a: string) => a.slice(2).toLowerCase().padStart(64, '0');
 const cacheStore = (): any => (globalThis as any).caches?.default;
