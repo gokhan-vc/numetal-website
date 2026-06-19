@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
-    "astro": "^6.4.6"
+    "astro": "^6.4.8"
   },
   "devDependencies": {
     "tsx": "^4.22.4"
