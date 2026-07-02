@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 export const prerender = true;
-const title = "Numetal — agent accelerator studio";
+const title = "Numetal Labs — agent accelerator studio";
 const description = "Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Chain-agnostic: Base, Ethereum, Solana, Hyperliquid, XRP Ledger.";
 const canonical = "https://numetal.xyz/";
 const ogImage = "https://numetal.xyz/og.png";
@@ -17,7 +17,7 @@ const bodyHtml = `<style>
   body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
   a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
   .sheet{max-width:880px;margin:0 auto;background:#fff;border-left:1px solid #c4c4c4;border-right:1px solid #c4c4c4;min-height:100vh;display:flex;flex-direction:column}
-  .top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 32px 14px}
+  .top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 32px 14px;position:sticky;top:29px;z-index:190;background:#fff;border-bottom:1px solid var(--line)}
   .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.03em;font-size:16px}
   .mark .sq{width:12px;height:12px;background:var(--ikb)}
   nav{display:flex;gap:18px;font-size:13px;align-items:center}nav a{color:var(--ink)}nav .upd{color:var(--mut)}
@@ -34,6 +34,7 @@ const bodyHtml = `<style>
   .btn{display:inline-flex;align-items:center;gap:8px;background:var(--ikb);color:#fff;border:1.5px solid var(--ink);font-weight:700;font-size:14px;padding:9px 16px;box-shadow:2px 2px 0 rgba(0,0,0,.5);transition:filter .1s,transform .05s,box-shadow .05s}
   .btn:hover{filter:brightness(1.1);text-decoration:none}.btn:active{transform:translate(2px,2px);box-shadow:0 0 0}
   .btn.dis{background:#ededed;color:var(--mut);border-color:var(--hard);box-shadow:none;cursor:default}.btn.dis:hover{filter:none}
+  .btn.app{background:#e10600;border-color:var(--ink)}.btn.app .bh{color:#fff}
   .idxh{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
   .idx{border:1.5px solid var(--hard)}
   .ix{display:block;padding:10px 13px;border-bottom:1px solid var(--line)}
@@ -73,9 +74,9 @@ const bodyHtml = `<style>
 
 <div class="sheet">
   <div class="top">
-    <div class="mark"><span class="sq"></span>NUMETAL</div>
+    <div class="mark"><span class="sq"></span>NUMETAL LABS</div>
     <nav>
-      <span class="upd">App · updating</span>
+      <a href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Use Ishtar&nbsp;♥</a>
       <a href="/fees">Fee engine</a>
       <a href="/airdrops">Airdrops</a>
       <span class="upd">Docs · updating</span>
@@ -93,16 +94,16 @@ const bodyHtml = `<style>
         <div class="def"><b>Numetal</b> — an agent accelerator studio: autonomous agents across onchain, compute, artistic &amp; cultural markets and frontier-lab toolkits. Chain-agnostic, home on Base.</div>
         <p class="lead">A few agents are already in the queue. The token, treasury, and settlement live on Base; the agents reach demand wherever it is and bring value back.</p>
         <div class="cta">
+          <a class="btn app" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">USE ISHTAR <span class="bh">♥</span></a>
           <a class="btn" href="/fees">Fee engine →</a>
-          <span class="btn dis">App — updating</span>
           <span class="btn dis">Docs — updating</span>
         </div>
       </section>
       <section>
         <div class="idxh">Index</div>
         <div class="idx">
+          <a class="ix" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener"><span class="ixr"><span class="k" style="color:#e10600">Ishtar ♥</span><span class="v" style="color:#e10600">ishtar.numetal.xyz →</span></span><span class="d">agentic dating · live</span></a>
           <a class="ix" href="/fees"><span class="ixr"><span class="k">Fee engine</span><span class="v">/fees →</span></span><span class="d">live burns &amp; buybacks</span></a>
-          <a class="ix" href="/airdrops"><span class="ixr"><span class="k">Retrodrop</span><span class="v">/airdrops →</span></span><span class="d">BOUNTY + PLATES holders</span></a>
           <a class="ix" href="https://gokhan.vc" target="_blank" rel="noopener"><span class="ixr"><span class="k">Atelier Gökhan</span><span class="v">gokhan.vc →</span></span><span class="d">the studio</span></a>
           <a class="ix" href="https://gokhanturhan.com" target="_blank" rel="noopener"><span class="ixr"><span class="k">Gökhan Turhan</span><span class="v">gokhanturhan.com →</span></span><span class="d">the founder</span></a>
           <a class="ix" href="https://dexscreener.com/base/0xf0ba727d596861455b31d6e444ed3ee41c77709a27f7d787ccf609f6c34dbbd8" target="_blank" rel="noopener"><span class="ixr"><span class="k">$NUMETAL</span><span class="v">0x57ED…CFbA3 →</span></span><span class="d">token on Base</span></a>
@@ -146,7 +147,7 @@ const bodyHtml = `<style>
 
   <div class="dither"></div>
   <div class="ft">
-    <span>Numetal · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio · on Base</span>
+    <span>Numetal Labs · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio · on Base</span>
     <span class="social"><a href="https://t.me/numetalxyz" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a href="https://discord.gg/MC4DYumPMz" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a><a href="https://x.com/numetalxyz" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></span>
       <span class="flinks">
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>

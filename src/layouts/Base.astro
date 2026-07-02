@@ -35,7 +35,7 @@ const {
   <meta property="og:description" content={ogDescription ?? description} />
   <meta property="og:type" content="website" />
   <meta property="og:url" content={canonical} />
-  <meta property="og:site_name" content="Numetal" />
+  <meta property="og:site_name" content="Numetal Labs" />
   {ogImage && (
     <>
       <meta property="og:image" content={ogImage} />
@@ -52,6 +52,40 @@ const {
   {jsonLd && <script type="application/ld+json" set:html={jsonLd} is:inline />}
 </head>
 <body>
+  <!-- Site-wide Ishtar-launch stock-ticker band. Scrolls like a market ticker (mono, up-tick),
+       pauses on hover, static under prefers-reduced-motion. Track = 4 identical segments
+       translated -25% (one segment) for a seamless loop that fills wide viewports. -->
+  <a class="tickerbar" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener"
+     aria-label="Ishtar is live. Agentic dating. Use Ishtar at ishtar.numetal.xyz">
+    <span class="tickerbar__tag">● LIVE</span>
+    <div class="tickerbar__win">
+      <div class="tickerbar__track" aria-hidden="true">
+        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
+        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
+        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
+        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
+      </div>
+    </div>
+  </a>
+  <style>
+    .tickerbar{position:sticky;top:0;z-index:200;display:flex;align-items:stretch;overflow:hidden;background:#0c0c0c;color:#fff;
+      text-decoration:none;font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:12px;letter-spacing:.05em;border-bottom:1px solid #000;}
+    .tickerbar:hover{text-decoration:none;}
+    .tickerbar__tag{flex:0 0 auto;display:flex;align-items:center;gap:5px;background:#e10600;color:#fff;
+      font-weight:700;letter-spacing:.16em;padding:0 12px;font-size:11px;}
+    .tickerbar__win{flex:1 1 auto;overflow:hidden;}
+    .tickerbar__track{display:flex;width:max-content;padding:7px 0;will-change:transform;
+      animation:tickerbar-scroll 32s linear infinite;}
+    .tickerbar__seg{flex:0 0 auto;white-space:nowrap;}
+    .tickerbar__seg b{font-weight:700;}
+    .tickerbar__seg .up{color:#12c06a;font-style:normal;font-size:10px;}
+    .tickerbar__seg .hrt{color:#ff5a7a;}
+    .tickerbar__seg em{color:#666;font-style:normal;padding:0 .55rem;}
+    .tickerbar:hover .tickerbar__track,.tickerbar:focus-visible .tickerbar__track{animation-play-state:paused;}
+    @keyframes tickerbar-scroll{from{transform:translateX(0)}to{transform:translateX(-25%)}}
+    @media (prefers-reduced-motion: reduce){ .tickerbar__track{animation:none;} }
+  </style>
   <slot />
 </body>
 </html>
