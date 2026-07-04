@@ -87,7 +87,7 @@ const {
     @media (prefers-reduced-motion: reduce){ .tickerbar__track{animation:none;} }
   </style>
   <!-- Site-wide "we are not raising (live)" banner → the raise dispatch. -->
-  <a class="nrbar" href="/blog/not-raising-a-preseed" aria-label="We are not raising — read the raise dispatch">
+  <a class="nrbar" href="https://ishtar.numetal.xyz/blog/not-raising-a-preseed/" aria-label="We are not raising — read the raise dispatch">
     <span class="nrbar__dot" aria-hidden="true"></span><span>WE ARE NOT RAISING</span><sup class="nrbar__live">LIVE</sup><span class="nrbar__arw" aria-hidden="true">→</span>
   </a>
   <style>
@@ -102,5 +102,6 @@ const {
     @media(prefers-reduced-motion:reduce){.nrbar__dot{animation:none}}
   </style>
   <slot />
+  <script src="/blog-collapse.js" defer></script>
 </body>
 </html>

@@ -61,7 +61,7 @@ const bodyHtml = `<style>
   .article .fine{font-size:13px;line-height:1.55;color:var(--muted);margin:0 0 12px}
   .orig{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--muted);margin:0 0 22px}
   .orig a{color:var(--ikb);font-weight:700}
-  .tldr{border:1px solid var(--line);border-left:3px solid var(--ikb);background:var(--bgray);padding:14px 18px;margin:0 0 24px}
+  .tldr{border:1.5px solid var(--line);background:var(--bgray);padding:14px 18px;margin:0 0 24px;box-shadow:5px 5px 0 var(--ikb)}
   .tldr .tl{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ikb);margin-bottom:8px}
   .tldr ul{margin:0;padding-left:18px}
   .tldr li{font-size:14.5px;line-height:1.5;margin:6px 0}
@@ -71,8 +71,9 @@ const bodyHtml = `<style>
   .toc .toclabel{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);padding:10px 16px;border-bottom:1px solid var(--line);background:#fff;list-style:none;cursor:pointer}
   .toc .toclabel::-webkit-details-marker{display:none}
   .toc[open] .toclabel{color:var(--ink)}
-  .toc ol{list-style:none;margin:0;padding:10px 16px 12px}
-  .toc li{margin:0}.toc>ol>li{padding:4px 0}
+  .toc ol{counter-reset:toc;list-style:none;margin:0;padding:10px 16px 12px}
+  .toc li{counter-increment:toc;margin:0;display:flex;gap:.55rem}.toc>ol>li{padding:4px 0}
+  .toc li::before{content:counter(toc,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--muted);flex:0 0 auto;padding-top:.15em}
   .toc a{color:var(--ikb);font-size:14px;line-height:1.5}
   @media(max-width:760px){.toc{margin-left:18px;margin-right:18px}}
   .sign{font-weight:700;color:var(--ink)}
