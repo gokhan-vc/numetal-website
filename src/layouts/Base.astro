@@ -102,6 +102,27 @@ const {
     @media(prefers-reduced-motion:reduce){.nrbar__dot{animation:none}}
   </style>
   <slot />
+  <!-- Site-wide newsletter subscribe + dual-RSS footer. Rendered once here so it
+       appears on EVERY page (landing, blog, legal) with zero per-page duplication.
+       Colors inherit from the page (currentColor / color:inherit) so it works on
+       both light and dark surfaces. The homepage keeps its own "04 Subscribe"
+       section; this footer band is additive. -->
+  <footer class="site-sub" aria-label="Subscribe to the Numetal newsletter">
+    <p class="site-sub__lead">Dispatches from the studio — occasional low-frequency notes on what we ship. No spam.</p>
+    <form method="POST" action="https://api.gokhan.vc/newsletter/subscribe" style="display:flex;gap:8px;flex-wrap:wrap;max-width:420px;margin:.75rem 0">
+      <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" aria-label="Email" style="flex:1;min-width:190px;padding:10px 12px;border:1px solid currentColor;background:transparent;color:inherit;font:inherit">
+      <input type="hidden" name="site" value="numetal">
+      <button type="submit" style="padding:10px 18px;border:1px solid currentColor;background:currentColor;color:Canvas;font:inherit;cursor:pointer">Subscribe</button>
+    </form>
+    <p style="margin:.4rem 0;font-size:.9em;opacity:.8">RSS — <a href="https://numetal.xyz/feed.xml">this site</a> &middot; <a href="https://api.gokhan.vc/feed.xml">everything</a></p>
+  </footer>
+  <style>
+    .site-sub{font-family:var(--mono,ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace);
+      padding:22px 32px;border-top:1px solid currentColor;}
+    .site-sub__lead{margin:0 0 .25rem;font-size:12px;opacity:.75;}
+    .site-sub a{color:inherit;}
+    @media(max-width:740px){.site-sub{padding-left:18px;padding-right:18px}}
+  </style>
   <script src="/blog-collapse.js" defer></script>
   <script src="/popups.js" defer></script>
 </body>
