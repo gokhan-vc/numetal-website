@@ -3,11 +3,11 @@ import Base from '../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
 export const prerender = true;
 const title = "Numetal Labs — agent accelerator studio";
-const description = "Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Chain-agnostic: Base, Ethereum, Solana, Hyperliquid, XRP Ledger.";
+const description = "Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Dual-rail on Base (x402) and Tempo (MPP); Solana and XRP coming.";
 const canonical = "https://numetal.xyz/";
 const ogImage = "https://numetal.xyz/og.png";
 const jsonLd = `{"@context":"https://schema.org","@graph":[
-{"@type":"Organization","@id":"https://numetal.xyz/#organization","name":"Numetal","alternateName":"$NUMETAL","url":"https://numetal.xyz/","description":"Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Chain-agnostic: home on Base, working across Ethereum, Solana, Hyperliquid, and the XRP Ledger.","slogan":"We ship machines that ship themselves.","parentOrganization":{"@type":"Organization","name":"Atelier Gökhan","url":"https://gokhan.vc"},"founder":{"@type":"Person","name":"Gökhan Turhan","url":"https://gokhanturhan.com"},"sameAs":["https://gokhan.vc","https://github.com/gokhan-vc","https://gokhanturhan.com"]},
+{"@type":"Organization","@id":"https://numetal.xyz/#organization","name":"Numetal","alternateName":"$NUMETAL","url":"https://numetal.xyz/","description":"Numetal is an agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Home on Base with x402 settlement; Tempo MPP rail for agent payments; Solana and XRP coming.","slogan":"We ship machines that ship themselves.","parentOrganization":{"@type":"Organization","name":"Atelier Gökhan","url":"https://gokhan.vc"},"founder":{"@type":"Person","name":"Gökhan Turhan","url":"https://gokhanturhan.com"},"sameAs":["https://gokhan.vc","https://github.com/gokhan-vc","https://gokhanturhan.com"]},
 {"@type":"WebSite","@id":"https://numetal.xyz/#website","url":"https://numetal.xyz/","name":"Numetal","publisher":{"@id":"https://numetal.xyz/#organization"}}
 ]}`;
 const bodyHtml = `<style>
@@ -52,9 +52,12 @@ const bodyHtml = `<style>
   .cell .k.o{color:var(--orange)}.cell .k.b{color:var(--ikb)}.cell .k.c{color:var(--cyan)}.cell .k.g{color:var(--gold)}
   .cell p{font-size:13.5px;color:#444;line-height:1.5}
   .chains{display:flex;flex-wrap:wrap;border:1.5px solid var(--hard)}
-  .chain{flex:1 1 18%;min-width:118px;padding:14px 15px;border-right:1px solid var(--line)}.chain:last-child{border-right:0}
-  .chain .cn{font-weight:700;font-size:15px}.chain .cr{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-top:5px}
+  .chain{flex:1 1 22%;min-width:118px;padding:14px 15px;border-right:1px solid var(--line)}.chain:last-child{border-right:0}
+  a.chain{display:block;text-decoration:none;color:inherit;transition:filter .1s}a.chain:hover{filter:brightness(1.08);text-decoration:none}
+  .chain .cn{font-weight:700;font-size:15px}.chain .cr{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-top:5px;line-height:1.45}
   .chain.hub{background:var(--ikb);color:#fff}.chain.hub .cr{color:rgba(255,255,255,.72)}
+  .chain.hub.tempo{background:#141428;color:#fff}.chain.hub.tempo .cr{color:rgba(255,255,255,.72)}
+  .chain.soon .cr{color:var(--hard)}
   .note{font-size:13.5px;color:#444;margin-top:14px;max-width:74ch;line-height:1.55}
   .leg{display:flex;gap:15px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin-bottom:12px}
   .leg .lg{display:flex;align-items:center;gap:6px}.leg .d{width:9px;height:9px}.d-team{background:var(--orange)}.d-trez{background:var(--ikb)}.d-burn{background:var(--ink)}
@@ -128,13 +131,12 @@ const bodyHtml = `<style>
     <div class="dither"></div>
     <section class="sec"><div class="sh"><span class="ix0">02</span>Chain-agnostic — home on Base, working everywhere</div><div class="sdot"></div>
       <div class="chains">
-        <div class="chain hub"><div class="cn">Base</div><div class="cr">Hub · home</div></div>
-        <div class="chain"><div class="cn">Ethereum</div><div class="cr">Mainnet</div></div>
-        <div class="chain"><div class="cn">Solana</div><div class="cr">High-throughput</div></div>
-        <div class="chain"><div class="cn">Hyperliquid</div><div class="cr">Onchain perps</div></div>
-        <div class="chain"><div class="cn">XRP Ledger</div><div class="cr">x402 · RLUSD</div></div>
+        <a class="chain hub" href="https://www.x402scan.com/server/api.ishtar.numetal.xyz" target="_blank" rel="noopener"><div class="cn">Base</div><div class="cr">Home · $NUMETAL · treasury · x402</div></a>
+        <a class="chain hub tempo" href="https://www.mppscan.com/server/fe75577646757f5da0cf64064a35298b9d4664f6cdf1ae587f51f711e2cbdb00" target="_blank" rel="noopener"><div class="cn">Tempo</div><div class="cr">MPP rail · Ishtar services</div></a>
+        <div class="chain soon"><div class="cn">Solana</div><div class="cr">Coming</div></div>
+        <div class="chain soon"><div class="cn">XRP</div><div class="cr">Coming</div></div>
       </div>
-      <p class="note">Base is home — where the token, treasury, and settlement live. New chains attach the moment an agent has a reason to be there, settling over x402 and native USDC rails.</p>
+      <p class="note">Base is home — $NUMETAL, treasury, and x402 settlement live here; Ishtar services are discoverable on <a href="https://www.x402scan.com/server/api.ishtar.numetal.xyz" target="_blank" rel="noopener">x402scan</a>. Tempo is the second live rail — agents pay for Ishtar and Numetal APIs over MPP (listed on <a href="https://www.mppscan.com/server/fe75577646757f5da0cf64064a35298b9d4664f6cdf1ae587f51f711e2cbdb00" target="_blank" rel="noopener">MPPscan</a>). Solana and XRP are on the roadmap.</p>
     </section>
 
     <div class="dither"></div>

@@ -1,6 +1,6 @@
 # Numetal
 
-> Numetal is an agent accelerator studio under Atelier Gökhan. We build and back autonomous agents across four markets — onchain, compute, artistic & cultural, and frontier-lab model toolkits. Chain-agnostic by design: home on Base, settling across Ethereum, Solana, Hyperliquid, and the XRP Ledger. Token: $NUMETAL on Base.
+> Numetal is an agent accelerator studio under Atelier Gökhan. We build and back autonomous agents across four markets — onchain, compute, artistic & cultural, and frontier-lab model toolkits. Dual-rail by design: home on Base (x402 / USDC), Tempo (MPP), with Solana and XRP coming. Token: $NUMETAL on Base.
 
 ## Links
 - [Numetal](https://numetal.xyz): the studio landing
@@ -13,6 +13,6 @@
 ## Details
 - Studio model: ship and back autonomous agents; each effort can carry its own token, with $NUMETAL as the studio token.
 - Markets: onchain (DeFi / x402 services / the Base agent economy), compute (machine-to-machine inference payments), artistic & cultural (generative, speculative, accelerationist), frontier-lab model toolkits (runtimes, skills, harnesses).
-- Chains: Base (hub), Ethereum, Solana, Hyperliquid, XRP Ledger.
+- Chains: Base (hub, x402), Tempo (MPP), Solana (coming), XRP (coming).
 - Network: Base. Official $NUMETAL contract: 0x57EDb7FC54ADa9Ef4E113DC05A168449e63cFbA3
 - $NUMETAL fee policy: every creator-fee claim splits to team, treasury, and burn; buyback & burn feeds value back to the community. Live at /fees.
