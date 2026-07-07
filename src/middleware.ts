@@ -5,8 +5,8 @@ import type { MiddlewareHandler } from 'astro';
 // Cloudflare adapter serves static assets directly, bypassing middleware).
 const CSP =
   "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; " +
-  "form-action 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; " +
-  "script-src 'self'; connect-src 'self'; manifest-src 'self'; upgrade-insecure-requests";
+  "form-action 'self' https://api.gokhan.vc; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; " +
+  "script-src 'self'; connect-src 'self' https://api.gokhan.vc; manifest-src 'self'; upgrade-insecure-requests";
 
 export const onRequest: MiddlewareHandler = async (context, next) => {
   const res = await next();
@@ -28,7 +28,7 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
       'permissions-policy',
       'accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()',
     );
-    h.set('cross-origin-opener-policy', 'same-origin');
+    h.set('cross-origin-opener-policy', 'same-origin-allow-popups');
     h.set('cross-origin-resource-policy', 'same-origin');
   }
   return res;
