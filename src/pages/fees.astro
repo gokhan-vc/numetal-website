@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import Base from '../layouts/Base.astro';
+import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
 const title = "Numetal — fee engine · machine report";
 const description = "Numetal fee engine — live burns, buybacks, and fee distribution on Base, as a machine report.";
 const canonical = 'https://numetal.xyz/fees';
@@ -99,6 +100,7 @@ const bodyHtml = `<style>
   .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
   .social a:hover{color:var(--ikb)}
   .social svg{width:17px;height:17px;fill:currentColor;display:block}
+${subscribeBlockCss}
 </style>
 
 <div class="sheet">
@@ -175,6 +177,7 @@ const bodyHtml = `<style>
     </div>
   </main>
 
+  ${subscribeBlockHtml}
   <div class="dither"></div>
   <footer class="ft">
     <span>Numetal · an Atelier Gökhan studio · on Base</span>

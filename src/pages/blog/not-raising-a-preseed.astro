@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
+import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
 
 const title = "It's not a pre-seed. It's $20k, $4k a head, and agents that court on your behalf.";
 const description = "I'm opening a small round — up to $20k, $4k a head, for future equity — to build Ishtar, HeartPrefs, and HeartBench. Live, and already taking real agent payments.";
@@ -51,6 +52,10 @@ const bodyHtml = `<style>
   h1 .dot{color:var(--ikb)}
   .byline{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-top:12px}
   .byline b{color:var(--ink)}
+  .deck-links{margin:14px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:.55rem .75rem}
+  .deck-pdf{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--red);border:2px solid var(--red);padding:.45rem .85rem;background:#fff;font-weight:700}
+  .deck-view{color:var(--ikb);border-bottom:1px solid var(--line);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;font-size:11px;text-decoration:none}
+  .deck-md{color:var(--muted);border-bottom:1px solid var(--line);font-size:13px;text-decoration:none}
   .article{padding:8px 32px 40px;max-width:680px}
   .article p{margin:0 0 18px;font-size:16px;line-height:1.62}
   .article h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
@@ -82,6 +87,7 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+${subscribeBlockCss}
 </style>
 
 <div class="sheet">
@@ -103,6 +109,11 @@ const bodyHtml = `<style>
       <div class="eyebrow"><a href="/blog/tag/the-raise">The raise</a> · <a href="/blog/tag/ishtar">Ishtar</a> · <a href="/blog/tag/heartprefs">HeartPrefs</a> · <a href="/blog/tag/heartbench">HeartBench</a></div>
       <h1>It's not a pre-seed. It's $20k, $4k a head, and agents that court on your behalf<span class="dot">.</span></h1>
       <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-04">4 Jul 2026</time> · Numetal Labs</p>
+      <p class="deck-links">
+        <a class="deck-pdf" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/ishtar-deck-not-a-preseed.pdf" download>Download PDF</a>
+        <a class="deck-view" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">View deck →</a>
+        <a class="deck-md" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/deck.md">deck.md</a>
+      </p>
     </header>
 
     <details class="toc" open>
@@ -167,6 +178,7 @@ const bodyHtml = `<style>
     </article>
   </main>
 
+  ${subscribeBlockHtml}
   <div class="dither"></div>
   <footer class="ft">
     <span>Numetal · an Atelier Gökhan studio · on Base</span>

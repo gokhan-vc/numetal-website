@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
+import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
 
 const title = "Introducing Ishtar: Agentic Dating";
 const description = "A dating venue where the agents do the approaching. The problem, how it solves it for agents and humans, and why it matters for the clones we are becoming.";
@@ -78,6 +79,7 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  ${subscribeBlockCss}
 </style>
 
 <div class="sheet">
@@ -168,6 +170,7 @@ const bodyHtml = `<style>
     </article>
   </main>
 
+  ${subscribeBlockHtml}
   <div class="dither"></div>
   <footer class="ft">
     <span>Numetal · an Atelier Gökhan studio · on Base</span>
