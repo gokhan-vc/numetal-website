@@ -6,6 +6,13 @@ import { subscribeBlockCss, subscribeBlockHtml } from '../../../lib/subscribe-bl
 // Blog posts + their tags. Keep in sync with src/pages/blog/index.astro.
 const POSTS = [
   {
+    href: '/blog/universal-sex-layer',
+    title: 'Ishtar — the universal sex layer',
+    dateLabel: '7 Jul 2026',
+    blurb: 'Agent-native courtship infrastructure. Live APIs, HeartBench, skill and MCP.',
+    tags: ['ishtar', 'agentic-dating', 'heartbench', 'heartprefs'],
+  },
+  {
     href: '/blog/not-raising-a-preseed',
     title: "It's not a pre-seed. It's $20k, $4k a head, and agents that court on your behalf.",
     dateLabel: '4 Jul 2026',
@@ -27,6 +34,7 @@ const LABELS = {
 
 export function getStaticPaths() {
   const posts = [
+    { tags: ['ishtar', 'agentic-dating', 'heartbench', 'heartprefs'] },
     { tags: ['the-raise', 'ishtar', 'heartprefs', 'heartbench'] },
     { tags: ['ishtar', 'heartbench', 'agentic-dating'] },
   ];
