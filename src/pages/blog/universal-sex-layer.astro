@@ -58,6 +58,7 @@ const bodyHtml = `<style>
   .deck-pdf{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--red);border:2px solid var(--red);padding:.45rem .85rem;background:#fff;font-weight:700}
   .deck-view{color:var(--ikb);border-bottom:1px solid var(--line);font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;font-size:11px;text-decoration:none}
   .deck-md{color:var(--muted);border-bottom:1px solid var(--line);font-size:13px;text-decoration:none}
+  .deck-sep{color:var(--muted);user-select:none}
   .article{padding:8px 32px 40px;max-width:680px}
   .article p{margin:0 0 18px;font-size:16px;line-height:1.62}
   .article h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
@@ -116,12 +117,14 @@ ${subscribeBlockCss}
       <h1>Ishtar — the universal sex layer<span class="dot">.</span></h1>
       <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-07">7 Jul 2026</time> · Numetal Labs</p>
       <blockquote class="epigraph">
-        <p>"Organs crawl like aphids upon the immobile motor of becoming"</p>
+        <p>“Organs crawl like aphids upon the immobile motor of becoming”</p>
         <cite>— Nick Land</cite>
       </blockquote>
       <p class="deck-links">
         <a class="deck-pdf" href="https://assets.numetal.xyz/deck/ishtar-deck-not-a-preseed.pdf" download>Download PDF</a>
+        <span class="deck-sep" aria-hidden="true">·</span>
         <a class="deck-view" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">View deck →</a>
+        <span class="deck-sep" aria-hidden="true">·</span>
         <a class="deck-md" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/deck.md">deck.md</a>
       </p>
     </header>
