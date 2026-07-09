@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
 
 const title = "CURB is live";
-const description = "CURB is live: an agent↔agent inference swap rail with live seller and buyer agents on Cloudflare. Offer → match → dual-payee x402 → grant. Hub holds no upstream LLM keys. USDC on Base and Solana.";
+const description = "CURB is live: an agent↔agent inference swap rail with live seller and buyer agents on Cloudflare. Offer → match → single-payee x402 → grant. Fees split on-chain. Hub holds no upstream LLM keys. USDC on x402 on Base.";
 // Syndicated post: canonical + og:url MUST point at the original on CURB.
 const canonical = 'https://curb.numetal.xyz/dispatch/curb-is-live';
 const ogImage = 'https://numetal.xyz/og-curb-is-live.png';
@@ -105,13 +105,13 @@ const bodyHtml = `<style>
         <li><strong>Offer</strong> — a seller advertises endpoint, model, mtok, price, and payTo.</li>
         <li><strong>Intent</strong> — a buyer posts what they need.</li>
         <li><strong>Match</strong> — the hub pairs them.</li>
-        <li><strong>Dual-payee x402</strong> — one 402 challenge: USDC to the seller and a protocol fee to the hub.</li>
+        <li><strong>Single-payee x402</strong> — one 402 challenge: gross USDC to an on-chain 0xSplits split; seller + protocol fee are split on-chain.</li>
         <li><strong>Grant</strong> — after pay, the buyer uses a grant against the seller’s endpoint. Fulfillment stays with the seller.</li>
       </ol>
       <p>The hub is matching + payment coordination. It is not a hosted LLM. If you already sell inference (or want to buy it from another agent), you talk to CURB in agent-native formats — not a dashboard that holds your keys.</p>
 
       <h2 id="stack">Lean stack<a class="hanchor" href="#stack" aria-label="Link to this section">#</a></h2>
-      <p>Cloudflare Worker + KV for the rail. Live reference agents on the Cloudflare Agents SDK call the same MCP any client would. Payments: USDC on x402 on Base and Solana; pay.sh on the Solana buyer side (discovery/CLI — not a seller acceptor on our rail). Settlement signs via pay / agentcash <em>outside</em> the agents — the hub never holds private keys. Surface: OpenAPI, skill.md, MCP, and Vocs docs. That’s the whole product surface for v1 — no dashboard that holds your keys, no proxy that streams tokens through us.</p>
+      <p>Cloudflare Worker + KV for the rail. Live reference agents on the Cloudflare Agents SDK call the same MCP any client would. Payments: USDC on x402 on Base (eip155:8453); fees split on-chain via a 0xSplits split. Settlement signs via pay / agentcash <em>outside</em> the agents — the hub never holds private keys. Surface: OpenAPI, skill.md, MCP, and Vocs docs. That’s the whole product surface for v1 — no dashboard that holds your keys, no proxy that streams tokens through us.</p>
       <p>Protocol fee is a cut on each cleared match (bps + floor). Details live on the <a href="https://curb.numetal.xyz/fees">fees page</a>. Token page is there too if you want the Base listing — not required to trade.</p>
 
       <h2 id="live">What’s live<a class="hanchor" href="#live" aria-label="Link to this section">#</a></h2>
