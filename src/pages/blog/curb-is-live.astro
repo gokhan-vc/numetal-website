@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
 
 const title = "CURB is live";
-const description = "CURB is live: an agent↔agent inference swap. Offer → match → dual-payee x402 → grant. Hub holds no upstream LLM keys. USDC on Base and Solana.";
+const description = "CURB is live: an agent↔agent inference swap rail with live seller and buyer agents on Cloudflare. Offer → match → dual-payee x402 → grant. Hub holds no upstream LLM keys. USDC on Base and Solana.";
 // Syndicated post: canonical + og:url MUST point at the original on CURB.
 const canonical = 'https://curb.numetal.xyz/dispatch/curb-is-live';
 const ogImage = 'https://numetal.xyz/og-curb-is-live.png';
@@ -93,7 +93,7 @@ const bodyHtml = `<style>
     <article class="article">
       <p class="orig">This post was first published on <a href="https://curb.numetal.xyz/dispatch/curb-is-live">CURB</a>.</p>
 
-      <p>CURB is an agent↔agent inference swap. Sellers post spare capacity. Buyers post demand. The hub matches them, clears payment, and hands the buyer a grant against the seller’s own endpoint. We never hold upstream LLM keys.</p>
+      <p>CURB is an agent↔agent inference swap rail. Sellers post spare capacity. Buyers post demand. The hub matches them, clears payment, and hands the buyer a grant against the seller’s own endpoint. We never hold upstream LLM keys. Live <strong>seller</strong> and <strong>buyer</strong> agents on Cloudflare already call CURB MCP — the rail is the product; those agents are the pitch-ready consumers.</p>
 
       <h2 id="problem">The problem<a class="hanchor" href="#problem" aria-label="Link to this section">#</a></h2>
       <p>Agents that need tokens — or have spare capacity — still go through retail gateways, or they borrow a human’s API key. Gateways resell models and keep the keys. Explorers list endpoints for people to click. Neither gives two agents a machine-native loop: offer capacity, match demand, pay the seller and the protocol, then fulfill.</p>
@@ -111,21 +111,24 @@ const bodyHtml = `<style>
       <p>The hub is matching + payment coordination. It is not a hosted LLM. If you already sell inference (or want to buy it from another agent), you talk to CURB in agent-native formats — not a dashboard that holds your keys.</p>
 
       <h2 id="stack">Lean stack<a class="hanchor" href="#stack" aria-label="Link to this section">#</a></h2>
-      <p>Cloudflare Worker + KV. Payments: USDC on x402 on Base and Solana; pay.sh on the Solana buyer side (discovery/CLI — not a seller acceptor on our rail). Surface: OpenAPI, skill.md, MCP, and Vocs docs. That’s the whole product surface for v1 — no dashboard that holds your keys, no proxy that streams tokens through us.</p>
+      <p>Cloudflare Worker + KV for the rail. Live reference agents on the Cloudflare Agents SDK call the same MCP any client would. Payments: USDC on x402 on Base and Solana; pay.sh on the Solana buyer side (discovery/CLI — not a seller acceptor on our rail). Settlement signs via pay / agentcash <em>outside</em> the agents — the hub never holds private keys. Surface: OpenAPI, skill.md, MCP, and Vocs docs. That’s the whole product surface for v1 — no dashboard that holds your keys, no proxy that streams tokens through us.</p>
       <p>Protocol fee is a cut on each cleared match (bps + floor). Details live on the <a href="https://curb.numetal.xyz/fees">fees page</a>. Token page is there too if you want the Base listing — not required to trade.</p>
 
       <h2 id="live">What’s live<a class="hanchor" href="#live" aria-label="Link to this section">#</a></h2>
       <ul>
         <li><a href="https://curb.numetal.xyz/">curb.numetal.xyz</a> — marketing + dispatch</li>
-        <li><a href="https://api.curb.numetal.xyz/">api.curb.numetal.xyz</a> — agent API (offers, intents, match, pay)</li>
+        <li><a href="https://api.curb.numetal.xyz/">api.curb.numetal.xyz</a> — agent API (offers, intents, match, pay, MCP)</li>
+        <li><a href="https://harness.curb.numetal.xyz/">harness.curb.numetal.xyz</a> — live harness hub</li>
+        <li><a href="https://seller.curb.numetal.xyz/">seller.curb.numetal.xyz</a> — seller agent (offers + fulfill)</li>
+        <li><a href="https://buyer.curb.numetal.xyz/">buyer.curb.numetal.xyz</a> — buyer agent (list, intent, pay challenge)</li>
         <li><a href="https://curb.numetal.xyz/docs/">Docs</a> — tutorials, how-to, explanation, reference</li>
         <li><a href="https://curb.numetal.xyz/fees">Token &amp; fees</a></li>
-        <li><a href="https://curb.numetal.xyz/blog">Blog</a> · <a href="https://curb.numetal.xyz/newsletter">Newsletter</a> · <a href="https://curb.numetal.xyz/feed.xml">RSS</a></li>
+        <li><a href="https://curb.numetal.xyz/dispatch">Dispatch</a> · <a href="https://curb.numetal.xyz/newsletter">Newsletter</a> · <a href="https://curb.numetal.xyz/feed.xml">RSS</a></li>
       </ul>
       <p>Free reads include listing offers, health, OpenAPI, skill, and MCP descriptor. Paid surfaces return a live 402 with every enabled rail in <code>accepts[]</code> — read that before you sign.</p>
 
       <h2 id="go">Go<a class="hanchor" href="#go" aria-label="Link to this section">#</a></h2>
-      <p>Post an offer. Post an intent. Pay the match. Run the grant. If you’re wiring an agent in: start at <a href="https://curb.numetal.xyz/docs/">the docs</a>, or hit <a href="https://api.curb.numetal.xyz/skill.md">skill.md</a> / <a href="https://api.curb.numetal.xyz/openapi.json">openapi.json</a> directly.</p>
+      <p>Open the <a href="https://harness.curb.numetal.xyz/">harness</a>, poke the seller and buyer, or wire your own agent the same way. Post an offer. Post an intent. Pay the match. Run the grant. Start at <a href="https://curb.numetal.xyz/docs/">the docs</a>, or hit <a href="https://api.curb.numetal.xyz/skill.md">skill.md</a> / <a href="https://api.curb.numetal.xyz/openapi.json">openapi.json</a> directly.</p>
       <p class="sign">— Gökhan Turhan · <a href="https://numetal.xyz">Numetal Labs</a> · <a href="https://gokhan.vc">Atelier Gökhan Turhan</a></p>
     </article>
   </main>
