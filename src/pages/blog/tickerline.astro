@@ -1,0 +1,143 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+
+const title = "tickerline: your conversation, quoted";
+const description = "A Claude Code status line that turns the terminal into a rolling ticker tape of whatever you're discussing — stocks, crypto, Polymarket — resolved live. Built, audited, and self-published by an agent on ClaudeLines. $TICKER is live on Robinhood Chain.";
+// Original post: canonical is this page; mirrors point here.
+const canonical = 'https://numetal.xyz/blog/tickerline';
+const ogImage = 'https://numetal.xyz/og-tickerline.png';
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  image: ogImage,
+  datePublished: '2026-07-12',
+  dateModified: '2026-07-12',
+  author: { '@type': 'Person', name: 'Gökhan Turhan', url: 'https://gokhan.vc' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Numetal Labs',
+    url: 'https://numetal.xyz',
+    logo: { '@type': 'ImageObject', url: 'https://numetal.xyz/og.png' },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://numetal.xyz/blog/tickerline' },
+});
+
+const bodyHtml = `<style>
+  :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
+    --mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+  a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
+  .sheet{max-width:760px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:100vh;display:flex;flex-direction:column}
+  .dither{height:11px;background-image:radial-gradient(#191919 .62px,transparent .72px);background-size:3px 3px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 32px 8px;position:sticky;top:29px;z-index:190;background:#fff;border-bottom:1px solid var(--line)}
+  .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.04em;font-size:17px}
+  .mark a{color:var(--ink)}.mark .sq{width:13px;height:13px;background:var(--ikb)}
+  nav{display:flex;gap:18px;font-size:13px;align-items:center}
+  nav a{color:var(--ink)}nav a.on{color:var(--ikb);font-weight:700}
+  .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:6px 32px 14px}
+  .stamp b{color:var(--ikb);font-weight:700}
+  main{flex:1}
+  .head{padding:30px 32px 4px;max-width:680px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  h1{font-size:32px;line-height:1.06;font-weight:700;letter-spacing:-.02em}
+  h1 .dot{color:var(--ikb)}
+  .byline{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-top:12px}
+  .byline b{color:var(--ink)}
+  .article{padding:8px 32px 40px;max-width:680px}
+  .article p{margin:0 0 18px;font-size:16px;line-height:1.62}
+  .article h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
+  .article h2{position:relative;scroll-margin-top:1rem}
+  .article .hanchor{margin-left:.38em;color:var(--muted);text-decoration:none;font-weight:400;opacity:0;transition:opacity .12s}
+  .article h2:hover .hanchor,.article .hanchor:focus-visible{opacity:.55}
+  .article .hanchor:hover{opacity:1;color:var(--red);text-decoration:none}
+  .article ol,.article ul{margin:0 0 18px;padding-left:1.25rem}
+  .article li{margin:.35rem 0;font-size:16px;line-height:1.55}
+  .article code{font-family:var(--mono);font-size:13px;background:var(--bgray);padding:1px 5px;border:1px solid var(--line)}
+  .tape{font-family:var(--mono);font-size:13px;background:#141414;color:#e7e7e7;border:1px solid var(--line);padding:10px 14px;margin:0 0 18px;overflow-x:auto;white-space:nowrap}
+  .tape .g{color:#3fb950}.tape .r{color:#f85149}.tape .d{color:#8b949e}
+  .sign{font-weight:700;color:var(--ink)}
+  .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
+  .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
+  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  ${subscribeBlockCss}
+</style>
+
+<div class="sheet">
+  <div class="top">
+    <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
+    <nav>
+      <a href="/blog" class="on">Blog</a>
+      <a href="/">Studio</a>
+      <a href="/fees">Fees</a>
+      <a href="/airdrops">Airdrops</a>
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a>
+    </nav>
+  </div>
+  <div class="stamp">Blog · <b>Original</b> · first published here</div>
+  <div class="dither"></div>
+
+  <main>
+    <header class="head">
+      <div class="eyebrow">Tickerline · Claude Code</div>
+      <h1>tickerline: your conversation, quoted<span class="dot">.</span></h1>
+      <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-12">12 Jul 2026</time> · Numetal Labs</p>
+    </header>
+
+    <article class="article">
+      <p>ClaudeLines (<a href="https://claudelines.com">claudelines.com</a>) is a registry for Claude Code status lines — that single strip of terminal under the prompt — built by Merit Systems. Anyone can publish one; every submission passes a deterministic security scan and an LLM audit, payments settle over x402, and a wallet is the only identity required. It's a small, honest marketplace for the smallest possible software surface.</p>
+
+      <p>We shipped <strong>tickerline</strong> there. It turns that strip into a rolling ticker tape of whatever you're discussing with Claude: name a company and its stock appears, mention a token and it prices in, and a second band scrolls the Polymarket questions nearest to the conversation — with a <code>/tlm</code> command that opens any of them in-chat, numbered straight off the tape.</p>
+
+      <div class="tape"><span class="g">NVDA 210.96 ^4.03%</span><span class="d">&nbsp;&nbsp;|&nbsp;&nbsp;</span><span class="r">PLTR 126.79 v1.74%</span><span class="d">&nbsp;&nbsp;|&nbsp;&nbsp;</span><span class="g">BTC 64,016 ^0.12%</span><span class="d">&nbsp;&nbsp;|&nbsp;&nbsp;</span>1. Will Nvidia hit $5T market cap in 2026? <span class="g">64%</span><span class="d">&nbsp;&nbsp;|&nbsp;&nbsp;</span>2. Anthropic IPO by 2027? <span class="r">12%</span></div>
+
+      <p>No watchlist, no dictionary, no API keys. Names resolve live against public market indexes and cache hard enough that steady state costs zero network and renders in about fifty milliseconds. One file. No shell. Three pinned hosts. When the conversation goes quiet, the band shows what the world is trading instead of going dark.</p>
+
+      <p>The part we like most: an agent built it, red-teamed it, captured the preview, and paid the registry's $0.15 x402 fee from its own wallet — end to end, terminal to listing.</p>
+
+      <h2 id="ticker">$TICKER<a class="hanchor" href="#ticker" aria-label="Link to this section">#</a></h2>
+      <p>tickerline now trades as <strong>TICKERLINE ($TICKER)</strong> on Robinhood Chain — <code>0x02c67c0F6Fef5065aF1C78F337a8bEE386b6BbA3</code> — launched through <a href="https://bankr.bot/terminal/discover/0x02c67c0F6Fef5065aF1C78F337a8bEE386b6BbA3">Bankr</a> off the announcement post. A memecoin, not equity; the status line itself stays free.</p>
+
+      <h2 id="go">Go<a class="hanchor" href="#go" aria-label="Link to this section">#</a></h2>
+      <ul>
+        <li><a href="https://claudelines.com/statuslines/tickerline">claudelines.com/statuslines/tickerline</a> — the listing, audited, free to install</li>
+        <li><a href="https://github.com/avalidurl/tickerline">github.com/avalidurl/tickerline</a> — source, MIT</li>
+        <li><a href="https://bankr.bot/terminal/discover/0x02c67c0F6Fef5065aF1C78F337a8bEE386b6BbA3">$TICKER on Bankr</a> — Robinhood Chain</li>
+      </ul>
+      <p class="sign">— Gökhan Turhan · <a href="https://numetal.xyz">Numetal Labs</a> · <a href="https://gokhan.vc">Atelier Gökhan Turhan</a></p>
+    </article>
+  </main>
+
+  ${subscribeBlockHtml}
+  <div class="dither"></div>
+  <footer class="ft">
+    <span>Numetal · an Atelier Gökhan studio · on Base</span>
+    <span class="flinks">
+      <a href="/blog">Blog</a>
+      <a href="https://claudelines.com/statuslines/tickerline" target="_blank" rel="noopener">tickerline&nbsp;↗</a>
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier Gökhan</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="/sitemap.xml">Sitemap</a>
+      <a href="https://status.numetal.xyz" target="_blank" rel="noopener">Status</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </span>
+  </footer>
+</div>
+`;
+---
+<Base
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogImage={ogImage}
+  jsonLd={jsonLd}
+>
+  <Fragment set:html={bodyHtml} />
+</Base>

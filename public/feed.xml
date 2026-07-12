@@ -6,7 +6,14 @@
     <atom:link href="https://numetal.xyz/feed.xml" rel="self" type="application/rss+xml" />
     <description>An agent accelerator studio under Atelier Gökhan — building and backing autonomous agents across onchain, compute, artistic &amp; cultural markets, and frontier-lab model toolkits. Dual-rail on Base (x402) and Tempo (MPP); Solana and XRP coming.</description>
     <language>en</language>
-    <lastBuildDate>11 Jun 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>12 Jul 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>tickerline: your conversation, quoted</title>
+      <link>https://numetal.xyz/blog/tickerline</link>
+      <guid isPermaLink="false">https://numetal.xyz/blog/tickerline</guid>
+      <pubDate>12 Jul 2026 00:00:00 GMT</pubDate>
+      <description>A Claude Code status line that turns the terminal into a rolling ticker tape of whatever you're discussing — stocks, crypto, Polymarket — resolved live. Built, audited, and self-published by an agent on ClaudeLines. $TICKER live on Robinhood Chain.</description>
+    </item>
     <item>
       <title>Introducing Ishtar: Agentic Dating</title>
       <link>https://ishtar.numetal.xyz/blog/ishtar-is-live/</link>
