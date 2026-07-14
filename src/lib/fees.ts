@@ -125,16 +125,21 @@ export async function getData(): Promise<any> {
 export async function getBurns(env: any): Promise<any[]> {
   const cache = cacheStore();
   const key = new Request('https://numetal.xyz/__burns_v6');
+  const lastKey = new Request('https://numetal.xyz/__burns_lastgood_v1');
   if (cache) { const hit = await cache.match(key); if (hit) { try { return await hit.json(); } catch {} } }
   const WETH = '0x4200000000000000000000000000000000000006';
   const SWAPS = ['0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67', '0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822'];
   const rpc = async (m: string, p: any) => {
     const r = await fetch(env.BASE_RPC_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: m, params: p }) });
-    return (await r.json() as any).result;
+    const j: any = await r.json();
+    if (!r.ok || j?.error) throw new Error('rpc_error');
+    return j.result;
   };
   let out: any[] = [];
+  let freshOk = false;
   try {
     const lists: any[] = await Promise.all(BURN_DESTS.map((dest) => rpc('alchemy_getAssetTransfers', [{ fromBlock: '0x0', toBlock: 'latest', toAddress: dest, contractAddresses: [NUM], category: ['erc20'], withMetadata: true, maxCount: '0x3e8', order: 'desc' }])));
+    freshOk = true;
     const merged: any[] = [];
     for (const tr of lists) merged.push(...(((tr && tr.transfers) || []).filter((t: any) => Number(t.value) >= 1)));
     merged.sort((a, b) => String(b.metadata?.blockTimestamp || '').localeCompare(String(a.metadata?.blockTimestamp || '')));
@@ -156,6 +161,22 @@ export async function getBurns(env: any): Promise<any[]> {
   // metered Alchemy key (env.BASE_RPC_URL) — limits cost-amplification. Pair with a
   // Cloudflare WAF rate-limit rule on /fees/events for a hard ceiling. Burns are
   // infrequent, so a longer TTL costs no meaningful freshness.
-  if (out.length && cache) { try { await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=300' } })); } catch {} }
+  if (cache) {
+    if (out.length) {
+      try {
+        await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=300' } }));
+        await cache.put(lastKey, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=86400' } }));
+      } catch {}
+    } else if (freshOk) {
+      try { await cache.put(key, new Response('[]', { headers: { 'cache-control': 'public, max-age=300' } })); } catch {}
+    } else {
+      try {
+        const lastGood = await cache.match(lastKey);
+        const fallback = lastGood ? await lastGood.json() : [];
+        await cache.put(key, new Response(JSON.stringify(fallback), { headers: { 'cache-control': 'public, max-age=60' } }));
+        return fallback;
+      } catch {}
+    }
+  }
   return out;
 }
