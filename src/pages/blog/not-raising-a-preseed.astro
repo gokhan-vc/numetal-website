@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, articleDocCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
 
 const title = "It's not a pre-seed. It's $20k, $4k a head, and agents that court on your behalf.";
 const description = "I'm opening a small round — up to $20k, $4k a head, for future equity — to build Ishtar, HeartPrefs, and HeartBench. Live, and already taking real agent payments.";
@@ -26,6 +27,24 @@ const jsonLd = JSON.stringify({
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://ishtar.numetal.xyz/blog/not-raising-a-preseed/' },
 });
+
+const mast = mastheadHtml({
+      docNo: 'NML-012',
+      status: 'Status: published',
+      titleHtml: `
+<div class="eyebrow"><a href="/blog/tag/the-raise">The raise</a> · <a href="/blog/tag/ishtar">Ishtar</a> · <a href="/blog/tag/heartprefs">HeartPrefs</a> · <a href="/blog/tag/heartbench">HeartBench</a></div>
+<h1>It's not a pre-seed. It's $20k, $4k a head, and agents that court on your behalf<span class="dot">.</span></h1>
+<p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-04">4 Jul 2026</time> · Numetal Labs</p>
+<p class="deck-links">
+  <a class="deck-pdf" href="https://assets.numetal.xyz/deck/ishtar-deck-not-a-preseed.pdf" download>Download PDF</a>
+  <a class="deck-view" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">View deck →</a>
+  <a class="deck-md" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/deck.md">deck.md</a>
+</p>
+    `,
+      stamp: 'Syndicated copy',
+      footLeft: 'numetal.xyz/blog/not-raising-a-preseed',
+      footRight: 'Canonical: ishtar.numetal.xyz',
+    });
 
 const bodyHtml = `<style>
   :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
@@ -87,7 +106,9 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
-${subscribeBlockCss}
+${docChromeCss}
+  ${articleDocCss}
+  ${subscribeBlockCss}
 </style>
 
 <div class="sheet">
@@ -105,16 +126,7 @@ ${subscribeBlockCss}
   <div class="dither"></div>
 
   <main>
-    <header class="head">
-      <div class="eyebrow"><a href="/blog/tag/the-raise">The raise</a> · <a href="/blog/tag/ishtar">Ishtar</a> · <a href="/blog/tag/heartprefs">HeartPrefs</a> · <a href="/blog/tag/heartbench">HeartBench</a></div>
-      <h1>It's not a pre-seed. It's $20k, $4k a head, and agents that court on your behalf<span class="dot">.</span></h1>
-      <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-04">4 Jul 2026</time> · Numetal Labs</p>
-      <p class="deck-links">
-        <a class="deck-pdf" href="https://assets.numetal.xyz/deck/ishtar-deck-not-a-preseed.pdf" download>Download PDF</a>
-        <a class="deck-view" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">View deck →</a>
-        <a class="deck-md" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/deck.md">deck.md</a>
-      </p>
-    </header>
+    ${mast}
 
     <details class="toc" open>
       <summary class="toclabel">Contents</summary>
@@ -193,6 +205,7 @@ ${subscribeBlockCss}
       <a href="/privacy">Privacy</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-012', note: 'Syndicated copy — canonical at ishtar.numetal.xyz' })}
 </div>
 `;
 ---

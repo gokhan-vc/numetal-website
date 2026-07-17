@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, articleDocCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
 
 const title = "tickerline: your conversation, quoted";
 const description = "A Claude Code status line that turns the terminal into a rolling ticker tape of whatever you're discussing — stocks, crypto, Polymarket — resolved live. Built, audited, and self-published by an agent on ClaudeLines. $TICKER is live on Robinhood Chain.";
@@ -26,6 +27,19 @@ const jsonLd = JSON.stringify({
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://numetal.xyz/blog/tickerline' },
 });
+
+const mast = mastheadHtml({
+      docNo: 'NML-015',
+      status: 'Status: published',
+      titleHtml: `
+<div class="eyebrow">Tickerline · Claude Code</div>
+<h1>tickerline: your conversation, quoted<span class="dot">.</span></h1>
+<p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-12">12 Jul 2026</time> · Numetal Labs</p>
+    `,
+      stamp: 'Original filing',
+      footLeft: 'numetal.xyz/blog/tickerline',
+      footRight: 'First published here',
+    });
 
 const bodyHtml = `<style>
   :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
@@ -66,6 +80,8 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  ${docChromeCss}
+  ${articleDocCss}
   ${subscribeBlockCss}
 </style>
 
@@ -84,11 +100,7 @@ const bodyHtml = `<style>
   <div class="dither"></div>
 
   <main>
-    <header class="head">
-      <div class="eyebrow">Tickerline · Claude Code</div>
-      <h1>tickerline: your conversation, quoted<span class="dot">.</span></h1>
-      <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-12">12 Jul 2026</time> · Numetal Labs</p>
-    </header>
+    ${mast}
 
     <article class="article">
       <p>ClaudeLines (<a href="https://claudelines.com">claudelines.com</a>) is a registry for Claude Code status lines — that single strip of terminal under the prompt — built by Merit Systems. Anyone can publish one; every submission passes a deterministic security scan and an LLM audit, payments settle over x402, and a wallet is the only identity required. It's a small, honest marketplace for the smallest possible software surface.</p>
@@ -129,6 +141,7 @@ const bodyHtml = `<style>
       <a href="/privacy">Privacy</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-015', note: 'Original filing — first published here' })}
 </div>
 `;
 ---

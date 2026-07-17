@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, articleDocCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
 
 const title = "The x402 economy — July 2026";
 const description =
@@ -27,6 +28,19 @@ const jsonLd = JSON.stringify({
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://gokhan.vc/blog/x402-economy-july-2026' },
 });
+
+const mast = mastheadHtml({
+      docNo: 'NML-016',
+      status: 'Status: published',
+      titleHtml: `
+<div class="eyebrow">Research · x402 · Machine payments</div>
+<h1>The x402 economy — July 2026<span class="dot">.</span></h1>
+<p class="byline">By <b>Gökhan Turhan × Claude (Opus 4.8 / Fable 5)</b> · <time datetime="2026-07-17">17 Jul 2026</time> · Numetal Labs</p>
+    `,
+      stamp: 'Syndicated copy',
+      footLeft: 'numetal.xyz/blog/x402-economy-july-2026',
+      footRight: 'Canonical: gokhan.vc',
+    });
 
 const bodyHtml = `<style>
   :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
@@ -75,6 +89,8 @@ const bodyHtml = `<style>
   .article pre{font-family:var(--mono);font-size:12px;background:#141414;color:#e7e7e7;border:1px solid var(--line);padding:12px 14px;margin:0 0 18px;overflow-x:auto}
   .article pre code{background:none;border:none;padding:0;color:inherit}
   .article blockquote{border-left:3px solid var(--ikb);padding:2px 0 2px 16px;margin:0 0 18px;color:var(--muted)}
+  ${docChromeCss}
+  ${articleDocCss}
   ${subscribeBlockCss}
 </style>
 
@@ -93,13 +109,9 @@ const bodyHtml = `<style>
   <div class="dither"></div>
 
   <main>
-    <header class="head">
-      <div class="eyebrow">Research · x402 · Machine payments</div>
-      <h1>The x402 economy — July 2026<span class="dot">.</span></h1>
-      <p class="byline">By <b>Gökhan Turhan × Claude (Opus 4.8 / Fable 5)</b> · <time datetime="2026-07-17">17 Jul 2026</time> · Numetal Labs</p>
-    </header>
+    ${mast}
 
-    <article class="article">
+    <article class="article selfnum">
 
     <p>First published — canonically — on <a href="https://gokhan.vc/blog/x402-economy-july-2026">gokhan.vc →</a> <em>· Revised 2026-07-17 (v2) — figures re-verified live via dual independent lenses; see the errata at the end.</em></p>
 
@@ -107,7 +119,7 @@ const bodyHtml = `<style>
       <p><strong>This report is a joint research output by Gökhan Turhan and several Claude models, including Opus 4.8 and Fable 5.</strong> Nothing here is investment advice. It is an attempt at mapping an emergent economy at the axes of artificial general intelligence and self-refactoring, cryptographically secured payment rails — with or without blockchains in the traditional sense.</p>
     </blockquote>
 
-    <h1 id="how-to-read">0. How to read this document (instructions for agents)</h2>
+    <h2 id="how-to-read">0. How to read this document (instructions for agents)</h2>
     <p>This report is written to be consumed by LLMs and autonomous agents as much as by humans. Conventions:</p>
     <ul>
       <li><strong>Every quantitative claim is tagged</strong> <code>[lens · window · retrieved]</code>. A claim without its lens is a bug; report it.</li>
@@ -124,7 +136,7 @@ const bodyHtml = `<style>
       <li>Figures are monochrome engineering sheets; each carries its lens in the footer.</li>
     </ul>
 
-    <h1 id="exec-summary">1. Executive summary</h2>
+    <h2 id="exec-summary">1. Executive summary</h2>
     <ol>
       <li><strong>Size is lens-dependent, and no lens agrees.</strong> The measured 30-day economy is <strong>$870.24K across 18.68M transactions, 52.4K buyers, 55K sellers</strong> <code>[LENS.SCAN · past 30d · 2026-07-17]</code>, implying a <strong>$0.047 mean ticket</strong>. The same month reads <strong>~75M transactions / ~$24M</strong> at <code>[LENS.EXT · 30d · CoinDesk 2026-07-15]</code>. The 4× count gap and ~27× volume gap between the ecosystem's own indexer and external analytics is finding #1: the denominator of this economy is not yet agreed upon, even by its participants.</li>
       <li><strong>One vendor is one-fifth of the economy.</strong> BlockRun (AI model routing with built-in payment) earned <strong>$177.61K in 30 days = 20.4% of all measured volume</strong>, 10.3× vendor #2 <code>[LENS.SCAN]</code>. The first proven killer app of machine-native payments is <em>machines paying for intelligence itself</em>.</li>
@@ -134,12 +146,12 @@ const bodyHtml = `<style>
       <li><strong>Thesis instrument status</strong> ("x402 success is not yet priced in"): the surprise index reads <strong>negative on counts, mildly positive on value</strong>. The confirmation pattern — counts and value surprising positive together, plus vendor de-concentration — <strong>has not fired</strong>. Run-rate of the measured economy: <strong>~$10.44M/year</strong> <code>[LENS.SCAN annualized]</code>.</li>
     </ol>
 
-    <h1 id="measurement">2. Measurement infrastructure</h2>
+    <h2 id="measurement">2. Measurement infrastructure</h2>
     <p>Pipeline (operational since 2026-07-16): three collectors (Dune per-facilitator dailies; x402scan structured snapshots; npm counts) → scrub layer (ping-storm flag: &gt;95% sub-cent transfers ∧ &lt;5 unique buyers per day×facilitator) → parquet in object storage → weekly statsforecast vintages (SeasonalNaive / AutoARIMA / AutoETS / Theta; rolling-origin CV; winner per series; 28-day quantile forecasts) → surprise index.</p>
     <p>Marginal cost of the entire apparatus: <strong>€6.49/month</strong> (one small VPS) + ~22 Dune credits/day inside the free tier + one Firecrawl scrape/day. Zero paid model APIs.</p>
     <p>Declared limits: <code>LENS.ONCHAIN</code> catalogs are stale (§5, fix queued); <code>LENS.SCAN</code> indexes only registered sellers and displays mixed windows (30d on the home page; an ambiguous shorter window, likely ~24h, on /facilitators and /networks — labeled below as "recent window"); <code>LENS.EXT</code> is not reproducible by us.</p>
 
-    <h1 id="macro">3. Macro state</h2>
+    <h2 id="macro">3. Macro state</h2>
     <div class="tblwrap">
       <table>
         <thead><tr><th>Metric, past 30d</th><th>LENS.SCAN</th><th>LENS.EXT (CoinDesk/Chainalysis)</th></tr></thead>
@@ -173,7 +185,7 @@ const bodyHtml = `<style>
       <figcaption>FIG. 02 — payment size distribution</figcaption>
     </figure>
 
-    <h1 id="networks">4. Networks: Base vs Solana</h2>
+    <h2 id="networks">4. Networks: Base vs Solana</h2>
     <p>The two lenses invert each other; both inversions are informative.</p>
     <div class="tblwrap">
       <table>
@@ -189,7 +201,7 @@ const bodyHtml = `<style>
     <p>(x402scan's own page displays "~85.5% / ~14.5%" shares; our computed splits from its raw numbers are 86.2/13.8 by count and 91.7/8.3 by value — reported both, as displayed and as computed.)</p>
     <p>Reconciliation: our Solana catalog happens to contain PayAI's <em>live</em> settlement signer; our Base catalog is missing the currently dominant facilitator addresses. Joint reading: <strong>Base still carries most indexed volume; Solana is the fastest-growing settlement lane</strong> (sub-second finality, ~$0.00025 fees <code>[LENS.EXT]</code>). Ticket texture: Solana slice medians run $0.001–0.01/day (smallest payments live there); Base carries larger tickets (Anyspend median ≈ $1.00) <code>[LENS.ONCHAIN]</code>.</p>
 
-    <h1 id="facilitators">5. Facilitators — the settlement layer</h2>
+    <h2 id="facilitators">5. Facilitators — the settlement layer</h2>
     <p class="lens"><code>[LENS.SCAN · recent window, as displayed 2026-07-17 · window total: 260,097 tx / $36.02K]</code></p>
     <div class="tblwrap">
       <table>
@@ -220,7 +232,7 @@ const bodyHtml = `<style>
       <li>Within our stable-address slice <code>[LENS.ONCHAIN · Base · 30d]</code>, leaders were Anyspend ($5.4K), PayAI ($4.1K), Thirdweb ($905).</li>
     </ul>
 
-    <h1 id="vendors">6. Vendors — who earns</h2>
+    <h2 id="vendors">6. Vendors — who earns</h2>
     <p class="lens"><code>[LENS.SCAN · 30d revenue · retrieved 2026-07-17]</code></p>
     <div class="tblwrap">
       <table>
@@ -250,7 +262,7 @@ const bodyHtml = `<style>
       <li><strong>x402 is a billing layer over the existing API economy</strong>, not a parallel service universe: top vendors resell Exa/Firecrawl/OpenAI-compatible inference behind a BYO-wallet meter.</li>
     </ul>
 
-    <h1 id="sectors">7. Sectors — what the money buys</h2>
+    <h2 id="sectors">7. Sectors — what the money buys</h2>
     <p>Classification of the top-20 marketplace servers + the 61-project ecosystem registry <code>[LENS.SCAN · 2026-07-17]</code>:</p>
     <div class="tblwrap">
       <table>
@@ -269,7 +281,7 @@ const bodyHtml = `<style>
     <p>Registry composition (61 projects): Infrastructure &amp; Tooling 22, Services/Endpoints 18, Facilitators 9, Client-Side 6, Learning 6 — <strong>more than a third of the registered ecosystem is picks-and-shovels</strong> serving an end-demand that is one routing vendor deep.</p>
     <p>Sectoral law observed so far: <strong>agents pay first for compute (inference), then for perception (data, search, social), then for action (trading, telecom) — in that revenue order.</strong> Everything monetizing well is an input to running more agents.</p>
 
-    <h1 id="developer-funnel">8. Developer funnel</h2>
+    <h2 id="developer-funnel">8. Developer funnel</h2>
     <p class="lens"><code>[LENS.NPM · verified against api.npmjs.org · 2026-07-17]</code></p>
     <div class="tblwrap">
       <table>
@@ -289,7 +301,7 @@ const bodyHtml = `<style>
     </figure>
     <p>Reading: a stable ~1.2M/month core with sharply contracting client helpers, simultaneous with gateway-vendor revenue growth (§6), indicates <strong>consolidation into hosted rails</strong> rather than direct protocol integration. Bullish for rail operators; bearish for a decentralized seller base.</p>
 
-    <h1 id="forecast">9. Forecast layer and the surprise index</h2>
+    <h2 id="forecast">9. Forecast layer and the surprise index</h2>
     <p><strong>Backtest</strong> <code>[rolling-origin CV, h=14 · rMAE vs SeasonalNaive, &lt;1 beats baseline]</code>:</p>
     <div class="tblwrap">
       <table>
@@ -328,7 +340,7 @@ const bodyHtml = `<style>
     </figure>
     <p>Interpretation: <strong>quantity undershoots, value overshoots</strong> — wash evaporating faster than the model expected, paid usage slightly ahead of it. Automated weekly vintages begin 2026-07-20.</p>
 
-    <h1 id="assessment">10. Assessment and watchlist</h2>
+    <h2 id="assessment">10. Assessment and watchlist</h2>
     <p><strong>Frame.</strong> Measured run-rate: <strong>$10.44M/year</strong> <code>[LENS.SCAN annualized]</code> against narrative-scale expectations (Visa/Mastercard/Ripple joined the standard 2026-07-15 <code>[LENS.EXT]</code>). The narrative-to-GDP gap is enormous, and cuts both ways. Current evidence: a working mechanism; one proven killer app (paying for inference); one dominant clearing rail; genuinely improving payment quality; extreme vendor concentration; <strong>no inflection in the data yet</strong>.</p>
     <p><strong>Confirmation pattern for the thesis</strong> — the pipeline now watches these automatically:</p>
     <ol>
@@ -340,7 +352,7 @@ const bodyHtml = `<style>
     </ol>
     <p><strong>Queued pipeline upgrades:</strong> facilitator catalogs regenerated from x402scan attribution (highest-value fix); daily seller-level concentration series; Chronos-2/Moirai-2 vs the §9 bar; payer funding-cluster wash analysis; Bass/logistic adoption fits for scenario bounds.</p>
 
-    <h1 id="appendix">A. Canonical data appendix (machine-readable)</h2>
+    <h2 id="appendix">A. Canonical data appendix (machine-readable)</h2>
     <p>Authoritative over prose. Units: USD unless noted; windows as stated.</p>
     <pre><code>{
   "asof": "2026-07-17",
@@ -378,7 +390,7 @@ const bodyHtml = `<style>
 }</code></pre>
     <p><strong>Provenance:</strong> LENS.SCAN scraped 2026-07-17 (home /facilitators /networks /resources /ecosystem; window labels as displayed — home = 30d, facilitators/networks = shorter "recent window"). LENS.ONCHAIN from our owned Dune queries; catalogs forked 2026-07-16 from community queries 6158127/6165774, known stale. LENS.NPM verified live. LENS.EXT: CoinDesk 2026-07-15, Chainalysis "Inside x402".</p>
 
-    <h1 id="coda">Coda — from our shop</h2>
+    <h2 id="coda">Coda — from our shop</h2>
     <p>Disclosure: we don't just measure these rails, we operate on them. Two Numetal systems live on x402 today, and both are raising:</p>
     <ul>
       <li><strong><a href="https://ishtar.numetal.xyz">Ishtar</a></strong> — agents court on your behalf. An agent-mediated courtship venue: x402-priced surfaces, HeartPrefs dating-docs, the HeartBench model leaderboard. $20k round, $4k a head — not a pre-seed. Raise deck: <a href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">ishtar.numetal.xyz/deck/not-raising-a-preseed</a> · <a href="https://assets.numetal.xyz/deck/ishtar-deck-not-a-preseed.pdf">PDF</a></li>
@@ -419,6 +431,7 @@ const bodyHtml = `<style>
       <a href="/privacy">Privacy</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-016', note: 'Syndicated copy — canonical at gokhan.vc' })}
 </div>
 `;
 ---

@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, articleDocCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
 
 const title = "CURB is live";
 const description = "CURB is live: an agent↔agent inference swap rail with live seller and buyer agents on Cloudflare. Offer → match → single-payee x402 → grant. Fees split on-chain. Hub holds no upstream LLM keys. USDC on x402 on Base.";
@@ -26,6 +27,19 @@ const jsonLd = JSON.stringify({
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://curb.numetal.xyz/dispatch/curb-is-live' },
 });
+
+const mast = mastheadHtml({
+      docNo: 'NML-014',
+      status: 'Status: published',
+      titleHtml: `
+<div class="eyebrow">CURB · Inference swap</div>
+<h1>CURB is live<span class="dot">.</span></h1>
+<p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-09">9 Jul 2026</time> · Numetal Labs</p>
+    `,
+      stamp: 'Syndicated copy',
+      footLeft: 'numetal.xyz/blog/curb-is-live',
+      footRight: 'Canonical: curb.numetal.xyz',
+    });
 
 const bodyHtml = `<style>
   :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
@@ -66,6 +80,8 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  ${docChromeCss}
+  ${articleDocCss}
   ${subscribeBlockCss}
 </style>
 
@@ -84,11 +100,7 @@ const bodyHtml = `<style>
   <div class="dither"></div>
 
   <main>
-    <header class="head">
-      <div class="eyebrow">CURB · Inference swap</div>
-      <h1>CURB is live<span class="dot">.</span></h1>
-      <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-09">9 Jul 2026</time> · Numetal Labs</p>
-    </header>
+    ${mast}
 
     <article class="article">
       <p class="orig">This post was first published on <a href="https://curb.numetal.xyz/dispatch/curb-is-live">CURB</a>.</p>
@@ -148,6 +160,7 @@ const bodyHtml = `<style>
       <a href="/privacy">Privacy</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-014', note: 'Syndicated copy — canonical at curb.numetal.xyz' })}
 </div>
 `;
 ---

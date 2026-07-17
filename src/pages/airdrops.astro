@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
 const title = "Numetal — BOUNTY + PLATES retrodrop";
 const description = "500M $NUMETAL retrodropped to the real holders of BOUNTY + PLATES, snapshotted at the Numetal launch block. Methodology, full recipient list, live batch tracker — no signing.";
 const canonical = 'https://numetal.xyz/airdrops';
@@ -25,22 +26,22 @@ const bodyHtml = `<style>
   .pad{padding:24px 32px}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
   .dotp{width:7px;height:7px;border-radius:50%;background:var(--cyan);display:inline-block;animation:pulse 1.8s ease-in-out infinite}
-  .intro{padding-top:30px;padding-bottom:8px;text-align:center}
-  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
   h1{font-size:32px;line-height:1.04;font-weight:700;letter-spacing:-.025em}
   h1 .dot{color:var(--ikb)}
-  .sub{font-size:15px;color:#444;margin-top:12px;max-width:66ch;line-height:1.55;margin-left:auto;margin-right:auto}
-  .hstat{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin-top:18px;display:flex;align-items:center;gap:9px;justify-content:center}
-  .sh{display:flex;align-items:baseline;gap:11px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:14px;justify-content:center}
-  .sh .ix{color:var(--muted)}
-  .mets{display:grid;grid-template-columns:repeat(4,1fr);border:1.5px solid var(--ink)}
+  .sub{font-size:15px;color:#444;margin-top:12px;max-width:66ch;line-height:1.55}
+  .hstat{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink);margin-top:14px;display:flex;align-items:center;gap:9px}
+  .sh{display:flex;align-items:baseline;gap:11px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;margin-bottom:14px;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:7px}
+  .sh .ix{color:var(--muted);font-weight:400;letter-spacing:.14em;white-space:nowrap}
+  .mets{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink)}
   .met{padding:14px 14px;border-right:1px solid var(--line)}.met:last-child{border-right:0}
   .met .k{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
   .met .v{font-size:21px;font-weight:700;margin-top:6px}.met .v.bn{color:var(--orange)}
-  .boxed{border:1.5px solid var(--ink)}
-  table.tb{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px}
-  table.tb th{text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#555;padding:10px 13px;border-bottom:1px solid var(--ink);background:#eeeeec}
-  table.tb td{padding:10px 13px;border-bottom:1px solid var(--line);white-space:nowrap}
+  .boxed{border:2px solid var(--ink);overflow-x:auto}
+  table.tb{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+  table.tb th{text-align:left;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#555;padding:10px 13px;border:1px solid var(--line);border-top:0;background:#eeeeec}
+  table.tb td{padding:10px 13px;border:1px solid var(--line);white-space:nowrap}
+  table.tb th:first-child,table.tb td:first-child{border-left:0}
+  table.tb th:last-child,table.tb td:last-child{border-right:0}
   table.tb tr:last-child td{border-bottom:0}
   .tag{font-family:var(--mono);font-size:10px;font-weight:700;padding:2px 7px;letter-spacing:.03em;text-transform:uppercase;display:inline-block;white-space:nowrap}
   .t-today{background:var(--cyan);color:#fff}.t-sched{border:1px solid var(--line);color:var(--muted)}.t-done{background:var(--green);color:#fff}
@@ -58,6 +59,7 @@ const bodyHtml = `<style>
   .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
   .social a:hover{color:var(--ikb)}
   .social svg{width:17px;height:17px;fill:currentColor;display:block}
+${docChromeCss}
 ${subscribeBlockCss}
 </style>
 
@@ -77,12 +79,15 @@ ${subscribeBlockCss}
   <div class="dither"></div>
 
   <main>
-    <section class="pad intro">
-      <div class="eyebrow">Retrodrop 01 · BOUNTY + PLATES · Base</div>
-      <h1>BOUNTY + PLATES retrodrop<span class="dot">.</span></h1>
-      <p class="sub">500M $NUMETAL back to the real holders of the predecessor tokens — snapshotted at the Numetal launch block, paid in 3 onchain batches via Smol Disperse. No signing, no claim. If you held, it just arrives.</p>
-      <div class="hstat" id="hstatus"><span class="dotp"></span><span>loading status…</span></div>
-    </section>
+    ${mastheadHtml({
+      docNo: 'NML-003',
+      status: 'Status: live',
+      titleHtml: '<h1>BOUNTY + PLATES retrodrop<span class="dot">.</span></h1><p class="sub">500M $NUMETAL back to the real holders of the predecessor tokens — snapshotted at the Numetal launch block, paid in 3 onchain batches via Smol Disperse. No signing, no claim. If you held, it just arrives.</p><div class="hstat" id="hstatus"><span class="dotp"></span><span>loading status…</span></div>',
+      sub: 'Retrodrop 01 · BOUNTY + PLATES · Base',
+      stamp: 'No signing required',
+      footLeft: 'numetal.xyz/airdrops',
+      footRight: 'Snapshot · block 46,958,289',
+    })}
 
     <div class="dither"></div>
     <section class="pad">
@@ -95,13 +100,13 @@ ${subscribeBlockCss}
     </section>
 
     <div class="dither"></div>
-    <section class="pad"><div class="sh"><span class="ix">01</span>Batch tracker</div>
+    <section class="pad"><div class="sh"><span>Batch tracker</span><span class="ix">§01</span></div>
       <div class="boxed"><table class="tb"><thead><tr><th>Batch</th><th>When</th><th>NUMETAL</th><th>Status</th><th>Tx</th></tr></thead><tbody id="tracker"><tr><td colspan="5" style="color:var(--muted)">loading…</td></tr></tbody></table></div>
       <div class="qhint">Each batch flips to a green tick with its Basescan tx once sent — verifiable onchain.</div>
     </section>
 
     <div class="dither"></div>
-    <section class="pad"><div class="sh"><span class="ix">02</span>Check your allocation</div>
+    <section class="pad"><div class="sh"><span>Check your allocation</span><span class="ix">§02</span></div>
       <input class="qin" id="q" placeholder="paste your address (0x…)" autocomplete="off" spellcheck="false" aria-label="Your wallet address" style="max-width:540px;margin:0 auto;display:block"/>
       <div class="qhint" style="text-align:center">No wallet connection — read-only lookup. Try <span id="ex" style="color:var(--ikb);cursor:pointer;text-decoration:underline">0xb1fd2b…</span></div>
       <div id="result" style="margin:14px auto 0;max-width:540px"></div>
@@ -109,7 +114,7 @@ ${subscribeBlockCss}
     </section>
 
     <div class="dither"></div>
-    <section class="pad"><div class="sh"><span class="ix">03</span>The numbers</div>
+    <section class="pad"><div class="sh"><span>The numbers</span><span class="ix">§03</span></div>
       <div class="boxed" style="max-width:520px;margin:0 auto"><table class="tb">
         <thead><tr><th></th><th style="text-align:right">Bounty</th><th style="text-align:right">Plates</th></tr></thead><tbody>
         <tr><td style="color:#555">Eligible holders</td><td style="text-align:right">654</td><td style="text-align:right">17</td></tr>
@@ -121,7 +126,7 @@ ${subscribeBlockCss}
     </section>
 
     <div class="dither"></div>
-    <section class="pad"><div class="sh"><span class="ix">04</span>Methodology</div>
+    <section class="pad"><div class="sh"><span>Methodology</span><span class="ix">§04</span></div>
       <ul class="mlist">
         <li>Balances reconstructed from the full onchain transfer history of both tokens up to the launch block — every token accounted for.</li>
         <li>Real people only — 10 infra/bot wallets stripped (AMM pools, Clanker fee locker, MEV bots, CoW, routers); 152 personal smart wallets (Coinbase, Safe, Meta&shy;Mask) kept.</li>
@@ -131,7 +136,7 @@ ${subscribeBlockCss}
     </section>
 
     <div class="dither"></div>
-    <section class="pad" style="padding-bottom:30px"><div class="sh"><span class="ix">05</span>How we enact it</div>
+    <section class="pad" style="padding-bottom:30px"><div class="sh"><span>How we enact it</span><span class="ix">§05</span></div>
       <div class="enact">Pushed via <a href="https://smold.app/disperse" style="color:var(--ink);font-weight:700">Smol Disperse</a> on Base — 3 batches (100M · 180M · 220M) from agentbountydev.eth <a href="https://basescan.org/address/0x15813fBeac0Ac58FA087C459639F8DC64a9B93c3" target="_blank" rel="noopener" style="color:var(--ikb)">0x15813f…B93c3</a>. Recipients sign nothing; the tokens simply arrive. Each batch is logged on the <a href="/fees">fee-engine report</a> tagged <span class="tag" style="background:var(--ikb);color:#fff">retrodrop&nbsp;N/3</span> — distribution, not a burn, so it never touches the burned total. Every batch is one onchain transaction, linked in the tracker above.</div>
     </section>
   </main>
@@ -154,6 +159,7 @@ ${subscribeBlockCss}
       <a href="/cookies">Cookies</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-003', note: 'Distribution record — verifiable onchain' })}
 </div>
 `;
 ---

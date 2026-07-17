@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
 export const prerender = true;
 const title = "Privacy Policy \u2014 Numetal";
 const description = "Privacy Policy for numetal.xyz and the Numetal Discord application.";
@@ -40,6 +41,11 @@ const bodyHtml = `<style>
   .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
   .social a:hover{color:var(--ikb)}
   .social svg{width:17px;height:17px;fill:currentColor;display:block}
+${docChromeCss}
+  /* document heading discipline (chrome only) */
+  h2{font-size:12px;letter-spacing:.18em;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:7px}
+  h2 .n{order:2;color:var(--muted)}
+  h2 .n::before{content:"\\00a7"}
 ${subscribeBlockCss}
 </style>
 
@@ -52,8 +58,15 @@ ${subscribeBlockCss}
 <div class="dither"></div>
 
 <main><div class="wrap">
-  <h1>Privacy Policy</h1>
-  <div class="upd">Last updated: 12 June 2026</div>
+  ${mastheadHtml({
+    docNo: 'NML-005',
+    status: 'Status: in force',
+    titleHtml: '<h1>Privacy Policy</h1><div class="upd">Last updated: 12 June 2026</div>',
+    sub: 'Legal · privacy policy',
+    stamp: 'Legal notice',
+    footLeft: 'numetal.xyz/privacy',
+    footRight: 'contact@numetal.xyz',
+  })}
 
   <p>This Privacy Policy explains how Numetal (“Numetal”, “we”, “us”) handles information in connection with the website at <strong>numetal.xyz</strong> and the <strong>Numetal Discord and Telegram bots</strong> (each, a “bot”), together the “Services”. We collect as little as possible.</p>
 
@@ -103,7 +116,9 @@ ${subscribeBlockHtml}
     <a href="/privacy">Privacy</a>
     <a href="/cookies">Cookies</a>
   </span>
-</div></footer></div>
+</div></footer>
+${colophonHtml({ docNo: 'NML-005', note: 'Filed at numetal.xyz' })}
+</div>
 `;
 ---
 <Base title={title} description={description} canonical={canonical}>

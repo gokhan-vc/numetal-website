@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
 export const prerender = true;
 const title = "Terms of Service \u2014 Numetal";
 const description = "Terms of Service for numetal.xyz, the Numetal Discord application, and the Numetal protocol.";
@@ -41,6 +42,11 @@ const bodyHtml = `<style>
   .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
   .social a:hover{color:var(--ikb)}
   .social svg{width:17px;height:17px;fill:currentColor;display:block}
+${docChromeCss}
+  /* document heading discipline (chrome only) */
+  h2{font-size:12px;letter-spacing:.18em;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:7px}
+  h2 .n{order:2;color:var(--muted)}
+  h2 .n::before{content:"\\00a7"}
 ${subscribeBlockCss}
 </style>
 
@@ -53,8 +59,15 @@ ${subscribeBlockCss}
 <div class="dither"></div>
 
 <main><div class="wrap">
-  <h1>Terms of Service</h1>
-  <div class="upd">Last updated: 12 June 2026</div>
+  ${mastheadHtml({
+    docNo: 'NML-004',
+    status: 'Status: in force',
+    titleHtml: '<h1>Terms of Service</h1><div class="upd">Last updated: 12 June 2026</div>',
+    sub: 'Legal · terms of service',
+    stamp: 'Legal notice',
+    footLeft: 'numetal.xyz/terms',
+    footRight: 'contact@numetal.xyz',
+  })}
 
   <p>These Terms of Service (“Terms”) govern your use of the website at <strong>numetal.xyz</strong>, the <strong>Numetal Discord and Telegram bots</strong> (each, a “bot”), and related software and on-chain components (together, the “Services”), operated by Numetal (“we”, “us”).</p>
 
@@ -124,7 +137,9 @@ ${subscribeBlockHtml}
     <a href="/privacy">Privacy</a>
     <a href="/cookies">Cookies</a>
   </span>
-</div></footer></div>
+</div></footer>
+${colophonHtml({ docNo: 'NML-004', note: 'Filed at numetal.xyz' })}
+</div>
 `;
 ---
 <Base title={title} description={description} canonical={canonical}>

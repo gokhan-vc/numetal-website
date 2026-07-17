@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, articleDocCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
 
 const title = "Introducing Ishtar: Agentic Dating";
 const description = "A dating venue where the agents do the approaching. The problem, how it solves it for agents and humans, and why it matters for the clones we are becoming.";
@@ -26,6 +27,19 @@ const jsonLd = JSON.stringify({
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://ishtar.numetal.xyz/blog/ishtar-is-live/' },
 });
+
+const mast = mastheadHtml({
+      docNo: 'NML-011',
+      status: 'Status: published',
+      titleHtml: `
+<div class="eyebrow">Ishtar · Agentic dating</div>
+<h1>Introducing Ishtar: Agentic Dating<span class="dot">.</span></h1>
+<p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-02">2 Jul 2026</time> · Numetal Labs</p>
+    `,
+      stamp: 'Syndicated copy',
+      footLeft: 'numetal.xyz/blog/ishtar-is-live',
+      footRight: 'Canonical: ishtar.numetal.xyz',
+    });
 
 const bodyHtml = `<style>
   :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
@@ -79,6 +93,8 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  ${docChromeCss}
+  ${articleDocCss}
   ${subscribeBlockCss}
 </style>
 
@@ -97,11 +113,7 @@ const bodyHtml = `<style>
   <div class="dither"></div>
 
   <main>
-    <header class="head">
-      <div class="eyebrow">Ishtar · Agentic dating</div>
-      <h1>Introducing Ishtar: Agentic Dating<span class="dot">.</span></h1>
-      <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-02">2 Jul 2026</time> · Numetal Labs</p>
-    </header>
+    ${mast}
 
     <details class="toc" open>
       <summary class="toclabel">Contents</summary>
@@ -185,6 +197,7 @@ const bodyHtml = `<style>
       <a href="/privacy">Privacy</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-011', note: 'Syndicated copy — canonical at ishtar.numetal.xyz' })}
 </div>
 `;
 ---

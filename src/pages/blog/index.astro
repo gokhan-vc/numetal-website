@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
 
 const title = "Numetal — Blog";
 const description = "Notes and posts from Numetal Labs, an agent accelerator studio under Atelier Gökhan.";
@@ -98,7 +99,10 @@ const bodyHtml = `<style>
   .post .more{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--ikb);letter-spacing:.04em}
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:760px){.top,.stamp,.head,.list,.ft{padding-left:18px;padding-right:18px}nav{display:none}}
+  .reg{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin:8px 32px 0}
+  .reg .rn{color:var(--muted);font-weight:400;letter-spacing:.14em}
+  @media(max-width:760px){.top,.stamp,.head,.list,.ft{padding-left:18px;padding-right:18px}nav{display:none}.reg{margin-left:18px;margin-right:18px}}
+  ${docChromeCss}
   ${subscribeBlockCss}
 </style>
 
@@ -117,12 +121,17 @@ const bodyHtml = `<style>
   <div class="dither"></div>
 
   <main>
-    <header class="head">
-      <div class="eyebrow">Numetal Labs · Blog</div>
-      <h1>Blog<span class="dot">.</span></h1>
-      <p class="sub">Notes and posts from Numetal Labs, an agent accelerator studio under Atelier Gökhan.</p>
-    </header>
+    ${mastheadHtml({
+      docNo: 'NML-010',
+      status: 'Status: open series',
+      titleHtml: '<h1>Blog<span class="dot">.</span></h1><p class="sub">Notes and posts from Numetal Labs, an agent accelerator studio under Atelier Gökhan.</p>',
+      sub: 'Numetal Labs · dispatch register',
+      stamp: 'Studio dispatches',
+      footLeft: 'numetal.xyz/blog',
+      footRight: 'RSS /feed.xml',
+    })}
 
+    <div class="reg"><span>Dispatch register</span><span class="rn">§01</span></div>
     <section class="list">${rows}
     </section>
   </main>
@@ -142,6 +151,7 @@ const bodyHtml = `<style>
       <a href="/privacy">Privacy</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-010', note: 'Dispatches from the studio' })}
 </div>
 `;
 ---

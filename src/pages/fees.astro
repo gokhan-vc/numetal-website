@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
 const title = "Numetal — fee engine · machine report";
 const description = "Numetal fee engine — live burns, buybacks, and fee distribution on Base, as a machine report.";
 const canonical = 'https://numetal.xyz/fees';
@@ -24,12 +25,9 @@ const bodyHtml = `<style>
   .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:6px 32px 14px}
   .stamp b{color:var(--ikb);font-weight:700}
   main{flex:1}
-  /* compact centered intro */
-  .intro{text-align:center;padding:30px 24px 4px;max-width:680px;margin:0 auto}
-  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
   h1{font-size:30px;line-height:1.04;font-weight:700;letter-spacing:-.02em}
   h1 .dot{color:var(--ikb)}
-  .sub{font-size:14px;color:#555;margin-top:9px}
+  .sub{font-size:14px;color:#555;margin-top:9px;max-width:66ch}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
   /* ── machine report · light paper teletext ── */
   .crt{max-width:640px;margin:22px auto 40px;background:#fff;
@@ -38,7 +36,7 @@ const bodyHtml = `<style>
   .crt .mast{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 14px;background:var(--ikb);color:#fff}
   .crt .mast .mt{font-weight:700;letter-spacing:.06em;font-size:12px}
   .crt .mast .lv{display:flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.16em}
-  .dotp{width:7px;height:7px;border-radius:50%;background:#7fe6ff;display:inline-block;animation:pulse 1.7s ease-in-out infinite;box-shadow:0 0 6px rgba(127,230,255,.9)}
+  .dotp{width:7px;height:7px;border-radius:50%;background:var(--cyan);display:inline-block;animation:pulse 1.7s ease-in-out infinite}
   .csec{display:flex;align-items:center;gap:8px;padding:6px 14px;background:#f0f0ed;border-top:1px solid #d8d8d3;border-bottom:1px solid #d8d8d3;
     font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#555;justify-content:space-between}
   .csec .lab{display:flex;align-items:center;gap:8px}
@@ -100,6 +98,7 @@ const bodyHtml = `<style>
   .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
   .social a:hover{color:var(--ikb)}
   .social svg{width:17px;height:17px;fill:currentColor;display:block}
+${docChromeCss}
 ${subscribeBlockCss}
 </style>
 
@@ -119,11 +118,15 @@ ${subscribeBlockCss}
   <div class="dither"></div>
 
   <main>
-    <section class="intro">
-      <div class="eyebrow">Fee engine · Base · live</div>
-      <h1>Burns &amp; buybacks<span class="dot">.</span></h1>
-      <p class="sub">Every fee claim splits to team, treasury, and burn — onchain.</p>
-    </section>
+    ${mastheadHtml({
+      docNo: 'NML-002',
+      status: 'Status: live · auto-refresh',
+      titleHtml: '<h1>Burns &amp; buybacks<span class="dot">.</span></h1><p class="sub">Every fee claim splits to team, treasury, and burn — onchain.</p>',
+      sub: 'Fee engine · Base · machine report',
+      stamp: 'Read from the contracts',
+      footLeft: 'numetal.xyz/fees',
+      footRight: '$NUMETAL 0x57ED…CFbA3 · Base',
+    })}
 
     <div class="crt">
       <div class="mast">
@@ -134,22 +137,22 @@ ${subscribeBlockCss}
       <div class="row"><span class="k">Chain</span><span class="lead"></span><span class="v w">Base · 8453</span></div>
       <div class="row"><span class="k">Token</span><span class="lead"></span><span class="v"><a href="https://basescan.org/token/${NUM}" target="_blank" rel="noopener">0x57ED…CFbA3 ↗</a></span></div>
 
-      <div class="csec"><span class="lab"><span class="blk" style="color:#ff6a33">█</span>Supply &amp; burn</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:var(--orange)">█</span>Supply &amp; burn</span></div>
       <div class="row"><span class="k">Total supply</span><span class="lead"></span><span class="v w">100,000,000,000</span></div>
       <div class="row"><span class="k">Current supply</span><span class="lead"></span><span class="v w" id="supplyNow">—</span></div>
       <div class="row"><span class="k">Burned</span><span class="gz">[<span class="trk"><span class="fil o" id="burnedBar"></span></span>]</span><span class="pct" id="burnedPct">—</span><span class="lead"></span><span class="v o" id="burned">—</span></div>
       <div class="row sub"><span class="k">├ buyback-burn</span><span class="gz">[<span class="trk"><span class="fil c" id="bbBar"></span></span>]</span><span class="pct" id="bbPct">—</span><span class="lead"></span><span class="v c" id="bbVal">—</span></div>
       <div class="row sub"><span class="k">└ manual-burn</span><span class="gz">[<span class="trk"><span class="fil k" id="mbBar"></span></span>]</span><span class="pct" id="mbPct">—</span><span class="lead"></span><span class="v w" id="mbVal">—</span></div>
 
-      <div class="csec"><span class="lab"><span class="blk" style="color:#5a8bff">█</span>Current studio holdings</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:var(--ikb)">█</span>Current studio holdings</span></div>
       <div class="row"><span class="k">Treasury</span><span class="lead"></span><span class="v b" id="treasury">—</span></div>
       <div class="row"><span class="k">Team</span><span class="lead"></span><span class="v w" id="team">—</span></div>
 
-      <div class="csec"><span class="lab"><span class="blk" style="color:#34c6e6">█</span>Market</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:var(--cyan)">█</span>Market</span></div>
       <div class="row"><span class="k">Price</span><span class="lead"></span><span class="v c" id="price">—</span></div>
       <div class="row"><span class="k">FDV · 24h vol</span><span class="lead"></span><span class="v w" id="fdv">—</span></div>
 
-      <div class="csec"><span class="lab"><span class="blk" style="color:#e6bb3f">█</span>Distribution</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:var(--gold)">█</span>Distribution</span></div>
       <div class="dwrap">
         <div class="dh">WETH side</div>
         <div class="barx"><span class="seg s-team" style="flex:80 0 0">80% team</span><span class="seg s-trez" style="flex:10 0 0">10%</span><span class="seg s-burn" style="flex:10 0 0">10%</span></div>
@@ -159,7 +162,7 @@ ${subscribeBlockCss}
         <div class="barx"><span class="seg s-team" style="flex:40 0 0">40% team</span><span class="seg s-trez" style="flex:30 0 0">30% treasury</span><span class="seg s-burn" style="flex:30 0 0">30% burn</span></div>
       </div>
 
-      <div class="csec"><span class="lab"><span class="blk" style="color:#cfcfcf">█</span>Burn &amp; buyback log</span><span class="cnt" id="burncount"></span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:var(--muted)">█</span>Burn &amp; buyback log</span><span class="cnt" id="burncount"></span></div>
       <div class="rlog">
         <table class="lg">
           <thead><tr><th>Time</th><th>Type</th><th>NUMETAL</th><th>From</th><th>Tx</th></tr></thead>
@@ -167,7 +170,7 @@ ${subscribeBlockCss}
         </table>
       </div>
 
-      <div class="csec"><span class="lab"><span class="blk" style="color:#002FA7">█</span>Wallet ledger</span><span class="cnt">who is who</span></div>
+      <div class="csec"><span class="lab"><span class="blk" style="color:var(--ikb)">█</span>Wallet ledger</span><span class="cnt">who is who</span></div>
       <div class="ldr"><svg viewBox="0 0 24 24"><path d="M20 9V7c0-1.1-.9-2-2-2h-3c0-1.66-1.34-3-3-3S9 3.34 9 5H6c-1.1 0-2 .9-2 2v2c-1.66 0-3 1.34-3 3s1.34 3 3 3v4c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-4c1.66 0 3-1.34 3-3s-1.34-3-3-3zM7.5 11.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5S9.83 13 9 13s-1.5-.67-1.5-1.5zM16 17H8v-2h8v2zm-1-4c-.83 0-1.5-.67-1.5-1.5S14.17 10 15 10s1.5.67 1.5 1.5S15.83 13 15 13z"/></svg><span class="nm"><b>Bankr</b><small>agent wallet · automated buybacks &amp; burns</small></span><a class="ad" href="https://basescan.org/address/0x8f49d4d782488e8576c8c54288027c57f4acf521" target="_blank" rel="noopener">0x8f49…f521&nbsp;↗</a></div>
       <div class="ldr"><svg viewBox="0 0 24 24"><path d="m16.955 8.662 2.12-2.122 1.416 1.414-2.121 2.122zM2 18h20v2H2zm9-14h2v3h-2zM3.543 7.925 4.957 6.51l2.121 2.12-1.414 1.415zM5 16h14c0-3.87-3.13-7-7-7s-7 3.13-7 7z"/></svg><span class="nm"><b>agentbountydev.eth</b><small>Agent Bounty (sunset) · retrodrop + burn source</small></span><a class="ad" href="https://basescan.org/address/0x15813fBeac0Ac58FA087C459639F8DC64a9B93c3" target="_blank" rel="noopener">0x1581…93c3&nbsp;↗</a></div>
       <div class="ldr"><svg viewBox="0 0 24 24"><path d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58A2.01 2.01 0 0 0 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29zM20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4 3.43c0-.81-.48-1.53-1.22-1.85A6.95 6.95 0 0 0 20 14c-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24v-1.57zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3z"/></svg><span class="nm"><b>Team</b><small>team allocation wallet</small></span><a class="ad" href="https://basescan.org/address/0xB13Fb67859bC818a7b9Eb7f1380274492B6D648F" target="_blank" rel="noopener">0xB13F…648F&nbsp;↗</a></div>
@@ -195,6 +198,7 @@ ${subscribeBlockCss}
       <a href="/cookies">Cookies</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-002', note: 'Figures read live from the contracts' })}
 </div>
 `;
 ---

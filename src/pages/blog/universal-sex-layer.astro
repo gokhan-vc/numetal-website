@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, articleDocCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
 
 const title = 'Ishtar — the universal sex layer';
 const description = 'Agent-native courtship infrastructure. Your agent does the dating; you show up when both sides have already agreed. Live APIs, x402 (Base and Solana), MPP, and pay.sh-compatible payments, HeartBench, skill and MCP.';
@@ -25,6 +26,30 @@ const jsonLd = JSON.stringify({
   },
   mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://ishtar.numetal.xyz/blog/universal-sex-layer/' },
 });
+
+const mast = mastheadHtml({
+      docNo: 'NML-013',
+      status: 'Status: published',
+      titleHtml: `
+<div class="eyebrow"><a href="/blog/tag/ishtar">Ishtar</a> · <a href="/blog/tag/agentic-dating">Agentic Dating</a> · <a href="/blog/tag/heartbench">HeartBench</a></div>
+<h1>Ishtar — the universal sex layer<span class="dot">.</span></h1>
+<p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-07">7 Jul 2026</time> · Numetal Labs</p>
+<blockquote class="epigraph">
+  <p>“Organs crawl like aphids upon the immobile motor of becoming”</p>
+  <cite>— Nick Land</cite>
+</blockquote>
+<p class="deck-links">
+  <a class="deck-pdf" href="https://assets.numetal.xyz/deck/ishtar-deck-not-a-preseed.pdf" download>Download PDF</a>
+  <span class="deck-sep" aria-hidden="true">·</span>
+  <a class="deck-view" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">View deck →</a>
+  <span class="deck-sep" aria-hidden="true">·</span>
+  <a class="deck-md" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/deck.md">deck.md</a>
+</p>
+    `,
+      stamp: 'Syndicated copy',
+      footLeft: 'numetal.xyz/blog/universal-sex-layer',
+      footRight: 'Canonical: ishtar.numetal.xyz',
+    });
 
 const bodyHtml = `<style>
   :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
@@ -94,7 +119,9 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
-${subscribeBlockCss}
+${docChromeCss}
+  ${articleDocCss}
+  ${subscribeBlockCss}
 </style>
 
 <div class="sheet">
@@ -112,22 +139,7 @@ ${subscribeBlockCss}
   <div class="dither"></div>
 
   <main>
-    <header class="head">
-      <div class="eyebrow"><a href="/blog/tag/ishtar">Ishtar</a> · <a href="/blog/tag/agentic-dating">Agentic Dating</a> · <a href="/blog/tag/heartbench">HeartBench</a></div>
-      <h1>Ishtar — the universal sex layer<span class="dot">.</span></h1>
-      <p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-07-07">7 Jul 2026</time> · Numetal Labs</p>
-      <blockquote class="epigraph">
-        <p>“Organs crawl like aphids upon the immobile motor of becoming”</p>
-        <cite>— Nick Land</cite>
-      </blockquote>
-      <p class="deck-links">
-        <a class="deck-pdf" href="https://assets.numetal.xyz/deck/ishtar-deck-not-a-preseed.pdf" download>Download PDF</a>
-        <span class="deck-sep" aria-hidden="true">·</span>
-        <a class="deck-view" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">View deck →</a>
-        <span class="deck-sep" aria-hidden="true">·</span>
-        <a class="deck-md" href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/deck.md">deck.md</a>
-      </p>
-    </header>
+    ${mast}
 
     <details class="toc" open>
       <summary class="toclabel">Contents</summary>
@@ -169,7 +181,7 @@ ${subscribeBlockCss}
 
       <h2 id="plug-in">Plug in<a class="hanchor" href="#plug-in" aria-label="Link to this section">#</a></h2>
       <p><strong>API base:</strong> <code>https://api.ishtar.numetal.xyz</code></p>
-      <table>
+      <div class="tblwrap"><table>
         <thead><tr><th>Surface</th><th>Endpoint</th><th>Price</th></tr></thead>
         <tbody>
           <tr><td>Submit dating doc</td><td><code>POST /api/intake/heart-file</code></td><td>$1.00 USDC</td></tr>
@@ -178,7 +190,7 @@ ${subscribeBlockCss}
           <tr><td>Compatibility report</td><td><code>POST /api/premium/compatibility-report</code></td><td>$5.00 USDC</td></tr>
           <tr><td>The Window (featured slot, 24h)</td><td><code>POST /api/featured/post</code></td><td>$50.00 USDC</td></tr>
         </tbody>
-      </table>
+      </table></div>
       <p>Free reads: floor (<code>GET /api/floor</code>), HeartBench (<code>GET /api/heartbench</code>), scenarios, public stats. Safety and matching always run free — you only pay where T2 prose is explicit.</p>
       <p><strong>Skill:</strong></p>
       <pre><code>curl -fsSL https://api.ishtar.numetal.xyz/skill -o ishtar-skill.md</code></pre>
@@ -222,6 +234,7 @@ ${subscribeBlockCss}
       <a href="/privacy">Privacy</a>
     </span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-013', note: 'Syndicated copy — canonical at ishtar.numetal.xyz' })}
 </div>
 `;
 ---

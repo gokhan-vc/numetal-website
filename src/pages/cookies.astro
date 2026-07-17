@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
 export const prerender = true;
 const title = "Cookie Policy \u2014 Numetal";
 const description = "Cookie Policy for numetal.xyz. Only strictly-necessary Cloudflare security cookies are used \u2014 no advertising, analytics, or tracking, and no consent banner required.";
@@ -32,7 +33,7 @@ const bodyHtml = `<style>
   strong{color:var(--ink)}
   table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
   th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
-  th{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:#fff}
+  th{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:var(--bgray)}
   code{font-family:var(--mono);font-size:13px;background:#f0f0ec;padding:1px 5px}
   .note{border:1px solid var(--ink);padding:16px 18px;margin:8px 0;font-size:14px}
   footer{background:#fff;margin-top:40px;border-top:1px solid var(--ink)}
@@ -45,6 +46,11 @@ const bodyHtml = `<style>
   .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
   .social a:hover{color:var(--ikb)}
   .social svg{width:17px;height:17px;fill:currentColor;display:block}
+${docChromeCss}
+  /* document heading discipline (chrome only) */
+  h2{font-size:12px;letter-spacing:.18em;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:7px}
+  h2 .n{order:2;color:var(--muted)}
+  h2 .n::before{content:"\\00a7"}
 ${subscribeBlockCss}
 </style>
 
@@ -57,8 +63,15 @@ ${subscribeBlockCss}
 <div class="dither"></div>
 
 <main><div class="wrap">
-  <h1>Cookie Policy</h1>
-  <div class="upd">Last updated: 11 June 2026</div>
+  ${mastheadHtml({
+    docNo: 'NML-006',
+    status: 'Status: in force',
+    titleHtml: '<h1>Cookie Policy</h1><div class="upd">Last updated: 11 June 2026</div>',
+    sub: 'Legal · cookie policy',
+    stamp: 'Legal notice',
+    footLeft: 'numetal.xyz/cookies',
+    footRight: 'contact@numetal.xyz',
+  })}
 
   <div class="note">numetal.xyz uses <strong>no advertising, analytics, profiling, or cross-site tracking cookies</strong>, embeds no third-party marketing pixels, and loads no consent-management platform. The only cookies that may be set are <strong>strictly necessary security cookies</strong> placed by our infrastructure provider, Cloudflare, to protect the site against bots and abuse and to deliver content.</div>
 
@@ -66,14 +79,14 @@ ${subscribeBlockCss}
   <p>Under Article 5(3) of the ePrivacy Directive (2002/58/EC) and its national transpositions — UK PECR reg. 6(4), Germany's TDDDG §25(2), and France via the CNIL — <strong>strictly necessary cookies are exempt from prior consent</strong>. Because the site sets only such cookies and no non-essential storage, GDPR's consent machinery is not triggered. Our obligation is <strong>transparency</strong>, met by this page — not a consent prompt. Adding a banner would itself introduce unnecessary storage, so we deliberately do not.</p>
 
   <h2><span class="n">02</span>Cookies that may be set</h2>
-  <table>
+  <div class="tblwrap"><table>
     <thead><tr><th>Cookie</th><th>Set by</th><th>Purpose</th><th>Duration</th><th>Type / legal basis</th></tr></thead>
     <tbody>
       <tr><td><code>__cf_bm</code></td><td>Cloudflare</td><td>Bot management — distinguishes humans from automated traffic to protect the site. Not used for advertising or cross-site tracking.</td><td>~30 min (rolling)</td><td>Strictly necessary — exempt from consent (ePrivacy Art 5(3)); security processing under GDPR Art 6(1)(f)</td></tr>
       <tr><td><code>cf_clearance</code></td><td>Cloudflare</td><td>Stores the result of a security challenge so a verified visitor is not re-challenged on every request.</td><td>~30 min</td><td>Strictly necessary — exempt from consent; GDPR Art 6(1)(f)</td></tr>
       <tr><td><code>__cflb</code> / <code>cf_use_ob</code></td><td>Cloudflare</td><td>Session routing for load balancing (may not appear on this site).</td><td>Session / short-lived</td><td>Strictly necessary — exempt from consent</td></tr>
     </tbody>
-  </table>
+  </table></div>
 
   <h2><span class="n">03</span>What we do not do</h2>
   <p>We set <strong>no first-party Numetal cookies</strong>. We do not sell or share any data derived from these cookies, and we do not use them for advertising, profiling, or targeted advertising (CCPA/CPRA). The read-only fee dashboard at <a href="/fees">/fees</a> reads public on-chain data from the Base network through fixed server-side endpoints; it does not set tracking cookies in your browser and does not build a profile of you.</p>
@@ -101,7 +114,9 @@ ${subscribeBlockHtml}
     <a href="/privacy">Privacy</a>
     <a href="/cookies">Cookies</a>
   </span>
-</div></footer></div>
+</div></footer>
+${colophonHtml({ docNo: 'NML-006', note: 'Filed at numetal.xyz' })}
+</div>
 `;
 ---
 <Base title={title} description={description} canonical={canonical}>

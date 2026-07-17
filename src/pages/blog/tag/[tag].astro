@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../../lib/subscribe-block';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../../../lib/doc-furniture';
 
 // Blog posts + their tags. Keep in sync with src/pages/blog/index.astro.
 const POSTS = [
@@ -57,6 +58,16 @@ const rows = posts.map((p) => `
         <span class="more">Read →</span>
       </a>`).join('');
 
+const mast = mastheadHtml({
+      docNo: 'NML-017',
+      status: 'Status: generated',
+      titleHtml: `<h1>#${label}<span class="h"> ·</span></h1><p>${posts.length} post${posts.length === 1 ? '' : 's'} tagged ${label} · <a href="/blog">← all posts</a></p>`,
+      sub: 'Blog · tag register',
+      stamp: 'Tag register',
+      footLeft: `numetal.xyz/blog/tag/${tag}`,
+      footRight: 'RSS /feed.xml',
+    });
+
 const bodyHtml = `<style>
   :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
     --mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,sans-serif}
@@ -85,6 +96,8 @@ const bodyHtml = `<style>
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}
   @media(max-width:760px){.top,.stamp,main,.ft{padding-left:18px;padding-right:18px}nav{display:none}}
+  ${docChromeCss}
+  .docmast{margin-left:0;margin-right:0}
   ${subscribeBlockCss}
 </style>
 
@@ -96,10 +109,7 @@ const bodyHtml = `<style>
   <div class="stamp">Blog · <b>Tag</b> · #${label}</div>
   <div class="dither"></div>
   <main>
-    <div class="head">
-      <h1>#${label}<span class="h"> ·</span></h1>
-      <p>${posts.length} post${posts.length === 1 ? '' : 's'} tagged ${label} · <a href="/blog">← all posts</a></p>
-    </div>
+    ${mast}
     <div class="posts">${rows}</div>
   </main>
   ${subscribeBlockHtml}
@@ -108,6 +118,7 @@ const bodyHtml = `<style>
     <span>Numetal · an Atelier Gökhan studio · on Base</span>
     <span><a href="/blog">Blog</a> · <a href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Ishtar ↗</a> · <a href="/feed.xml">RSS</a> · <a href="https://status.numetal.xyz" target="_blank" rel="noopener">Status</a></span>
   </footer>
+  ${colophonHtml({ docNo: 'NML-017', note: 'Generated register — see /blog' })}
 </div>
 `;
 ---
