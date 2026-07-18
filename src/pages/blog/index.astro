@@ -101,7 +101,9 @@ const bodyHtml = `<style>
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   .reg{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin:8px 32px 0}
   .reg .rn{color:var(--muted);font-weight:400;letter-spacing:.14em}
-  @media(max-width:760px){.top,.stamp,.head,.list,.ft{padding-left:18px;padding-right:18px}nav{display:none}.reg{margin-left:18px;margin-right:18px}}
+  .ways{padding:14px 32px 0;font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--muted)}
+  .ways a{color:var(--ikb)}
+  @media(max-width:760px){.top,.stamp,.head,.list,.ft,.ways{padding-left:18px;padding-right:18px}nav{display:none}.reg{margin-left:18px;margin-right:18px}}
   ${docChromeCss}
   ${subscribeBlockCss}
   @media (prefers-color-scheme:dark){
@@ -136,6 +138,7 @@ const bodyHtml = `<style>
       footRight: 'RSS /feed.xml',
     })}
 
+    <p class="ways">Read them here or → <a href="/newsletter">subscribe</a> · <a href="/feed.xml">RSS</a></p>
     <div class="reg"><span>Dispatch register</span><span class="rn">§01</span></div>
     <section class="list">${rows}
     </section>
