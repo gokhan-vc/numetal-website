@@ -1,0 +1,93 @@
+---
+import Base from '../layouts/Base.astro';
+import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
+// Rendered on demand for every unmatched route (no prerender): the worker
+// serves this sheet with a 404 status for any path not in the register.
+const title = "Document not found — Numetal";
+const description = "The requested path matches no document in the Numetal register.";
+const canonical = "https://numetal.xyz/";
+const bodyHtml = `<style>
+  :root{--bgray:#e7e7e7;--ikb:#002FA7;--paper:#FAFAF8;--ink:#141414;--cyan:#0791a6;--hard:#8c8c8c;--orange:#FF5A1F;--line:#cfcfcf;--muted:#7c7c7c;--mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+  a{color:var(--ikb)}
+  .wrap{width:100%;max-width:760px;margin:0 auto;padding:0 24px}
+  .dither{height:11px;background-image:radial-gradient(#191919 .62px,transparent .72px);background-size:3px 3px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 24px 8px;position:sticky;top:29px;z-index:190;background:var(--sheet,#fff);border-bottom:1px solid var(--line)}
+  nav{display:flex;gap:16px;font-size:13px;align-items:center}
+  nav a{color:var(--ink);text-decoration:none}
+  .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:6px 24px 0}
+  .stamp b{color:var(--ikb);font-weight:700}
+  .mark{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:700;letter-spacing:.06em}
+  .mark a{color:var(--ink);text-decoration:none}
+  .mark .sq{width:13px;height:13px;background:var(--ikb)}
+  main{flex:1;padding:48px 0 64px}
+  h1{font-family:var(--mono);font-size:32px;letter-spacing:-.01em;margin-bottom:6px}
+  .upd{font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:30px}
+  h2{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin:30px 0 10px;display:flex;gap:9px;align-items:center;justify-content:space-between;border-bottom:2px solid var(--ink);padding-bottom:7px}
+  h2 .n{order:2;color:var(--muted)}
+  h2 .n::before{content:"\\00a7"}
+  p{margin-bottom:12px}
+  .risk{border:1px solid var(--ink);padding:16px 18px;margin:8px 0 22px;font-size:14px}
+  .risk .code{font-family:var(--mono);font-weight:700}
+  table.reg{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums;margin:0}
+  table.reg th,table.reg td{border:1px solid var(--ink);padding:8px 11px;text-align:left}
+  table.reg th{font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:var(--bgray);color:var(--muted)}
+  table.reg td a{text-decoration:none}
+  table.reg td a:hover{text-decoration:underline}
+  footer{background:var(--sheet,#fff);margin-top:40px;border-top:1px solid var(--ink)}
+  .foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--muted);padding:22px 0}
+  .foot a{color:var(--muted)}
+  .sheet{max-width:880px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:100vh;display:flex;flex-direction:column}
+${docChromeCss}
+</style>
+
+<div class="sheet">
+  <div class="top">
+    <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
+    <nav><a href="/blog">Blog</a><a href="/">Studio</a><a href="/fees">Fee engine</a><a href="/airdrops">Airdrops</a><a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;↗</a></nav>
+  </div>
+  <div class="stamp">Doc · <b>404</b> · not on file</div>
+<div class="dither"></div>
+
+<main><div class="wrap">
+  ${mastheadHtml({
+    docNo: 'NML-018',
+    status: 'Status: not on file',
+    titleHtml: '<h1>Document not found</h1><div class="upd">File request refused — no matching entry</div>',
+    sub: 'Error record · HTTP 404',
+    stamp: 'No such filing',
+    footLeft: 'numetal.xyz',
+    footRight: 'contact@numetal.xyz',
+  })}
+
+  <h2>Finding<span class="n">1</span></h2>
+  <div class="risk"><span class="code">HTTP 404.</span> The requested path matches no document in the Numetal register. The reference may be mistyped, withdrawn, or never issued. No record was created.</div>
+
+  <h2>Filed entry points<span class="n">2</span></h2>
+  <div class="tblwrap"><table class="reg">
+    <thead><tr><th>Doc</th><th>Title</th><th>Route</th></tr></thead>
+    <tbody>
+      <tr><td>NML-001</td><td>Studio index</td><td><a href="/">numetal.xyz/</a></td></tr>
+      <tr><td>NML-002</td><td>Fee engine — machine report</td><td><a href="/fees">/fees</a></td></tr>
+      <tr><td>NML-003</td><td>Retrodrop 01</td><td><a href="/airdrops">/airdrops</a></td></tr>
+      <tr><td>NML-010</td><td>Blog register</td><td><a href="/blog">/blog</a></td></tr>
+      <tr><td>NML-004</td><td>Terms of Service</td><td><a href="/terms">/terms</a></td></tr>
+      <tr><td>NML-005</td><td>Privacy Policy</td><td><a href="/privacy">/privacy</a></td></tr>
+      <tr><td>NML-006</td><td>Cookie Policy</td><td><a href="/cookies">/cookies</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="upd" style="margin:10px 0 0">Misfiled references may be reported to <a href="mailto:contact@numetal.xyz">contact@numetal.xyz</a>.</p>
+</div></main>
+
+<footer><div class="wrap"><div class="foot">
+  <span>Numetal · an Atelier Gökhan studio · on Base</span>
+  <span><a href="/terms">Terms</a> · <a href="/privacy">Privacy</a> · <a href="/cookies">Cookies</a></span>
+</div></div></footer>
+${colophonHtml({ docNo: 'NML-018', note: 'No document at this address' })}
+</div>`;
+---
+<Base title={title} description={description} canonical={canonical} robots="noindex, follow">
+  <Fragment set:html={bodyHtml} />
+</Base>

@@ -13,10 +13,23 @@ export const DOC_DATE = '2026-07-17';
 export const DOC_REV = 'Rev A';
 
 /** Chrome-level CSS. Relies on page tokens: --ink, --line, --mono, --bgray and
- *  --muted (or --mut on the index sheet); safe fallbacks included. */
+ *  --muted (or --mut on the index sheet); safe fallbacks included.
+ *  Ships both themes: the dark scheme (prefers-color-scheme) re-issues the same
+ *  document with inverted ink/paper — identical borders, weights and structure.
+ *  Accent tokens keep their hue; only the link/text blue gets a dark-legible
+ *  counterpart, and brand-blue fills that carry white type stay on the original
+ *  fill value. --sheet is defined only in the dark scheme; light falls back to
+ *  the original hardcoded sheet white. */
 export const docChromeCss = `
   body{font-variant-numeric:tabular-nums}
-  .docmast{border:2px solid var(--ink,#141414);margin:26px 32px 6px;background:#fff}
+  :root{color-scheme:light dark}
+  @media (prefers-color-scheme:dark){
+    :root{--sheet:#181816;--ink:#e8e8e6;--paper:#181816;--bgray:#262624;--line:#3a3a38;--muted:#9a9a98;--mut:#9a9a98;--hard:#7f7f7d;--ikb:#6f8dfa}
+    .sheet,.top,footer,.qin,.post,.toc .toclabel,.deck-pdf,.ask{background:var(--sheet)}
+    .dither{background-image:radial-gradient(#d9d9d6 .62px,transparent .72px)}
+    .btn,.chain.hub,.crt .mast,.ptag,.s-trez,.d-trez{background:#002FA7}
+  }
+  .docmast{border:2px solid var(--ink,#141414);margin:26px 32px 6px;background:var(--sheet,#fff)}
   .docmast-row{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line,#c4c4c4)}
   .docmast-cell{font-family:var(--mono,ui-monospace,monospace);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted,var(--mut,#6f6f6f));padding:7px 12px;border-right:1px solid var(--line,#c4c4c4);white-space:nowrap}
   .docmast-row .docmast-cell:first-child{font-weight:700;color:var(--ink,#141414)}
