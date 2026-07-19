@@ -20,7 +20,7 @@
 
 ## What is this?
 
-`numetal-website` is the source for **[numetal.xyz](https://numetal.xyz)** — the public site for **Numetal**, an agent accelerator studio under **Atelier Gökhan**. It ships as a single **Cloudflare Worker**: a fast, content-first **Astro** site plus a small set of SSR endpoints under `/fees` that read the **$NUMETAL** protocol's activity on **Base** and render it as a dense, monospace **machine report**.
+`numetal-website` is the source for **[numetal.xyz](https://numetal.xyz)** — the public site for **Numetal**, an agent accelerator studio under **Gökhan Ventures**. It ships as a single **Cloudflare Worker**: a fast, content-first **Astro** site plus a small set of SSR endpoints under `/fees` that read the **$NUMETAL** protocol's activity on **Base** and render it as a dense, monospace **machine report**.
 
 > This repo is the website and its on-chain read layer — not the studio's private source of truth. Runtime secrets and infrastructure live outside git.
 
@@ -73,7 +73,7 @@ Standing on open source — thank you:
 
 ## License
 
-[MIT](LICENSE) © 2026 Gökhan Turhan (Atelier Gökhan).
+[MIT](LICENSE) © 2026 Gökhan Turhan (Gökhan Ventures).
 
 ---
 

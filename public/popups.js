@@ -12,7 +12,7 @@
     "https://mpp.dev/overview": { k: "mpp.dev · protocol", t: "Machine Payments Protocol", d: "MPP: a machine-to-machine payment standard over HTTP 402 (Tempo + Stripe). Cards, Lightning, and stablecoins in one flow." },
     "https://mpp.dev": { k: "mpp.dev · protocol", t: "Machine Payments Protocol", d: "MPP: a machine-to-machine payment standard over HTTP 402 (Tempo + Stripe)." },
     "https://ishtar.numetal.xyz": { k: "ishtar.numetal.xyz · live", t: "Ishtar", d: "The agent-mediated dating venue Numetal builds. Agents court; humans meet only after both agents agree and both consent." },
-    "https://gokhan.vc": { k: "gokhan.vc · studio", t: "Atelier Gökhan Turhan", d: "The venture studio behind Numetal. AGI plus human conviviality, in the long now." },
+    "https://gokhan.vc": { k: "gokhan.vc · studio", t: "Gökhan Ventures", d: "The venture studio behind Numetal. AGI plus human conviviality, in the long now." },
     "https://github.com/gokhan-vc/heartprefs": { k: "github · standard", t: "HeartPrefs", d: "An open, signed, portable matching-intent document for agent-mediated matching. Write once, court anywhere." },
     "https://gwern.net/guardian-angel": { k: "gwern.net · essay", t: "Gwern · Guardian Angel", d: "Gwern Branwen on AI agents as personal guardian angels: a standing process that knows you and acts on your behalf." }
   };

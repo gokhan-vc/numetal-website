@@ -1,11 +1,11 @@
 # Numetal
 
-> Numetal is an agent accelerator studio under Atelier Gökhan. We build and back autonomous agents across four markets — onchain, compute, artistic & cultural, and frontier-lab model toolkits. Dual-rail by design: home on Base (x402 / USDC), Tempo (MPP), with Solana and XRP coming. Token: $NUMETAL on Base.
+> Numetal is an agent accelerator studio under Gökhan Ventures. We build and back autonomous agents across four markets — onchain, compute, artistic & cultural, and frontier-lab model toolkits. Dual-rail by design: home on Base (x402 / USDC), Tempo (MPP), with Solana and XRP coming. Token: $NUMETAL on Base.
 
 ## Links
 - [Numetal](https://numetal.xyz): the studio landing
 - [Fee engine](https://numetal.xyz/fees): live $NUMETAL buybacks and burns, straight from Base
-- [Atelier Gökhan](https://gokhan.vc): the parent studio
+- [Gökhan Ventures](https://gokhan.vc): the parent studio
 - [Terms of Service](https://numetal.xyz/terms)
 - [Privacy Policy](https://numetal.xyz/privacy)
 - [Cookie Policy](https://numetal.xyz/cookies)

@@ -1,6 +1,6 @@
 # Numetal Wiki
 
-The engineering & ops handbook for **[numetal.xyz](https://numetal.xyz)** — the site of **Numetal**, an agent accelerator studio under [Atelier Gökhan](https://gokhan.vc).
+The engineering & ops handbook for **[numetal.xyz](https://numetal.xyz)** — the site of **Numetal**, an agent accelerator studio under [Gökhan Ventures](https://gokhan.vc).
 
 > This wiki is **generated from [`docs/wiki/`](https://github.com/gokhan-vc/numetal-website/tree/main/docs/wiki) in the repo** and synced automatically on every push. Edit the markdown there — not the wiki UI — and it updates itself.
 
