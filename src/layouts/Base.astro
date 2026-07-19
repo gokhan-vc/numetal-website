@@ -86,20 +86,21 @@ const {
     @keyframes tickerbar-scroll{from{transform:translateX(0)}to{transform:translateX(-25%)}}
     @media (prefers-reduced-motion: reduce){ .tickerbar__track{animation:none;} }
   </style>
-  <!-- Site-wide "we are not raising (live)" banner → the raise dispatch. -->
-  <a class="nrbar" href="https://ishtar.numetal.xyz/blog/not-raising-a-preseed/" aria-label="We are not raising — read the raise dispatch">
-    <span class="nrbar__dot" aria-hidden="true"></span><span>WE ARE NOT RAISING</span><sup class="nrbar__live">LIVE</sup><span class="nrbar__arw" aria-hidden="true">→</span>
-  </a>
+  <!-- Site-wide "we are raising — check our decks" banner. -->
+  <p class="nrbar">
+    <span class="nrbar__flag">WE ARE RAISING</span><span class="nrbar__note">— check our decks:</span>
+    <a href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">Ishtar deck</a>
+    <span class="nrbar__note" aria-hidden="true">·</span>
+    <a href="https://curb.numetal.xyz/deck">Curb deck</a>
+  </p>
   <style>
-    .nrbar{display:flex;align-items:center;justify-content:center;gap:8px;background:#e10600;color:#fff;text-decoration:none;
+    .nrbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px 8px;margin:0;background:#e10600;color:#fff;
       font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;font-weight:600;letter-spacing:.1em;
-      padding:6px 12px;border-bottom:1px solid #000}
-    .nrbar:hover{background:#c40500;text-decoration:none}
-    .nrbar__dot{width:6px;height:6px;border-radius:50%;background:#fff;animation:nrpulse 1.8s infinite}
-    .nrbar__live{font-size:8px;letter-spacing:.16em;vertical-align:super;border:1px solid rgba(255,255,255,.75);padding:1px 4px;margin-left:1px}
-    .nrbar__arw{opacity:.85}
-    @keyframes nrpulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.6)}70%{box-shadow:0 0 0 6px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
-    @media(prefers-reduced-motion:reduce){.nrbar__dot{animation:none}}
+      padding:6px 12px;border-bottom:1px solid #000;line-height:1.35}
+    .nrbar__flag{font-weight:700}
+    .nrbar__note{opacity:.85}
+    .nrbar a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+    .nrbar a:hover{text-decoration:none}
   </style>
   <slot />
   <script src="/newsletter-xmtp.js" defer></script>
