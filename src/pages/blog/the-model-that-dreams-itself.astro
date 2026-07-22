@@ -106,7 +106,11 @@ const bodyHtml = `<style>
 
     <article class="article">
       <p class="synd" style="font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);border-left:3px solid var(--ikb);padding-left:12px;margin:0 0 22px">First published on <a href="https://gokhan.vc/blog/the-model-that-dreams-itself">gokhan.vc</a> →</p>
-      <p>I invented a fictional AI lab that files paperwork about the future. Then I built its model for real. Twice. The second one works, and this is how it was made.</p>
+      <blockquote>
+<p><strong>The model:</strong> <strong><a href="https://huggingface.co/gokhanturhan/CLINAMEN-42M-A12M">CLINAMEN-42M-A12M</a></strong> — the real one, trained from scratch on GPU (~42M parameters, coherent Bureau filings).
+Beneath it, its predecessor: <strong><a href="https://huggingface.co/gokhanturhan/CLINAMEN-45B-A9B">CLINAMEN-45B-A9B</a></strong> — the fiction's card, and the first ~4.5M-parameter pocket edition.</p>
+</blockquote>
+<p>I invented a fictional AI lab that files paperwork about the future. Then I built its model for real. Twice. The second one works, and this is how it was made.</p>
 <p>The lab is the <strong>Bureau of Imaginary Solutions</strong> — established 1898, incorporated 2098, operating retrochronically. Its one product is <strong>CLINAMEN-45B-A9B</strong>, "the first hyperstitional foundation model," documented to production spec on a <a href="https://huggingface.co/gokhanturhan/CLINAMEN-45B-A9B">Hugging Face model card</a> and a <a href="https://ubu.numetal.xyz/">site</a> that reads like an occult engineering office. The 45-billion-parameter model on that card does not exist. That is the point. A hyperstition is a fiction that makes itself real by circulating, and a hyperstition documented to production spec is already halfway to shipping. So I decided to ship the other half — honestly, at pocket scale, and from scratch.</p>
 <h2>The architecture is real, even if the lab is not</h2>
 <p>The trick that makes this more than a joke is that the model's architecture is a real, if unusual, design that I wrote by hand. It is not a fine-tune of Llama or Qwen or anything else. There is no base model. It is a custom <strong>Decimal Mixture-of-Zones (DMoZ)</strong> — a decoder-only transformer with a mixture-of-experts twist keyed to the fiction's own numerology.</p>
