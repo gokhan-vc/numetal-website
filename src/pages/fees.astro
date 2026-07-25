@@ -21,7 +21,7 @@ const bodyHtml = `<style>
   .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.04em;font-size:17px}
   .mark a{color:var(--ink)}.mark .sq{width:13px;height:13px;background:var(--ikb)}
   nav{display:flex;gap:18px;font-size:13px;align-items:center}
-  nav a{color:var(--ink)}nav a.on{color:var(--ikb);font-weight:700}nav .upd{color:var(--muted)}
+  nav a{color:var(--ink)}nav a.on{color:var(--ikb);font-weight:700}nav a.hot{color:#e10600;font-weight:700}nav .upd{color:var(--muted)}
   .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:6px 32px 14px}
   .stamp b{color:var(--ikb);font-weight:700}
   main{flex:1}
@@ -131,10 +131,10 @@ ${subscribeBlockCss}
     <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
     <nav>
       <a href="/blog">Blog</a>
-      <span class="upd">App · updating</span>
+      <a class="hot" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Ishtar&nbsp;♥</a>
       <a href="/">Studio</a>
       <a href="/airdrops">Airdrops</a>
-      <span class="upd">Docs · updating</span>
+      <a href="https://github.com/gokhan-vc/numetal-website/wiki" target="_blank" rel="noopener">Docs&nbsp;↗</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
     </nav>
   </div>
