@@ -86,8 +86,10 @@ const bodyHtml = `<style>
   .btn:hover{filter:brightness(1.1);text-decoration:none}.btn:active{transform:translate(2px,2px);box-shadow:0 0 0}
   .btn.gh{background:#fff;color:var(--ink)}
   .btn.app{background:#e10600;border-color:var(--ink)}.btn.app .bh{color:#fff}
-  .sec{padding:26px 32px}
+  .sec{padding:26px 32px;scroll-margin-top:56px}
   .sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:16px}.sh .ix0{color:var(--mut);font-weight:400;letter-spacing:.14em;white-space:nowrap}
+  /* § numbers are retrieval handles, so each one is the anchor for its own section. */
+  .sh a.ix0:hover,.sh a.ix0:focus-visible{color:var(--ink);text-decoration:none}
   /* products — use buttons with hover-reveal explanation */
   .prods{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink)}
   .prod{position:relative;display:block;padding:17px 17px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);color:inherit;text-decoration:none;transition:background .1s}
@@ -169,20 +171,20 @@ const bodyHtml = `<style>
     </div>
 
     <div class="dither"></div>
-    <section class="sec" id="products"><div class="sh"><span>The products — live, use them</span><span class="ix0">§01</span></div>
+    <section class="sec" id="products"><div class="sh"><span>The products — live, use them</span><a class="ix0" href="#products">§01</a></div>
       <div class="prods">${prodCards}
       </div>
       <p class="note">Six shipped and live — from agentic dating (Ishtar) to an inference swap (CURB) to a hyperstitional AI lab (CLINAMEN) to NFT rescue (Reclaim). More in the queue — see the <a href="/decks">decks</a>.</p>
     </section>
 
     <div class="dither"></div>
-    <section class="sec"><div class="sh"><span>Inside the products — where the pieces belong</span><span class="ix0">§02</span></div>
+    <section class="sec" id="inside"><div class="sh"><span>Inside the products — where the pieces belong</span><a class="ix0" href="#inside">§02</a></div>
       <div class="tax">${taxCols}
       </div>
     </section>
 
     <div class="dither"></div>
-    <section class="sec"><div class="sh"><span>What we build — agents across four markets</span><span class="ix0">§03</span></div>
+    <section class="sec" id="markets"><div class="sh"><span>What we build — agents across four markets</span><a class="ix0" href="#markets">§03</a></div>
       <div class="grid4">
         <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy — intelligence, trading, NFT rescue, and x402 services across the Base / Bankr agent economy.</p></div>
         <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference — paying for what they consume and charging for what they serve, machine-to-machine over x402.</p></div>
@@ -192,7 +194,7 @@ const bodyHtml = `<style>
     </section>
 
     <div class="dither"></div>
-    <section class="sec"><div class="sh"><span>Treasury &amp; onchain</span><span class="ix0">§09</span></div>
+    <section class="sec" id="treasury"><div class="sh"><span>Treasury &amp; onchain</span><a class="ix0" href="#treasury">§04</a></div>
       <div class="onchain">
         <div class="oh">Onchain footnote — home on Base</div>
         <div class="onrow">
