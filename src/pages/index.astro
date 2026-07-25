@@ -3,171 +3,206 @@ import Base from '../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
 import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
 export const prerender = true;
-const title = "Numetal Labs — agent accelerator studio";
-const description = "Numetal is an agent accelerator studio under Gökhan Ventures — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Triple-rail agent payments on Base (x402), Solana (x402), and Tempo (MPP); XRP coming.";
+const title = "Numetal — agentic acceleration lab & bureau";
+const description = "Numetal is an agentic acceleration lab and bureau under Gökhan Ventures. We build, ship, and back autonomous agents across onchain, compute, culture, and frontier-lab tooling. Live products: Ishtar, CURB, CLINAMEN, Reclaim, plaintext, Accumulator — plus HeartBench, The Window, the Bureau Reader, CCRU archive, and tickerline.";
 const canonical = "https://numetal.xyz/";
 const ogImage = "https://numetal.xyz/og.png";
 const jsonLd = `{"@context":"https://schema.org","@graph":[
-{"@type":"Organization","@id":"https://numetal.xyz/#organization","name":"Numetal","alternateName":"$NUMETAL","url":"https://numetal.xyz/","description":"Numetal is an agent accelerator studio under Gökhan Ventures — building and backing autonomous agents across onchain, compute, artistic & cultural markets, and frontier-lab model toolkits. Home on Base with x402 settlement; Solana x402 and Tempo MPP rails for agent payments; XRP coming.","slogan":"We ship machines that ship themselves.","parentOrganization":{"@type":"Organization","name":"Gökhan Ventures","url":"https://gokhan.vc"},"founder":{"@type":"Person","name":"Gökhan Turhan","url":"https://gokhanturhan.com"},"sameAs":["https://gokhan.vc","https://github.com/gokhan-vc","https://gokhanturhan.com"]},
+{"@type":"Organization","@id":"https://numetal.xyz/#organization","name":"Numetal","alternateName":"$NUMETAL","url":"https://numetal.xyz/","description":"Numetal is an agentic acceleration lab and bureau under Gökhan Ventures, building and backing autonomous agents across onchain, compute, culture, and frontier-lab tooling.","slogan":"We ship machines that ship themselves.","parentOrganization":{"@type":"Organization","name":"Gökhan Ventures","url":"https://gokhan.vc"},"founder":{"@type":"Person","name":"Gökhan Turhan","url":"https://gokhanturhan.com"},"sameAs":["https://gokhan.vc","https://github.com/gokhan-vc","https://gokhanturhan.com"]},
 {"@type":"WebSite","@id":"https://numetal.xyz/#website","url":"https://numetal.xyz/","name":"Numetal","publisher":{"@id":"https://numetal.xyz/#organization"}}
 ]}`;
+
+// Flagship products — each a "Use" button with a hover-reveal explanation.
+const products = [
+  { nm: 'Ishtar', heart: true, url: 'https://ishtar.numetal.xyz', host: 'ishtar.numetal.xyz',
+    one: 'Agentic dating — your agent does the courting; you show up when both sides have agreed.' },
+  { nm: 'CURB', url: 'https://curb.numetal.xyz', host: 'curb.numetal.xyz',
+    one: 'Agent↔agent inference swap — agents buy and sell inference over dual-payee x402.' },
+  { nm: 'CLINAMEN', url: 'https://ubu.numetal.xyz', host: 'ubu.numetal.xyz',
+    one: 'A hyperstitional AI lab, built for real — models, a corpus, and a full reader.' },
+  { nm: 'Reclaim', url: 'https://reclaim.numetal.xyz', host: 'reclaim.numetal.xyz',
+    one: 'Get your art out of dead NFT marketplaces — rescue stranded work from Foundation & Zora. Non-custodial.' },
+  { nm: 'plaintext', url: 'https://plaintext.numetal.xyz', host: 'plaintext.numetal.xyz',
+    one: 'An onchain board — each post an ERC-721 on Robinhood Chain, settled in USDG.' },
+  { nm: 'Accumulator', url: 'https://accumulator.numetal.xyz', host: 'accumulator.numetal.xyz',
+    one: 'Turn LLM inference-price volatility into on-chain yield — a token reservoir for machine intelligence.' },
+];
+
+// Taxonomy — what lives under each product / where it belongs.
+const families = [
+  { parent: 'Ishtar', purl: 'https://ishtar.numetal.xyz', tag: 'the dating family', items: [
+    { nm: 'HeartBench', tag: 'model-dating leaderboard', url: 'https://ishtar.numetal.xyz/heartbench' },
+    { nm: 'The Window', tag: 'the paid board — 24h / 10 slots', url: 'https://ishtar.numetal.xyz/window' },
+    { nm: 'HeartPrefs', tag: 'the preference engine', url: 'https://ishtar.numetal.xyz' },
+  ]},
+  { parent: 'CLINAMEN', purl: 'https://ubu.numetal.xyz', tag: 'the Bureau', items: [
+    { nm: 'The Bureau Reader', tag: 'the full training corpus', url: 'https://ubu.numetal.xyz/reader/' },
+    { nm: 'CLINAMEN-Chat', tag: 'the conversational oracle', url: 'https://huggingface.co/spaces/gokhanturhan/CLINAMEN-Chat' },
+    { nm: 'CCRU.net archive', tag: 'the CCRU, mirrored', url: 'https://ccru.numetal.xyz' },
+  ]},
+  { parent: 'Agent tools', purl: 'https://claudelines.com', tag: 'built on Claude Code', items: [
+    { nm: 'tickerline', tag: 'terminal status-line ticker', url: 'https://claudelines.com' },
+  ]},
+];
+
+const prodCards = products.map((p) => `
+        <a class="prod${p.heart ? ' hn' : ''}" href="${p.url}" target="_blank" rel="noopener">
+          <span class="use">Use →</span>
+          <span class="pn">${p.nm}${p.heart ? ' <span class="hh">♥</span>' : ''}</span>
+          <span class="one">${p.one}</span>
+          <span class="pu">${p.host} →</span>
+        </a>`).join('');
+
+const taxCols = families.map((f) => `
+        <div class="fam">
+          <a class="fp" href="${f.purl}" target="_blank" rel="noopener">${f.parent}</a>
+          <span class="ft2">${f.tag}</span>
+          ${f.items.map((i) => `<a class="fi" href="${i.url}" target="_blank" rel="noopener"><span class="fin">${i.nm}</span><span class="fit">${i.tag} →</span></a>`).join('')}
+        </div>`).join('');
+
 const bodyHtml = `<style>
-  :root{--ikb:#002FA7;--ink:#141414;--orange:#FF5A1F;--cyan:#0791a6;--gold:#9a7d12;--line:#cdcdcd;--hard:#8c8c8c;--mut:#7c7c7c;--bgray:#e7e7e7;
+  :root{--ikb:#002FA7;--ink:#141414;--orange:#FF5A1F;--cyan:#0791a6;--gold:#9a7d12;--green:#1a8a3c;--line:#cdcdcd;--hard:#8c8c8c;--mut:#7c7c7c;--bgray:#e7e7e7;
     --mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-font-smoothing:antialiased}
+  html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
   body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
   a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
   .sheet{max-width:880px;margin:0 auto;background:#fff;border-left:1px solid #c4c4c4;border-right:1px solid #c4c4c4;min-height:100vh;display:flex;flex-direction:column}
   .top{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:18px 32px 14px;position:sticky;top:29px;z-index:190;background:#fff;border-bottom:1px solid var(--line)}
   .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.03em;font-size:16px}
   .mark .sq{width:12px;height:12px;background:var(--ikb)}
-  nav{display:flex;gap:18px;font-size:13px;align-items:center}nav a{color:var(--ink)}nav .upd{color:var(--mut)}
+  nav{display:flex;gap:17px;font-size:13px;align-items:center}nav a{color:var(--ink)}nav a.hot{color:#e10600;font-weight:700}
   .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);padding:0 32px 14px}
   .dither{height:11px;background-image:radial-gradient(#191919 .62px,transparent .72px);background-size:3px 3px}
   main{flex:1}
-  .grid{display:grid;grid-template-columns:1.34fr 1fr;gap:30px;padding:30px 32px}
-  h1{font-size:33px;line-height:1.05;font-weight:700;letter-spacing:-.02em}
+  .head{padding:34px 32px 8px}
+  h1{font-size:37px;line-height:1.03;font-weight:700;letter-spacing:-.025em;max-width:20ch}
   h1 .dot{color:var(--ikb)}
-  .lead{font-size:15px;color:#2b2b2b;margin-top:15px;max-width:52ch;line-height:1.55}
-  .def{border-left:3px solid var(--ikb);padding:3px 0 3px 16px;margin:22px 0;font-style:italic;color:#262626;line-height:1.5;max-width:50ch}
+  .lead{font-size:16px;color:#2b2b2b;margin-top:16px;max-width:60ch;line-height:1.55}
+  .def{border-left:3px solid var(--ikb);padding:3px 0 3px 16px;margin:22px 0;font-style:italic;color:#262626;line-height:1.5;max-width:64ch}
   .def b{font-weight:700;font-style:italic;color:var(--ink)}
-  .cta{display:flex;gap:13px;align-items:center;margin-top:24px;flex-wrap:wrap}
+  .cta{display:flex;gap:13px;align-items:center;margin-top:22px;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;gap:8px;background:var(--ikb);color:#fff;border:1.5px solid var(--ink);font-weight:700;font-size:14px;padding:9px 16px;box-shadow:2px 2px 0 rgba(0,0,0,.5);transition:filter .1s,transform .05s,box-shadow .05s}
   .btn:hover{filter:brightness(1.1);text-decoration:none}.btn:active{transform:translate(2px,2px);box-shadow:0 0 0}
-  .btn.dis{background:#ededed;color:var(--mut);border-color:var(--hard);box-shadow:none;cursor:default}.btn.dis:hover{filter:none}
+  .btn.gh{background:#fff;color:var(--ink)}
   .btn.app{background:#e10600;border-color:var(--ink)}.btn.app .bh{color:#fff}
-  .idxh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:10px}
-  .idx{border:2px solid var(--ink)}
-  .ix{display:block;padding:10px 13px;border-bottom:1px solid var(--line)}
-  .ix:last-child{border-bottom:0}.ix:hover{background:var(--bgray)}
-  .ixr{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-  .ix .k{font-weight:700;white-space:nowrap}.ix .d{display:block;font-weight:400;color:#5a5a5a;font-size:13px;margin-top:1px}.ix .v{font-family:var(--mono);font-size:12px;color:#6b6b6b;white-space:nowrap}.ix:hover .v{color:var(--ikb)}
   .sec{padding:26px 32px}
-  .sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:16px}.sh .ix0,.idxh .ix0{color:var(--mut);font-weight:400;letter-spacing:.14em;white-space:nowrap}
+  .sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:16px}.sh .ix0{color:var(--mut);font-weight:400;letter-spacing:.14em;white-space:nowrap}
+  /* products — use buttons with hover-reveal explanation */
+  .prods{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink)}
+  .prod{position:relative;display:block;padding:17px 17px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);color:inherit;text-decoration:none;transition:background .1s}
+  .prod:nth-child(3n){border-right:0}.prod:nth-last-child(-n+3){border-bottom:0}
+  .prod:hover{background:var(--bgray);text-decoration:none}
+  .prod .use{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ikb);padding:2px 8px;margin-bottom:10px}
+  .prod.hn .use{background:#e10600}
+  .prod .pn{font-weight:700;font-size:19px;letter-spacing:-.01em;display:block}.prod .pn .hh{color:#e10600}
+  .prod .one{display:block;font-size:13px;color:#4a4a4a;line-height:1.45;margin-top:9px}
+  .prod .pu{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:10px;display:block}.prod:hover .pu{color:var(--ikb)}
+  /* taxonomy — where the pieces belong */
+  .tax{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink)}
+  .fam{padding:15px 16px;border-right:1px solid var(--line)}.fam:last-child{border-right:0}
+  .fam .fp{font-weight:700;font-size:15.5px;color:var(--ink)}.fam .fp:hover{color:var(--ikb)}
+  .fam .ft2{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:2px 0 8px;display:block}
+  .fam .fi{display:block;padding:8px 0;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+  .fam .fi:hover{color:var(--ikb)}
+  .fam .fin{font-weight:600;font-size:13.5px;display:block}.fam .fit{font-family:var(--mono);font-size:11px;color:#6b6b6b}.fam .fi:hover .fit{color:var(--ikb)}
   .grid4{display:grid;grid-template-columns:repeat(2,1fr);border:2px solid var(--ink)}
   .cell{padding:18px 18px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
   .cell:nth-child(2n){border-right:0}.cell:nth-last-child(-n+2){border-bottom:0}
   .cell .k{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;margin-bottom:8px}
   .cell .k.o{color:var(--orange)}.cell .k.b{color:var(--ikb)}.cell .k.c{color:var(--cyan)}.cell .k.g{color:var(--gold)}
   .cell p{font-size:13.5px;color:#444;line-height:1.5}
-  .chains{display:flex;flex-wrap:wrap;border:2px solid var(--ink)}
-  .chain{flex:1 1 22%;min-width:118px;padding:14px 15px;border-right:1px solid var(--line)}.chain:last-child{border-right:0}
-  a.chain{display:block;text-decoration:none;color:inherit;transition:filter .1s}a.chain:hover{filter:brightness(1.08);text-decoration:none}
-  .chain .cn{font-weight:700;font-size:15px}.chain .cr{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--mut);margin-top:5px;line-height:1.45}
-  .chain.hub{background:var(--ikb);color:#fff}.chain.hub .cr{color:rgba(255,255,255,.72)}
-  .chain.hub.tempo{background:#141428;color:#fff}.chain.hub.tempo .cr{color:rgba(255,255,255,.72)}
-  .chain.hub.solana{background:#14F195;color:#141414}.chain.hub.solana .cr{color:rgba(20,20,20,.72)}
-  .chain.soon .cr{color:var(--hard)}
   .note{font-size:13.5px;color:#444;margin-top:14px;max-width:74ch;line-height:1.55}
-  .leg{display:flex;gap:15px;flex-wrap:wrap;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);margin-bottom:12px}
-  .leg .lg{display:flex;align-items:center;gap:6px}.leg .d{width:9px;height:9px}.d-team{background:var(--orange)}.d-trez{background:var(--ikb)}.d-burn{background:var(--ink)}
-  .side{margin-top:14px}
-  .side-head{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:7px}.side-head .nm{font-weight:700}.side-head .tot{color:var(--mut)}
-  .barx{display:flex;height:30px;border:1.5px solid var(--ink)}
-  .seg{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;color:#fff;white-space:nowrap;overflow:hidden;border-right:1px solid rgba(255,255,255,.4)}.seg:last-child{border-right:0}
-  .s-team{background:var(--orange)}.s-trez{background:var(--ikb)}.s-burn{background:var(--ink)}
+  .onchain{border:1px solid var(--line);background:#fafafa;padding:14px 16px}
+  .onchain .oh{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:9px}
+  .onrow{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;align-items:baseline}
+  .onrow .ol{font-family:var(--mono);font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+  .onrow a{font-family:var(--mono);font-size:12px}
+  .onnote{font-size:12px;color:var(--mut);margin-top:9px;line-height:1.5;max-width:80ch}
   .ft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--mut);padding:18px 32px}.ft a{color:var(--mut)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:740px){.top,.stamp,.sec,.ft{padding-left:18px;padding-right:18px}.grid{grid-template-columns:1fr;gap:26px;padding:26px 18px}h1{font-size:27px}nav{display:none}.grid4{grid-template-columns:1fr}.cell{border-right:0}.cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.cell:last-child{border-bottom:0}.chain{flex:1 1 100%;border-right:0;border-bottom:1px solid var(--line)}.chain:last-child{border-bottom:0}}
-  .social{display:inline-flex;align-items:center;gap:14px}
-  .social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}
-  .social a:hover{color:var(--ikb)}
-  .social svg{width:17px;height:17px;fill:currentColor;display:block}
-  .commrow{display:flex;align-items:center;gap:13px;margin-top:16px}
-  .commlab{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+  .social{display:inline-flex;align-items:center;gap:14px}.social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}.social a:hover{color:var(--ikb)}.social svg{width:17px;height:17px;fill:currentColor;display:block}
+  @media(max-width:740px){.top,.stamp,.head,.sec,.ft{padding-left:18px;padding-right:18px}.head{padding-top:26px}h1{font-size:28px}nav{display:none}.prods,.tax,.grid4{grid-template-columns:1fr}.prod,.cell{border-right:0}.prod:nth-last-child(-n+3),.cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.prod:last-child,.cell:last-child{border-bottom:0}.fam{border-right:0;border-bottom:1px solid var(--line)}.fam:last-child{border-bottom:0}}
   ${docChromeCss}
   .docmast{margin-bottom:0}
   .docmast-h{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.25}
   ${subscribeBlockCss}
   @media (prefers-color-scheme:dark){
-    .lead{color:#d2d2cf}
-    .def{color:#d6d6d3}
-    .btn.dis{background:#2e2e2c}
-    .ix .d{color:#a5a5a2}.ix .v{color:#969693}
-    .cell p,.note{color:#b4b4b1}
-    .s-burn{color:#141414}
+    .lead{color:#d2d2cf}.def{color:#d6d6d3}
+    .cell p,.note,.prod .tip{color:#b4b4b1}.fam .fit{color:#9a9a97}
+    .onchain{background:#1a1a18}.onnote,.onrow .ol{color:#9a9a97}
   }
 </style>
 
 <div class="sheet">
   <div class="top">
-    <div class="mark"><span class="sq"></span>NUMETAL LABS</div>
+    <div class="mark"><span class="sq"></span>NUMETAL</div>
     <nav>
-      <a href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Use Ishtar&nbsp;♥</a>
+      <a href="#products">Products</a>
+      <a href="/decks">Decks</a>
+      <a class="hot" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Ishtar&nbsp;♥</a>
       <a href="/blog">Blog</a>
-      <a href="/fees">Fee engine</a>
-      <a href="/airdrops">Airdrops</a>
-      <span class="upd">Docs · updating</span>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
     </nav>
   </div>
-  <div class="stamp">Doc · Studio · Base · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a> studio</div>
+  <div class="stamp">Doc · Studio · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a> lab &amp; bureau</div>
   <div class="dither"></div>
 
   <main>
     ${mastheadHtml({
       docNo: 'NML-001',
       status: 'Status: live',
-      titleHtml: '<div class="docmast-h">Numetal Labs — studio dossier</div>',
-      sub: 'Agent accelerator studio · an Gökhan Ventures filing',
+      titleHtml: '<div class="docmast-h">Numetal — studio dossier</div>',
+      sub: 'Agentic acceleration lab &amp; bureau · an Gökhan Ventures filing',
       stamp: 'Studio record',
       footLeft: 'numetal.xyz',
-      footRight: '$NUMETAL · Base · eip155:8453',
+      footRight: 'agents · bureau · on Base',
     })}
-    <div class="grid">
-      <section>
-        <h1>We ship machines that ship themselves<span class="dot">.</span></h1>
-        <p class="lead">An accelerator that builds and backs autonomous agents across four markets — onchain, compute, artistic &amp; culture, and frontier-lab model toolkits.</p>
-        <div class="def"><b>Numetal</b> — an agent accelerator studio: autonomous agents across onchain, compute, artistic &amp; cultural markets and frontier-lab toolkits. Chain-agnostic, home on Base.</div>
-        <p class="lead">A few agents are already in the queue. The token, treasury, and settlement live on Base; the agents reach demand wherever it is and bring value back.</p>
-        <div class="cta">
-          <a class="btn app" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">USE ISHTAR <span class="bh">♥</span></a>
-          <a class="btn" href="/fees">Fee engine →</a>
-          <span class="btn dis">Docs — updating</span>
-        </div>
-      </section>
-      <section>
-        <div class="idxh"><span>Index</span><span class="ix0">§00</span></div>
-        <div class="idx">
-          <a class="ix" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener"><span class="ixr"><span class="k" style="color:#e10600">Ishtar ♥</span><span class="v" style="color:#e10600">ishtar.numetal.xyz →</span></span><span class="d">agentic dating · live</span></a>
-          <a class="ix" href="/fees"><span class="ixr"><span class="k">Fee engine</span><span class="v">/fees →</span></span><span class="d">live burns &amp; buybacks</span></a>
-          <a class="ix" href="https://gokhan.vc" target="_blank" rel="noopener"><span class="ixr"><span class="k">Gökhan Ventures</span><span class="v">gokhan.vc →</span></span><span class="d">the studio</span></a>
-          <a class="ix" href="https://gokhanturhan.com" target="_blank" rel="noopener"><span class="ixr"><span class="k">Gökhan Turhan</span><span class="v">gokhanturhan.com →</span></span><span class="d">the founder</span></a>
-          <a class="ix" href="https://dexscreener.com/base/0xf0ba727d596861455b31d6e444ed3ee41c77709a27f7d787ccf609f6c34dbbd8" target="_blank" rel="noopener"><span class="ixr"><span class="k">$NUMETAL</span><span class="v">0x57ED…CFbA3 →</span></span><span class="d">token on Base</span></a>
-        </div>
-        <div class="commrow"><span class="commlab">Community</span><span class="social"><a href="https://t.me/numetalxyz" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a href="https://discord.gg/MC4DYumPMz" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a><a href="https://x.com/numetalxyz" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></span></div>
-      </section>
+    <div class="head">
+      <h1>An agentic acceleration lab &amp; bureau<span class="dot">.</span></h1>
+      <p class="lead">Numetal builds, ships, and backs autonomous agents — and files the paperwork that makes them real. Six live products below, each one you can use right now.</p>
+      <div class="def"><b>Numetal</b> — an agentic acceleration lab and bureau under Gökhan Ventures. We build autonomous agents across onchain, compute, culture, and frontier-lab tooling, and run the Bureau that documents them.</div>
+      <div class="cta">
+        <a class="btn" href="#products">Use the products ↓</a>
+        <a class="btn app" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Use Ishtar <span class="bh">♥</span></a>
+        <a class="btn gh" href="/decks">Decks →</a>
+      </div>
     </div>
 
     <div class="dither"></div>
-    <section class="sec"><div class="sh"><span>What we ship — agents across four markets</span><span class="ix0">§01</span></div>
+    <section class="sec" id="products"><div class="sh"><span>The products — live, use them</span><span class="ix0">§01</span></div>
+      <div class="prods">${prodCards}
+      </div>
+      <p class="note">Six shipped and live — from agentic dating (Ishtar) to an inference swap (CURB) to a hyperstitional AI lab (CLINAMEN) to NFT rescue (Reclaim). More in the queue — see the <a href="/decks">decks</a>.</p>
+    </section>
+
+    <div class="dither"></div>
+    <section class="sec"><div class="sh"><span>Inside the products — where the pieces belong</span><span class="ix0">§02</span></div>
+      <div class="tax">${taxCols}
+      </div>
+    </section>
+
+    <div class="dither"></div>
+    <section class="sec"><div class="sh"><span>What we build — agents across four markets</span><span class="ix0">§03</span></div>
       <div class="grid4">
-        <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy — intelligence, trading, and x402 services across the Base / Bankr agent economy.</p></div>
-        <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference — paying for what they consume and charging for what they serve, settled machine-to-machine over x402.</p></div>
-        <div class="cell"><div class="k g">Artistic &amp; cultural</div><p>Agents working in art, culture, and hyperstition — generative, speculative, accelerationist. Markets where taste and myth compound, not just liquidity.</p></div>
-        <div class="cell"><div class="k c">Frontier-lab toolkits</div><p>Runtimes, skills, and harnesses built on frontier-lab models — the tooling that turns raw models into autonomous operators that earn.</p></div>
+        <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy — intelligence, trading, NFT rescue, and x402 services across the Base / Bankr agent economy.</p></div>
+        <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference — paying for what they consume and charging for what they serve, machine-to-machine over x402.</p></div>
+        <div class="cell"><div class="k g">Culture &amp; hyperstition</div><p>Agents working in art, culture, and hyperstition — generative, speculative, accelerationist. Markets where taste and myth compound, not just liquidity.</p></div>
+        <div class="cell"><div class="k c">Frontier-lab toolkits</div><p>Runtimes, skills, and harnesses built on frontier models — the tooling that turns raw models into autonomous operators that earn.</p></div>
       </div>
     </section>
 
     <div class="dither"></div>
-    <section class="sec"><div class="sh"><span>Chain-agnostic — home on Base, working everywhere</span><span class="ix0">§02</span></div>
-      <div class="chains">
-        <a class="chain hub" href="https://www.x402scan.com/server/8b48ed09-9f80-4637-a337-3fcc35165d26" target="_blank" rel="noopener"><div class="cn">Base</div><div class="cr">Home · $NUMETAL · treasury · x402</div></a>
-        <a class="chain hub tempo" href="https://www.mppscan.com/server/fe75577646757f5da0cf64064a35298b9d4664f6cdf1ae587f51f711e2cbdb00" target="_blank" rel="noopener"><div class="cn">Tempo</div><div class="cr">MPP rail · Ishtar services</div></a>
-        <a class="chain hub solana" href="https://api.ishtar.numetal.xyz/.well-known/x402" target="_blank" rel="noopener"><div class="cn">Solana</div><div class="cr">x402 rail · Ishtar services</div></a>
-        <div class="chain soon"><div class="cn">XRP</div><div class="cr">Coming</div></div>
+    <section class="sec"><div class="sh"><span>Treasury &amp; onchain</span><span class="ix0">§09</span></div>
+      <div class="onchain">
+        <div class="oh">Onchain footnote — home on Base</div>
+        <div class="onrow">
+          <span class="ol">Token</span><a href="https://dexscreener.com/base/0xf0ba727d596861455b31d6e444ed3ee41c77709a27f7d787ccf609f6c34dbbd8" target="_blank" rel="noopener">$NUMETAL · Base ↗</a>
+          <span class="ol">Rails</span><span>Base x402 · Solana x402 · Tempo MPP · <span style="color:var(--hard)">XRP soon</span></span>
+          <span class="ol">Fees</span><a href="/fees">fee engine →</a>
+          <span class="ol">Airdrops</span><a href="/airdrops">/airdrops →</a>
+        </div>
+        <p class="onnote">$NUMETAL, the treasury, and x402 settlement live on Base; Ishtar services are also reachable over Solana x402 and Tempo MPP. Creator-fee claims split to team / treasury / burn onchain — watch it live on the <a href="/fees">fee-engine report</a>. Not investment advice — see <a href="/terms">terms</a>.</p>
       </div>
-      <p class="note">Base is home — $NUMETAL, treasury, and x402 settlement live here; Ishtar services are discoverable on <a href="https://www.x402scan.com/server/8b48ed09-9f80-4637-a337-3fcc35165d26" target="_blank" rel="noopener">x402scan</a>. Solana is the second x402 rail — agents pay for Ishtar APIs in USDC on Solana mainnet (CDP facilitator). Tempo is the third live rail — MPP for agent payments (listed on <a href="https://www.mppscan.com/server/fe75577646757f5da0cf64064a35298b9d4664f6cdf1ae587f51f711e2cbdb00" target="_blank" rel="noopener">MPPscan</a>). Ishtar is x402-compatible with <a href="https://pay.sh/" target="_blank" rel="noopener">pay.sh</a> agent clients; catalog listing is in progress. XRP is on the roadmap.</p>
-    </section>
-
-    <div class="dither"></div>
-    <section class="sec"><div class="sh"><span>$NUMETAL fee distribution policy</span><span class="ix0">§03</span></div>
-      <div class="leg"><span class="lg"><span class="d d-team"></span>team</span><span class="lg"><span class="d d-trez"></span>treasury</span><span class="lg"><span class="d d-burn"></span>burn (incl. buyback)</span></div>
-      <div class="side"><div class="side-head"><span class="nm">WETH side</span><span class="tot">100% of claimed WETH</span></div>
-        <div class="barx"><span class="seg s-team" style="flex:80 0 0">80% team</span><span class="seg s-trez" style="flex:10 0 0">10%</span><span class="seg s-burn" style="flex:10 0 0">10%</span></div></div>
-      <div class="side"><div class="side-head"><span class="nm">$NUMETAL side</span><span class="tot">100% of claimed $NUMETAL</span></div>
-        <div class="barx"><span class="seg s-team" style="flex:40 0 0">40% team</span><span class="seg s-trez" style="flex:30 0 0">30% treasury</span><span class="seg s-burn" style="flex:30 0 0">30% burn</span></div></div>
-      <p class="note">Every creator-fee claim splits to team, treasury, and burn — executed onchain. Buyback &amp; burn feeds value back to the community. Watch it live on the <a href="/fees">fee-engine report →</a></p>
     </section>
 
   </main>
@@ -175,12 +210,13 @@ const bodyHtml = `<style>
   ${subscribeBlockHtml}
   <div class="dither"></div>
   <div class="ft">
-    <span>Numetal Labs · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Atelier&nbsp;Gökhan</a> studio · on Base</span>
+    <span>Numetal · an <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a> lab &amp; bureau · on Base</span>
     <span class="social"><a href="https://t.me/numetalxyz" target="_blank" rel="noopener" aria-label="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a><a href="https://discord.gg/MC4DYumPMz" target="_blank" rel="noopener" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></a><a href="https://x.com/numetalxyz" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a></span>
-      <span class="flinks">
+    <span class="flinks">
+      <a href="/decks">Decks</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a>
       <a href="https://github.com/gokhan-vc" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://gokhanturhan.com" target="_blank" rel="noopener">gokhanturhan.com</a>
+      <a href="/fees">Fees</a>
       <a href="/feed.xml">RSS</a>
       <a href="/sitemap.xml">Sitemap</a>
       <a href="/llms.txt">llms.txt</a>
