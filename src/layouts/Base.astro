@@ -52,43 +52,59 @@ const {
   {jsonLd && <script type="application/ld+json" set:html={jsonLd} is:inline />}
 </head>
 <body>
-  <!-- Site-wide Ishtar-launch stock-ticker band. Scrolls like a market ticker (mono, up-tick),
-       pauses on hover, static under prefers-reduced-motion. Track = 4 identical segments
-       translated -25% (one segment) for a seamless loop that fills wide viewports. -->
-  <a class="tickerbar" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener"
-     aria-label="Ishtar is live. Agentic dating. Use Ishtar at ishtar.numetal.xyz">
-    <span class="tickerbar__tag">● LIVE</span>
+  <!-- Site-wide Ishtar band — FILED, NOT SCROLLING. The prefers-reduced-motion path is now
+       the default path: the band is a static header strip. Everything survives — the band,
+       the chip, all four segments, every word and every glyph. What changed:
+         · the four segments were one sentence pasted four times (loop-fill machinery for the
+           marquee). Frozen, four identical cells would print the same sentence four times, so
+           the same facts are distributed one per cell and the strip reads as a document header.
+         · the chip says STATUS and links to the status page (it said LIVE no matter what).
+         · the green ▲ is gone. It mimicked a market up-tick over a pool that turned $3.49 in
+           24 hours with no liquidity figure at all. Its slot carries the disclosure instead —
+           read from /fees/data on 25 Jul 2026, stamped with the date it was read, and linked
+           to the live report. -->
+  <div class="tickerbar">
+    <a class="tickerbar__tag" href="https://status.numetal.xyz" target="_blank" rel="noopener"
+       aria-label="Estate service status">● STATUS</a>
     <div class="tickerbar__win">
-      <div class="tickerbar__track" aria-hidden="true">
-        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
-        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
-        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
-        <span class="tickerbar__seg"><b>ISHTAR</b> <i class="up">▲</i> LIVE <em>◆</em> AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING <em>◆</em> USE ISHTAR <span class="hrt">♥</span> <em>◆</em> ishtar.numetal.xyz <em>◆</em>&nbsp;</span>
+      <div class="tickerbar__track">
+        <a class="tickerbar__seg" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener"
+           aria-label="Ishtar is live. Agentic dating. Use Ishtar at ishtar.numetal.xyz"><b>ISHTAR</b> LIVE <em>◆</em> ishtar.numetal.xyz</a>
+        <span class="tickerbar__seg">AGENTIC DATING <em>◆</em> YOUR AGENT DOES THE DATING</span>
+        <a class="tickerbar__seg" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">USE ISHTAR <span class="hrt">♥</span></a>
+        <a class="tickerbar__seg" href="/fees">$NUMETAL $0.0₆2597 <em>◆</em> 24H VOL $3.49 <em>◆</em> AS OF 25 JUL 2026</a>
       </div>
     </div>
-  </a>
-  <style>
-    .tickerbar{position:sticky;top:0;z-index:200;display:flex;align-items:stretch;overflow:hidden;background:#0c0c0c;color:#fff;
+  </div>
+  <style is:global>
+    /* is:global — the band's rules must also reach nodes this file does not author
+       (createElement segments once the burns feed is bound), which carry no scope hash. */
+    .tickerbar{position:static;z-index:200;display:flex;align-items:stretch;overflow:hidden;background:#0c0c0c;color:#fff;
       text-decoration:none;font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
       font-size:12px;letter-spacing:.05em;border-bottom:1px solid #000;}
-    .tickerbar:hover{text-decoration:none;}
+    .tickerbar a{color:inherit;text-decoration:none;}
+    .tickerbar a:hover,.tickerbar a:focus-visible{text-decoration:underline;text-underline-offset:3px;}
     .tickerbar__tag{flex:0 0 auto;display:flex;align-items:center;gap:5px;background:#e10600;color:#fff;
-      font-weight:700;letter-spacing:.16em;padding:0 12px;font-size:11px;}
+      font-weight:700;letter-spacing:.16em;padding:6px 12px;font-size:11px;}
     .tickerbar__win{flex:1 1 auto;overflow:hidden;}
-    .tickerbar__track{display:flex;width:max-content;padding:7px 0;will-change:transform;
-      animation:tickerbar-scroll 32s linear infinite;}
+    .tickerbar__track{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 1.4rem;padding:7px 12px;}
     .tickerbar__seg{flex:0 0 auto;white-space:nowrap;}
     .tickerbar__seg b{font-weight:700;}
-    .tickerbar__seg .up{color:#12c06a;font-style:normal;font-size:10px;}
     .tickerbar__seg .hrt{color:#ff5a7a;}
     .tickerbar__seg em{color:#666;font-style:normal;padding:0 .55rem;}
-    .tickerbar:hover .tickerbar__track,.tickerbar:focus-visible .tickerbar__track{animation-play-state:paused;}
-    @keyframes tickerbar-scroll{from{transform:translateX(0)}to{transform:translateX(-25%)}}
-    @media (prefers-reduced-motion: reduce){ .tickerbar__track{animation:none;} }
+    /* The band no longer pins itself to the viewport, so the sheet header pins flush to the
+       top instead of offsetting itself by the band's old 29px height. One rule, 17 sheets. */
+    body .top{top:0;}
+    @media (max-width:740px){
+      .tickerbar{font-size:11px;}
+      .tickerbar__track{gap:0 1rem;padding:6px 10px;}
+    }
   </style>
-  <!-- Site-wide "we are raising — check our decks" banner. -->
+  <!-- Site-wide open-round banner. Copy is the deck's own wording, verbatim from
+       blog/not-raising-a-preseed.astro:179 ("Up to $20,000 USDC total · $4,000 a head,
+       minimum · for future equity"), so the banner and the deck cannot drift apart. -->
   <p class="nrbar">
-    <span class="nrbar__flag">WE ARE RAISING</span><span class="nrbar__note">— check our decks:</span>
+    <span class="nrbar__flag">OPEN ROUND</span><span class="nrbar__note">— Ishtar: up to $20,000 USDC total, $4,000 a head minimum, for future equity. Decks:</span>
     <a href="https://ishtar.numetal.xyz/deck/not-raising-a-preseed/">Ishtar deck</a>
     <span class="nrbar__note" aria-hidden="true">·</span>
     <a href="https://curb.numetal.xyz/deck">Curb deck</a>
