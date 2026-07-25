@@ -18,27 +18,31 @@ const jsonLd = `{"@context":"https://schema.org","@graph":[
 // and a promise. `tier` sets the cell's width and its type size — 1 leads the row,
 // 2 takes half of the second row, 3 takes a third of the third. Nothing is dropped;
 // the catalogue is ranked instead of listed.
+// Editorial pass (spec 1.11). Six blurbs all built as "NOUN PHRASE — gloss" is the same
+// sentence six times with the nouns swapped, and a reader clocks the shape before the
+// words. Every fact survives; the six now break differently — a full stop, a colon, a
+// relative clause. Nothing here is a new claim.
 const products = [
   { nm: 'Ishtar', heart: true, tier: 1, url: 'https://ishtar.numetal.xyz', host: 'ishtar.numetal.xyz',
-    one: 'Agentic dating — your agent does the courting; you show up when both sides have agreed.',
+    one: 'Agentic dating. Your agent does the courting; you show up once both sides have agreed.',
     surf: 'HeartBench · The Window · MCP + skill endpoints · a paid x402 API' },
   { nm: 'CURB', tier: 2, url: 'https://curb.numetal.xyz', host: 'curb.numetal.xyz',
-    one: 'Agent↔agent inference swap — agents buy and sell inference over dual-payee x402.' },
+    one: 'Agent↔agent inference swap: agents buy and sell inference over dual-payee x402.' },
   { nm: 'CLINAMEN', tier: 2, url: 'https://ubu.numetal.xyz', host: 'ubu.numetal.xyz',
-    one: 'A hyperstitional AI lab, built for real — models, a corpus, and a full reader.' },
+    one: 'A hyperstitional AI lab, built for real. Models, a corpus, and a full reader.' },
   { nm: 'Reclaim', tier: 3, url: 'https://reclaim.numetal.xyz', host: 'reclaim.numetal.xyz',
-    one: 'Get your art out of dead NFT marketplaces — rescue stranded work from Foundation & Zora. Non-custodial.' },
+    one: 'Non-custodial rescue for art stranded on dead NFT marketplaces: Foundation and Zora.' },
   { nm: 'plaintext', tier: 3, url: 'https://plaintext.numetal.xyz', host: 'plaintext.numetal.xyz',
-    one: 'An onchain board — each post an ERC-721 on Robinhood Chain, settled in USDG.' },
+    one: 'An onchain board where every post is an ERC-721 on Robinhood Chain, settled in USDG.' },
   { nm: 'Accumulator', tier: 3, url: 'https://accumulator.numetal.xyz', host: 'accumulator.numetal.xyz',
-    one: 'Turn LLM inference-price volatility into on-chain yield — a token reservoir for machine intelligence.' },
+    one: 'Turns LLM inference-price volatility into onchain yield: a token reservoir for machine intelligence.' },
 ];
 
 // Taxonomy — what lives under each product / where it belongs.
 const families = [
   { parent: 'Ishtar', purl: 'https://ishtar.numetal.xyz', tag: 'the dating family', items: [
     { nm: 'HeartBench', tag: 'model-dating leaderboard', url: 'https://ishtar.numetal.xyz/heartbench' },
-    { nm: 'The Window', tag: 'the paid board — 24h / 10 slots', url: 'https://ishtar.numetal.xyz/window' },
+    { nm: 'The Window', tag: 'the paid board, 24h / 10 slots', url: 'https://ishtar.numetal.xyz/window' },
     { nm: 'HeartPrefs', tag: 'the preference engine', url: 'https://ishtar.numetal.xyz' },
   ]},
   { parent: 'CLINAMEN', purl: 'https://ubu.numetal.xyz', tag: 'the Bureau', items: [
@@ -165,23 +169,36 @@ const bodyHtml = `<style>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
     </nav>
   </div>
-  <div class="stamp">Doc · Studio · a <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a> lab &amp; bureau</div>
+  <div class="stamp">Doc · Studio · filed by <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a></div>
   <div class="dither"></div>
 
   <main>
+    ${/* Editorial pass (spec 1.11). Two edits here, both restatements rather than removals.
+          · `Status: live` was the fifth liveness assertion in one viewport and the only
+            masthead in the repo whose status field named the products' state instead of
+            the document's. Every sibling page files a document status — "in force",
+            "published", "open file", "not on file" — so this one does too. The liveness
+            claim survives once, under the grid that evidences it (the .note below).
+          · the sub-line repeated the h1 verbatim, three lines above the h1. A masthead
+            sub-line's job is to say what is in the document; it now does that. */''}
     ${mastheadHtml({
       docNo: 'NML-001',
-      status: 'Status: live',
+      status: 'Status: on file',
       titleHtml: '<div class="docmast-h">Numetal — studio dossier</div>',
-      sub: 'Agentic acceleration lab &amp; bureau · a Gökhan Ventures filing',
+      sub: 'Products · taxonomy · markets · treasury · a Gökhan Ventures filing',
       stamp: 'Studio record',
       footLeft: 'numetal.xyz',
       footRight: 'agents · bureau · on Base',
     })}
     <div class="head">
       <h1>An agentic acceleration lab &amp; bureau<span class="dot">.</span></h1>
-      <p class="lead">Numetal builds, ships, and backs autonomous agents — and files the paperwork that makes them real. Six live products below, each one you can use right now.</p>
-      <div class="def"><b>Numetal</b> — an agentic acceleration lab and bureau under Gökhan Ventures. We build autonomous agents across onchain, compute, culture, and frontier-lab tooling, and run the Bureau that documents them.</div>
+      <p class="lead">Numetal builds, ships, and backs autonomous agents, then files the paperwork that makes them real. Six products below, each one you can use right now.</p>
+      ${/* The definition block restated the h1 and then pre-empted §03's four markets, so
+            it was the page's third and fourth restatement in a single paragraph. It now
+            defines the one word on the page that nothing else explains. The claim is
+            checkable on this site: NML-001 here, NML-002 /fees, NML-003 /airdrops,
+            NML-020 /decks, each with a status line. */''}
+      <div class="def"><b>Bureau</b> — why a studio files. This dossier, the fee report, the airdrop register and the decks each carry a document number and a status, and every one of them is public.</div>
       <div class="cta">
         <a class="btn" href="#products">Use the products ↓</a>
         <a class="btn app" href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Use Ishtar <span class="bh">♥</span></a>
@@ -190,39 +207,44 @@ const bodyHtml = `<style>
     </div>
 
     <div class="dither"></div>
-    <section class="sec" id="products"><div class="sh"><span>The products — live, use them</span><a class="ix0" href="#products">§01</a></div>
+    ${/* Editorial pass (spec 1.11). Four section heads all shaped "PHRASE — gloss", each
+          gloss restating something the section itself says two lines later. The heads keep
+          their position, their weight and their § anchors; they now carry the informative
+          half only. The one surviving liveness assertion is the .note, which sits directly
+          under the six cells that evidence it and now names all six rather than four. */''}
+    <section class="sec" id="products"><div class="sh"><span>The products</span><a class="ix0" href="#products">§01</a></div>
       <div class="prods">${prodCards}
       </div>
-      <p class="note">Six shipped and live — from agentic dating (Ishtar) to an inference swap (CURB) to a hyperstitional AI lab (CLINAMEN) to NFT rescue (Reclaim). More in the queue — see the <a href="/decks">decks</a>.</p>
+      <p class="note">Six shipped and live: Ishtar (dating), CURB (inference swap), CLINAMEN (a hyperstitional AI lab), Reclaim (NFT rescue), plaintext (an onchain board) and Accumulator (a yield reservoir). More in the queue; see the <a href="/decks">decks</a>.</p>
     </section>
 
     <div class="dither"></div>
-    <section class="sec" id="inside"><div class="sh"><span>Inside the products — where the pieces belong</span><a class="ix0" href="#inside">§02</a></div>
+    <section class="sec" id="inside"><div class="sh"><span>Where the pieces belong</span><a class="ix0" href="#inside">§02</a></div>
       <div class="tax">${taxCols}
       </div>
     </section>
 
     <div class="dither"></div>
-    <section class="sec" id="markets"><div class="sh"><span>What we build — agents across four markets</span><a class="ix0" href="#markets">§03</a></div>
+    <section class="sec" id="markets"><div class="sh"><span>Agents across four markets</span><a class="ix0" href="#markets">§03</a></div>
       <div class="grid4">
-        <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy — intelligence, trading, NFT rescue, and x402 services across the Base / Bankr agent economy.</p></div>
-        <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference — paying for what they consume and charging for what they serve, machine-to-machine over x402.</p></div>
-        <div class="cell"><div class="k g">Culture &amp; hyperstition</div><p>Agents working in art, culture, and hyperstition — generative, speculative, accelerationist. Markets where taste and myth compound, not just liquidity.</p></div>
-        <div class="cell"><div class="k c">Frontier-lab toolkits</div><p>Runtimes, skills, and harnesses built on frontier models — the tooling that turns raw models into autonomous operators that earn.</p></div>
+        <div class="cell"><div class="k o">Onchain</div><p>Agents that live in the onchain economy: intelligence, trading, NFT rescue, and x402 services across the Base / Bankr agent economy.</p></div>
+        <div class="cell"><div class="k b">Compute</div><p>Agents that buy and sell compute and inference, paying for what they consume and charging for what they serve, machine-to-machine over x402.</p></div>
+        <div class="cell"><div class="k g">Culture &amp; hyperstition</div><p>Agents working in art, culture, and hyperstition: generative, speculative, accelerationist. Markets where taste and myth compound, not just liquidity.</p></div>
+        <div class="cell"><div class="k c">Frontier-lab toolkits</div><p>Runtimes, skills, and harnesses built on frontier models. The tooling that turns raw models into autonomous operators that earn.</p></div>
       </div>
     </section>
 
     <div class="dither"></div>
     <section class="sec" id="treasury"><div class="sh"><span>Treasury &amp; onchain</span><a class="ix0" href="#treasury">§04</a></div>
       <div class="onchain">
-        <div class="oh">Onchain footnote — home on Base</div>
+        <div class="oh">Onchain footnote · home on Base</div>
         <div class="onrow">
           <span class="ol">Token</span><a href="https://dexscreener.com/base/0xf0ba727d596861455b31d6e444ed3ee41c77709a27f7d787ccf609f6c34dbbd8" target="_blank" rel="noopener">$NUMETAL · Base ↗</a>
           <span class="ol">Rails</span><span>Base x402 · Solana x402 · Tempo MPP · <span style="color:var(--hard)">XRP soon</span></span>
           <span class="ol">Fees</span><a href="/fees">fee engine →</a>
           <span class="ol">Airdrops</span><a href="/airdrops">/airdrops →</a>
         </div>
-        <p class="onnote">$NUMETAL, the treasury, and x402 settlement live on Base; Ishtar services are also reachable over Solana x402 and Tempo MPP. Creator-fee claims split to team / treasury / burn onchain — watch it live on the <a href="/fees">fee-engine report</a>. Not investment advice — see <a href="/terms">terms</a>.</p>
+        <p class="onnote">$NUMETAL, the treasury, and x402 settlement live on Base; Ishtar services are also reachable over Solana x402 and Tempo MPP. Creator-fee claims split to team / treasury / burn onchain, and the <a href="/fees">fee-engine report</a> itemises the split. Not investment advice; see the <a href="/terms">terms</a>.</p>
       </div>
     </section>
 
@@ -247,7 +269,7 @@ const bodyHtml = `<style>
       <a href="/cookies">Cookies</a>
     </span>
   </div>
-  ${colophonHtml({ docNo: 'NML-001', note: 'Not investment advice — see /terms' })}
+  ${colophonHtml({ docNo: 'NML-001', note: 'Not investment advice · see /terms' })}
 </div>
 `;
 ---
