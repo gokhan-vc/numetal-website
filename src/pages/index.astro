@@ -12,19 +12,25 @@ const jsonLd = `{"@context":"https://schema.org","@graph":[
 {"@type":"WebSite","@id":"https://numetal.xyz/#website","url":"https://numetal.xyz/","name":"Numetal","publisher":{"@id":"https://numetal.xyz/#organization"}}
 ]}`;
 
-// Flagship products — each a "Use" button with a hover-reveal explanation.
+// Flagship products, weighted. Six cells at identical weight said the studio has no
+// opinion about its own catalogue: Ishtar carries a paid API (402 on /api/chat/ask),
+// an MCP + skill endpoint, a leaderboard and a paid board; three of the six are a page
+// and a promise. `tier` sets the cell's width and its type size — 1 leads the row,
+// 2 takes half of the second row, 3 takes a third of the third. Nothing is dropped;
+// the catalogue is ranked instead of listed.
 const products = [
-  { nm: 'Ishtar', heart: true, url: 'https://ishtar.numetal.xyz', host: 'ishtar.numetal.xyz',
-    one: 'Agentic dating — your agent does the courting; you show up when both sides have agreed.' },
-  { nm: 'CURB', url: 'https://curb.numetal.xyz', host: 'curb.numetal.xyz',
+  { nm: 'Ishtar', heart: true, tier: 1, url: 'https://ishtar.numetal.xyz', host: 'ishtar.numetal.xyz',
+    one: 'Agentic dating — your agent does the courting; you show up when both sides have agreed.',
+    surf: 'HeartBench · The Window · MCP + skill endpoints · a paid x402 API' },
+  { nm: 'CURB', tier: 2, url: 'https://curb.numetal.xyz', host: 'curb.numetal.xyz',
     one: 'Agent↔agent inference swap — agents buy and sell inference over dual-payee x402.' },
-  { nm: 'CLINAMEN', url: 'https://ubu.numetal.xyz', host: 'ubu.numetal.xyz',
+  { nm: 'CLINAMEN', tier: 2, url: 'https://ubu.numetal.xyz', host: 'ubu.numetal.xyz',
     one: 'A hyperstitional AI lab, built for real — models, a corpus, and a full reader.' },
-  { nm: 'Reclaim', url: 'https://reclaim.numetal.xyz', host: 'reclaim.numetal.xyz',
+  { nm: 'Reclaim', tier: 3, url: 'https://reclaim.numetal.xyz', host: 'reclaim.numetal.xyz',
     one: 'Get your art out of dead NFT marketplaces — rescue stranded work from Foundation & Zora. Non-custodial.' },
-  { nm: 'plaintext', url: 'https://plaintext.numetal.xyz', host: 'plaintext.numetal.xyz',
+  { nm: 'plaintext', tier: 3, url: 'https://plaintext.numetal.xyz', host: 'plaintext.numetal.xyz',
     one: 'An onchain board — each post an ERC-721 on Robinhood Chain, settled in USDG.' },
-  { nm: 'Accumulator', url: 'https://accumulator.numetal.xyz', host: 'accumulator.numetal.xyz',
+  { nm: 'Accumulator', tier: 3, url: 'https://accumulator.numetal.xyz', host: 'accumulator.numetal.xyz',
     one: 'Turn LLM inference-price volatility into on-chain yield — a token reservoir for machine intelligence.' },
 ];
 
@@ -46,10 +52,11 @@ const families = [
 ];
 
 const prodCards = products.map((p) => `
-        <a class="prod${p.heart ? ' hn' : ''}" href="${p.url}" target="_blank" rel="noopener">
+        <a class="prod prod--t${p.tier}${p.heart ? ' hn' : ''}" href="${p.url}" target="_blank" rel="noopener">
           <span class="use">Use →</span>
           <span class="pn">${p.nm}${p.heart ? ' <span class="hh">♥</span>' : ''}</span>
-          <span class="one">${p.one}</span>
+          <span class="one">${p.one}</span>${p.surf ? `
+          <span class="surf">${p.surf}</span>` : ''}
           <span class="pu">${p.host} →</span>
         </a>`).join('');
 
@@ -90,15 +97,25 @@ const bodyHtml = `<style>
   .sh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:7px;margin-bottom:16px}.sh .ix0{color:var(--mut);font-weight:400;letter-spacing:.14em;white-space:nowrap}
   /* § numbers are retrieval handles, so each one is the anchor for its own section. */
   .sh a.ix0:hover,.sh a.ix0:focus-visible{color:var(--ink);text-decoration:none}
-  /* products — use buttons with hover-reveal explanation */
-  .prods{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink)}
+  /* products — three tiers on a 6-column register: the lead takes the row, the second
+     tier a half each, the third a third each. Six cells at one weight is a list; this
+     is the catalogue with an opinion in it. */
+  .prods{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--ink)}
   .prod{position:relative;display:block;padding:17px 17px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);color:inherit;text-decoration:none;transition:background .1s}
-  .prod:nth-child(3n){border-right:0}.prod:nth-last-child(-n+3){border-bottom:0}
+  .prod--t1{grid-column:span 6;padding:22px 20px 20px;border-right:0}
+  .prod--t2{grid-column:span 3}
+  .prod--t3{grid-column:span 2;border-bottom:0}
+  .prod:nth-child(3),.prod:nth-child(6){border-right:0}
   .prod:hover{background:var(--bgray);text-decoration:none}
   .prod .use{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ikb);padding:2px 8px;margin-bottom:10px}
   .prod.hn .use{background:#e10600}
-  .prod .pn{font-weight:700;font-size:19px;letter-spacing:-.01em;display:block}.prod .pn .hh{color:#e10600}
-  .prod .one{display:block;font-size:13px;color:#4a4a4a;line-height:1.45;margin-top:9px}
+  .prod .pn{font-weight:700;font-size:17px;letter-spacing:-.01em;display:block}.prod .pn .hh{color:#e10600}
+  .prod--t1 .pn{font-size:28px;letter-spacing:-.02em}
+  .prod--t2 .pn{font-size:20px}
+  .prod .one{display:block;font-size:12.5px;color:#4a4a4a;line-height:1.45;margin-top:9px}
+  .prod--t1 .one{font-size:15px;line-height:1.5;max-width:52ch}
+  .prod--t2 .one{font-size:13px}
+  .prod .surf{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:11px;border-top:1px solid var(--line);padding-top:9px}
   .prod .pu{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:10px;display:block}.prod:hover .pu{color:var(--ikb)}
   /* taxonomy — where the pieces belong */
   .tax{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink)}
@@ -123,14 +140,16 @@ const bodyHtml = `<style>
   .onnote{font-size:12px;color:var(--mut);margin-top:9px;line-height:1.5;max-width:80ch}
   .ft{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--mut);padding:18px 32px}.ft a{color:var(--mut)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
   .social{display:inline-flex;align-items:center;gap:14px}.social a{display:inline-flex;color:inherit;line-height:0;text-decoration:none}.social a:hover{color:var(--ikb)}.social svg{width:17px;height:17px;fill:currentColor;display:block}
-  @media(max-width:740px){.top,.stamp,.head,.sec,.ft{padding-left:18px;padding-right:18px}.head{padding-top:26px}h1{font-size:28px}nav{display:none}.prods,.tax,.grid4{grid-template-columns:1fr}.prod,.cell{border-right:0}.prod:nth-last-child(-n+3),.cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.prod:last-child,.cell:last-child{border-bottom:0}.fam{border-right:0;border-bottom:1px solid var(--line)}.fam:last-child{border-bottom:0}}
+  @media(max-width:740px){.top,.stamp,.head,.sec,.ft{padding-left:18px;padding-right:18px}.head{padding-top:26px}h1{font-size:28px}nav{display:none}.prods,.tax,.grid4{grid-template-columns:1fr}.prod--t1,.prod--t2,.prod--t3{grid-column:span 1}.prod,.cell{border-right:0}.prod,.prod:nth-last-child(-n+3),.cell:nth-last-child(-n+2){border-bottom:1px solid var(--line)}.prod:last-child,.cell:last-child{border-bottom:0}.prod--t1 .pn{font-size:24px}.prod--t1 .one{font-size:14px}.fam{border-right:0;border-bottom:1px solid var(--line)}.fam:last-child{border-bottom:0}}
   ${docChromeCss}
   .docmast{margin-bottom:0}
   .docmast-h{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.25}
   ${subscribeBlockCss}
   @media (prefers-color-scheme:dark){
     .lead{color:#d2d2cf}.def{color:#d6d6d3}
-    .cell p,.note,.prod .tip{color:#b4b4b1}.fam .fit{color:#9a9a97}
+    /* .prod .tip was renamed .one and the dark override was never followed through, so
+       every product blurb rendered #4a4a4a on a #181816 sheet. */
+    .cell p,.note,.prod .one{color:#b4b4b1}.fam .fit{color:#9a9a97}
     .onchain{background:#1a1a18}.onnote,.onrow .ol{color:#9a9a97}
   }
 </style>
