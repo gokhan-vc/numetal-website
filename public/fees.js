@@ -1,28 +1,28 @@
 var $=function(id){return document.getElementById(id);};
-  function abbr(n){
-    if(n==null||isNaN(n)) return "—";
-    var a=Math.abs(n);
-    if(a>=1e9) return (n/1e9).toFixed(2)+"B";
-    if(a>=1e6) return (n/1e6).toFixed(2)+"M";
-    if(a>=1e3) return (n/1e3).toFixed(1)+"K";
-    return n.toLocaleString(undefined,{maximumFractionDigits:0});
-  }
-  function tok(raw,dec){ if(raw==null) return "—"; try{ var n=Number(BigInt(raw))/Math.pow(10,dec); return abbr(n); }catch(e){ return "—"; } }
-  function usd(x){ if(x==null) return ""; x=Number(x); if(x>=1e6) return "$"+(x/1e6).toFixed(1)+"M"; if(x>=1e3) return "$"+(x/1e3).toFixed(0)+"K"; return "$"+x.toFixed(2); }
-  function price(p){ if(p==null) return "—"; p=Number(p); if(p>=1) return "$"+p.toFixed(2); if(p>=0.001) return "$"+p.toPrecision(3); var sub="₀₁₂₃₄₅₆₇₈₉"; var str=p.toFixed(20); var dec=str.slice(str.indexOf(".")+1); var z=0; while(z<dec.length&&dec[z]==="0")z++; var sig=dec.slice(z,z+4); var zc=String(z).split("").map(function(d){return sub[+d];}).join(""); return "$0.0"+zc+sig; }
+  /* Number formatting lives in /fmt.js (loaded immediately before this file) so the fee
+     report, the airdrop tracker and the band cannot disagree about what a figure looks
+     like. If it is missing the page keeps its server-rendered values instead of painting
+     a screen of dashes — each wrapper returns exactly the "no value" string its caller
+     already handles. */
+  var FMT=window.NMLFMT||null;
+  function abbr(n){ return FMT?FMT.abbr(n):"—"; }
+  function tok(raw,dec){ return FMT?FMT.tok(raw,dec):"—"; }
+  function usd(x){ return FMT?FMT.usd(x):""; }
+  function price(p){ return FMT?FMT.price(p):"—"; }
+  function num(n){ return FMT?FMT.num(n):String(n); }
   function load(){
     fetch("/fees/data",{cache:"no-store"}).then(function(r){return r.json();}).then(function(d){
       if(d.error){ $("updated").textContent="data source error — retrying"; return; }
       var dec=d.decimals||18;
       var TOTAL=1e11;
       if(d.burned!=null){ $("burned").textContent=tok(d.burned,dec); if(d.supply){ try{ var pct=Number(BigInt(d.burned)*10000n/BigInt(d.supply))/100; var pe=$("burnedPct"); if(pe)pe.textContent=pct.toFixed(2)+"% supply"; var bbar=$("burnedBar"); if(bbar)bbar.style.width=Math.max(.8,Math.min(100,pct)).toFixed(2)+"%"; }catch(e){} }
-        try{ var bt=Number(BigInt(d.burned))/Math.pow(10,dec); var cur=TOTAL-bt; var se=$("supplyNow"); if(se)se.textContent=cur.toLocaleString(undefined,{maximumFractionDigits:0}); }catch(e){} }
-      var rd=$("rdate"); if(rd) rd.textContent=new Date(d.ts||Date.now()).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"});
+        try{ var bt=Number(BigInt(d.burned))/Math.pow(10,dec); var cur=TOTAL-bt; var se=$("supplyNow"); if(se)se.textContent=num(cur); }catch(e){} }
+      var rd=$("rdate"); if(rd) rd.textContent=FMT?FMT.dateShort(d.ts||Date.now()):"";
       if(d.treasury!=null) $("treasury").textContent=tok(d.treasury,dec);
       if(d.team!=null) $("team").textContent=tok(d.team,dec);
       if(d.price!=null) $("price").textContent=price(d.price);
       if(d.fdv!=null) $("fdv").textContent="FDV "+usd(d.fdv)+(d.vol24?(" · 24h "+usd(d.vol24)):"");
-      $("updated").textContent="Updated "+new Date(d.ts||Date.now()).toLocaleTimeString();
+      $("updated").textContent="Updated "+(FMT?FMT.timeShort(d.ts||Date.now()):"");
     }).catch(function(){ $("updated").textContent="update failed — retrying"; });
   }
   function shortA(a){return a?a.slice(0,6)+"…"+a.slice(-4):"?";}
@@ -41,13 +41,13 @@ var $=function(id){return document.getElementById(id);};
     else nm=shortA(addr);
     return '<a href="https://basescan.org/address/'+addr+'" target="_blank" rel="noopener">'+ic+nm+'</a>';
   }
-  function whenTs(ts){if(!ts)return "";try{return new Date(ts).toLocaleString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});}catch(e){return "";}}
+  function whenTs(ts){ return FMT?FMT.dateTime(ts):""; }
   function rowBurn(e){
     var isBuy=e.type==="buyback-burn";
     var tag='<span class="tag '+(isBuy?"buyback":"manual")+'">'+(isBuy?"buyback-burn":"manual-burn")+'</span>';
     var from=walletCell(e.from,e.label);
     var tx=e.tx?'<a href="https://basescan.org/tx/'+e.tx+'" target="_blank" rel="noopener">'+e.tx.slice(0,8)+'…</a>':'';
-    var amt=Number(e.amount).toLocaleString(undefined,{maximumFractionDigits:0});
+    var amt=num(Number(e.amount));
     return '<tr><td>'+whenTs(e.ts)+'</td><td>'+tag+'</td><td class="amt">'+amt+'</td><td>'+from+'</td><td>'+tx+'</td></tr>';
   }
   function rowRetro(x,dep,depLabel){
@@ -55,7 +55,7 @@ var $=function(id){return document.getElementById(id);};
     var from=walletCell(dep,depLabel)+' <span class="lbl">→ '+(x.recipients||0)+'</span>';
     var txl=x.txs||(x.tx?[x.tx]:[]);
     var tx=txl.map(function(t,i){return '<a href="https://basescan.org/tx/'+t+'" target="_blank" rel="noopener">'+(txl.length>1?'p'+(i+1):t.slice(0,8)+'…')+'</a>';}).join(' · ');
-    var amt=Number(x.amount).toLocaleString(undefined,{maximumFractionDigits:0});
+    var amt=num(Number(x.amount));
     return '<tr><td>'+whenTs(x.ts)+'</td><td>'+tag+'</td><td class="amt">'+amt+'</td><td>'+from+'</td><td>'+tx+'</td></tr>';
   }
   function loadBurns(){
