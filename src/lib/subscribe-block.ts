@@ -1,5 +1,5 @@
 /**
- * In-flow newsletter footnote — Ishtar / Atelier foot-sub pattern for numetal.xyz.
+ * In-flow newsletter footnote — Ishtar / gokhan.vc foot-sub pattern for numetal.xyz.
  * Stripe divider + subtle outlined buttons (no currentColor/Canvas fill hack).
  */
 export const subscribeBlockCss = `
