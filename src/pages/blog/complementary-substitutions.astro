@@ -1,0 +1,152 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
+import { docChromeCss, articleDocCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
+
+const title = "Complementary Substitutions";
+const description = "Two notes from the same week. Why the open-weights fight is a microeconomics argument about complements rather than a morality play, and why Leopold Aschenbrenner selling the public book to Citadel is a risk story rather than a verdict.";
+// Syndicated mirror: canonical points to the original on gokhanturhan.com.
+const canonical = 'https://gokhanturhan.com/journal/complementary-substitutions';
+const ogImage = 'https://numetal.xyz/og-complementary-substitutions.png';
+
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  image: ogImage,
+  datePublished: '2026-08-01',
+  dateModified: '2026-08-01',
+  author: { '@type': 'Person', name: 'Gökhan Turhan', url: 'https://gokhan.vc' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Numetal Labs',
+    url: 'https://numetal.xyz',
+    logo: { '@type': 'ImageObject', url: 'https://numetal.xyz/og.png' },
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://gokhanturhan.com/journal/complementary-substitutions' },
+});
+
+const mast = mastheadHtml({
+      docNo: 'NML-021',
+      status: 'Status: syndicated',
+      titleHtml: `
+<div class="eyebrow">Open weights · Complements · Forecasting</div>
+<h1>Complementary Substitutions<span class="dot">.</span></h1>
+<p class="byline">By <b>Gökhan Turhan</b> · <time datetime="2026-08-01">1 Aug 2026</time> · Numetal Labs</p>
+    `,
+      stamp: 'Syndicated',
+      footLeft: 'gokhanturhan.com/journal/complementary-substitutions',
+      footRight: 'First published on gokhanturhan.com',
+    });
+
+const bodyHtml = `<style>
+  :root{--ikb:#002FA7;--bgray:#e7e7e7;--ink:#141414;--red:#e10600;--line:#c4c4c4;--muted:#6f6f6f;
+    --mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;--sans:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--bgray);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+  a{color:var(--ikb);text-decoration:none}a:hover{text-decoration:underline}
+  .sheet{max-width:760px;margin:0 auto;background:#fff;border-left:1px solid var(--line);border-right:1px solid var(--line);min-height:100vh;display:flex;flex-direction:column}
+  .dither{height:11px;background-image:radial-gradient(#191919 .62px,transparent .72px);background-size:3px 3px}
+  .top{display:flex;align-items:center;justify-content:space-between;padding:16px 32px 8px;position:sticky;top:29px;z-index:190;background:#fff;border-bottom:1px solid var(--line)}
+  .mark{display:flex;align-items:center;gap:9px;font-weight:700;letter-spacing:.04em;font-size:17px}
+  .mark a{color:var(--ink)}.mark .sq{width:13px;height:13px;background:var(--ikb)}
+  nav{display:flex;gap:18px;font-size:13px;align-items:center}
+  nav a{color:var(--ink)}nav a.on{color:var(--ikb);font-weight:700}
+  .stamp{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);padding:6px 32px 14px}
+  .stamp b{color:var(--ikb);font-weight:700}
+  main{flex:1}
+  .head{padding:30px 32px 4px;max-width:680px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  h1{font-size:32px;line-height:1.06;font-weight:700;letter-spacing:-.02em}
+  h1 .dot{color:var(--ikb)}
+  .byline{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-top:12px}
+  .byline b{color:var(--ink)}
+  .article{padding:8px 32px 40px;max-width:680px}
+  .article p{margin:0 0 1em;font-size:18px;line-height:1.6}
+  .article h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
+  .article h2{position:relative;scroll-margin-top:1rem}
+  .article .hanchor{margin-left:.38em;color:var(--muted);text-decoration:none;font-weight:400;opacity:0;transition:opacity .12s}
+  .article h2:hover .hanchor,.article .hanchor:focus-visible{opacity:.55}
+  .article .hanchor:hover{opacity:1;color:var(--red);text-decoration:none}
+  .article ol,.article ul{margin:0 0 18px;padding-left:1.25rem}
+  .article li{margin:0 0 .7em;font-size:18px;line-height:1.6}
+  .article code{font-family:var(--mono);font-size:13px;background:var(--bgray);padding:1px 5px;border:1px solid var(--line)}
+  .tape{font-family:var(--mono);font-size:13px;background:#141414;color:#e7e7e7;border:1px solid var(--line);padding:10px 14px;margin:0 0 18px;overflow-x:auto;white-space:nowrap}
+  .tape .g{color:#3fb950}.tape .r{color:#f85149}.tape .d{color:#8b949e}
+  .sign{font-weight:700;color:var(--ink)}
+  .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
+  .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
+  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}}
+  ${docChromeCss}
+  .article blockquote{border-left:3px solid var(--ikb);padding-left:14px;margin:0 0 18px;color:var(--muted);font-style:italic}
+  .article blockquote p{margin:0}
+  ${articleDocCss}
+  ${subscribeBlockCss}
+</style>
+
+<div class="sheet">
+  <div class="top">
+    <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
+    <nav>
+      <a href="/blog" class="on">Blog</a>
+      <a href="/newsletter">Newsletter</a>
+      <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
+      <a href="/fees">Fees</a>
+      <a href="/airdrops">Airdrops</a>
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
+    </nav>
+  </div>
+  <div class="stamp">Blog · <b>Syndicated</b> · first published on gokhanturhan.com</div>
+  <div class="dither"></div>
+
+  <main>
+    ${mast}
+
+    <article class="article">
+      <p class="synd" style="font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);border-left:3px solid var(--ikb);padding-left:12px;margin:0 0 22px">First published on <a href="https://gokhanturhan.com/journal/complementary-substitutions">gokhanturhan.com</a> →</p>
+<h2>Open Weights Falls</h2>
+<ul>
+<li>Even pizzerias are in the add-in markets and you wonder why you suck at your work of line. I think double-cheddar crusts with organic gluten free sesame are great and deserve any premia atop if the chef meets even the Barstool <a href="https://www.youtube.com/@OneBitePizzaReviews">standards</a>. While you are trying to time the markets reading into <a href="https://www.pizzint.watch/">Pentagon pizza waves</a>, though, you also tend to make sloppy generalizations regarding the open weight letters of global intents, lone ranger trail blazers diligently not bending before the "mob" so as not to turn a technology so future-present-impactful out of not only the empire business drives but also a firm belief in the supremacy of that which is to distill itself from not the future but immediate present. You have always done this. It is how you meet people online all the while thinking it's not the people's slop but is the AI slop.</li>
+<li>That is, it is lazy to argue over no faith at all rather than having a good or bad faith, let alone the basics of business and economics, which is the pure human psyche. I think social media makes you dumb and you are responsible for weaving a proper network of critical thinking for your own. That was also why Dean Ball was unevenly, to put it roughly, "roasted" for a <a href="https://x.com/deanwball/status/2078619513575137330?s=20">pristine communique</a> regarding open source, open weights the last week, and it was done especially by people who should know how to speak better but anyway went to harvest populist slop online.</li>
+<li>If you are wondering why you have both claude dot md and agents dot md in your file system today, and want to make sense of Huang's first "tweet" or Sacks' most of the time proper blanket criticism that at times won't work, or the mere microeconomic basics such as substitute or complement, I think Gwern's post from 2018 is a good primer: <a href="https://gwern.net/complement">Laws of Tech: Commoditize Your Complement</a></li>
+</ul>
+<h2>You too can buy Sweden</h2>
+<ul>
+<li><a href="https://situational-awareness.ai/">Situational Awareness</a>, and its author-forecaster <a href="https://x.com/leopoldasch">Leopold Aschenbrenner</a> were almost too stupidly condemned for making future predictions into domains where incumbents didn't have any whatsoever. Only a handful of underfunded forecasters, tobacco-fragrant <a href="https://grokipedia.com/page/Nick_Land">Nick Land</a> fanboys who can never stop collecting <a href="https://www.youtube.com/watch?v=zP6NkpWTZRU&amp;list=PLrrTHwNNlbfK7GL0k2vPJy1J5ahqn8gEJ">Burial</a> reissues, avid LessWrong readers and <a href="https://scholar.google.com/citations?user=CJjf6H0AAAAJ&amp;hl=en">Phil Tetlock</a> disciples thought they knew what was going on—and a few hundred dozen <a href="https://www.astralcodexten.com/">Astral Codex Ten</a> annual 75% discount Substack link hunters. It was 2024, and it was, and still is a good document, and it did outstanding returns, as a fund, too, either in unrealized and realized ends. With some of the bubbly parts of the current markets popped here and there, Leopold had to sell the public parts of the books he was managing to <a href="https://grokipedia.com/page/Ken_Griffin">Ken Griffin</a>'s <a href="https://uk.finance.yahoo.com/news/situational-awareness-ai-deal-citadels-235730306.html">Citadel</a>. Now, this is all markets, and he might not have been able to manage some margins. Risk happens. Unlike Michael Lewis tries to <a href="https://www.amazon.com/dp/0692336907?lv=shuf&amp;channelId=500&amp;plpRedirect=mhFallback">lobotomize</a> the parts of your brains where you are supposed to understand behavioral markets, not everyone is as charismatic as Michael Burry because he is indeed <a href="https://x.com/goekhan/status/2083558938612502699?s=20">Christian Bale</a>. Though if you can spend only 4 hours of your time on this Dwarkesh Patel <a href="https://open.substack.com/pub/dwarkesh/p/leopold-aschenbrenner?r=1ejwk&amp;utm_campaign=post-expanded-share&amp;utm_medium=web">podcast</a>, having read the entire Situational Awareness epub, you'll get to see that you are probably witnessing the rise of a future famous fund manager who can take risks. He'll indeed be more efficient and will probably become one of the few dozens running the citadels of the next two decades unlike some clairvoyants from 2008 who are charging 60 USD per month on Substack.</li>
+</ul>
+    </article>
+  </main>
+
+  ${subscribeBlockHtml}
+  <div class="dither"></div>
+  <footer class="ft">
+    <span>Numetal · a Gökhan Ventures studio · on Base</span>
+    <span class="flinks">
+      <a href="/blog">Blog</a>
+      <a href="/newsletter">Newsletter</a>
+      <a href="https://ubu.numetal.xyz" target="_blank" rel="noopener">CLINAMEN&nbsp;↗</a>
+      <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a>
+      <a href="/feed.xml">RSS</a>
+      <a href="/sitemap.xml">Sitemap</a>
+      <a href="https://status.numetal.xyz" target="_blank" rel="noopener">Status</a>
+      <a href="/terms">Terms</a>
+      <a href="/privacy">Privacy</a>
+    </span>
+  </footer>
+  ${colophonHtml({ docNo: 'NML-021', note: 'Syndicated — first published on gokhanturhan.com' })}
+</div>
+`;
+---
+<Base
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogImage={ogImage}
+  jsonLd={jsonLd}
+>
+  <Fragment set:html={bodyHtml} />
+</Base>

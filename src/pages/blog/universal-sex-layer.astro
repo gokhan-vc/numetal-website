@@ -85,7 +85,7 @@ const bodyHtml = `<style>
   .deck-md{color:var(--muted);border-bottom:1px solid var(--line);font-size:13px;text-decoration:none}
   .deck-sep{color:var(--muted);user-select:none}
   .article{padding:8px 32px 40px;max-width:680px}
-  .article p{margin:0 0 18px;font-size:16px;line-height:1.62}
+  .article p{margin:0 0 1em;font-size:18px;line-height:1.6}
   .article h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
   .article h2,.article h3{position:relative;scroll-margin-top:1rem}
   .article .hanchor{margin-left:.38em;color:var(--muted);text-decoration:none;font-weight:400;opacity:0;transition:opacity .12s}
@@ -118,7 +118,7 @@ const bodyHtml = `<style>
   .sign{font-weight:700;color:var(--ink)}
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}}
 ${docChromeCss}
   ${articleDocCss}
   ${subscribeBlockCss}
@@ -129,7 +129,9 @@ ${docChromeCss}
     <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
     <nav>
       <a href="/blog" class="on">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/fees">Fees</a>
       <a href="/airdrops">Airdrops</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
@@ -225,6 +227,7 @@ ${docChromeCss}
     <span>Numetal · a Gökhan Ventures studio · on Base</span>
     <span class="flinks">
       <a href="/blog">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="https://ishtar.numetal.xyz" target="_blank" rel="noopener">Ishtar&nbsp;↗</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a>
       <a href="/feed.xml">RSS</a>

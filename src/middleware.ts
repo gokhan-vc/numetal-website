@@ -6,7 +6,7 @@ import type { MiddlewareHandler } from 'astro';
 const CSP =
   "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; " +
   "form-action 'self' https://api.gokhan.vc; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; " +
-  "script-src 'self'; connect-src 'self' https://api.gokhan.vc; manifest-src 'self'; upgrade-insecure-requests";
+  "script-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://api.gokhan.vc; manifest-src 'self'; upgrade-insecure-requests";
 
 export const onRequest: MiddlewareHandler = async (context, next) => {
   const res = await next();

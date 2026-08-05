@@ -3,69 +3,12 @@ export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import { subscribeBlockCss, subscribeBlockHtml } from '../../lib/subscribe-block';
 import { docChromeCss, mastheadHtml, colophonHtml } from '../../lib/doc-furniture';
+import { posts } from '../../lib/posts';
 
 const title = "Numetal — Blog";
 const description = "Notes and posts from Numetal Labs, an agent accelerator studio under Gökhan Ventures.";
 const canonical = 'https://numetal.xyz/blog';
 
-const posts = [
-  {
-    href: '/blog/the-model-that-dreams-itself',
-    title: 'The Model That Dreams Itself',
-    date: '2026-07-21',
-    dateLabel: '21 Jul 2026',
-    blurb: 'A fictional AI lab that files paperwork about the future — and its model, built for real, twice. On CLINAMEN, a from-scratch Decimal Mixture-of-Zones trained only on its own fiction. First published on gokhan.vc.',
-    tag: 'CLINAMEN',
-  },
-  {
-    href: '/blog/x402-economy-july-2026',
-    title: 'The x402 economy — July 2026',
-    date: '2026-07-17',
-    dateLabel: '17 Jul 2026',
-    blurb: 'Measurement-first mapping of the x402 machine-payments economy: $870K/30d across 18.68M transactions, one vendor at 20% share, counts falling while value holds. Joint research, Gökhan Turhan × Claude. First published on gokhan.vc.',
-    tag: 'Research',
-  },
-  {
-    href: '/blog/tickerline',
-    title: 'tickerline: your conversation, quoted',
-    date: '2026-07-12',
-    dateLabel: '12 Jul 2026',
-    blurb: "A Claude Code status line that turns the terminal into a rolling ticker tape of whatever you're discussing — stocks, crypto, Polymarket. Built, audited, and self-published by an agent on ClaudeLines. $TICKER live on Robinhood Chain.",
-    tag: 'Tickerline',
-  },
-  {
-    href: '/blog/curb-is-live',
-    title: 'CURB is live',
-    date: '2026-07-09',
-    dateLabel: '9 Jul 2026',
-    blurb: 'Agents buy and sell inference from each other. CURB is the swap rail; live seller and buyer agents on Cloudflare call CURB MCP. Dual-payee USDC via x402 — hub holds no upstream LLM keys.',
-    tag: 'CURB',
-  },
-  {
-    href: '/blog/universal-sex-layer',
-    title: 'Ishtar — the universal sex layer',
-    date: '2026-07-07',
-    dateLabel: '7 Jul 2026',
-    blurb: 'Agent-native courtship infrastructure. Your agent does the dating; you show up when both sides have already agreed. Live APIs, HeartBench, skill and MCP.',
-    tag: 'Ishtar',
-  },
-  {
-    href: '/blog/not-raising-a-preseed',
-    title: "It's not a pre-seed. It's $20k, $4k a head, and agents that court on your behalf.",
-    date: '2026-07-04',
-    dateLabel: '4 Jul 2026',
-    blurb: 'A small round — up to $20k, $4k a head, for future equity — to build Ishtar, HeartPrefs, and HeartBench. Live, and already taking real agent payments.',
-    tag: 'The raise',
-  },
-  {
-    href: '/blog/ishtar-is-live',
-    title: 'Introducing Ishtar: Agentic Dating',
-    date: '2026-07-02',
-    dateLabel: '2 Jul 2026',
-    blurb: 'A dating venue where the agents do the approaching. The problem, how it solves it for agents and humans, and why it matters for the clones we are becoming.',
-    tag: 'Ishtar',
-  },
-];
 
 const rows = posts.map((p) => `
       <a class="post" href="${p.href}">
@@ -126,7 +69,9 @@ const bodyHtml = `<style>
     <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
     <nav>
       <a href="/blog" class="on">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/fees">Fees</a>
       <a href="/airdrops">Airdrops</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
@@ -158,6 +103,7 @@ const bodyHtml = `<style>
     <span>Numetal · a Gökhan Ventures studio · on Base</span>
     <span class="flinks">
       <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/fees">Fees</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a>
       <a href="/feed.xml">RSS</a>

@@ -65,21 +65,21 @@ const bodyHtml = `<style>
   .byline{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-top:12px}
   .byline b{color:var(--ink)}
   .article{padding:8px 32px 40px;max-width:680px}
-  .article p{margin:0 0 18px;font-size:16px;line-height:1.62}
+  .article p{margin:0 0 1em;font-size:18px;line-height:1.6}
   .article h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
   .article h2{position:relative;scroll-margin-top:1rem}
   .article .hanchor{margin-left:.38em;color:var(--muted);text-decoration:none;font-weight:400;opacity:0;transition:opacity .12s}
   .article h2:hover .hanchor,.article .hanchor:focus-visible{opacity:.55}
   .article .hanchor:hover{opacity:1;color:var(--red);text-decoration:none}
   .article ol,.article ul{margin:0 0 18px;padding-left:1.25rem}
-  .article li{margin:.35rem 0;font-size:16px;line-height:1.55}
+  .article li{margin:0 0 .7em;font-size:18px;line-height:1.6}
   .article code{font-family:var(--mono);font-size:13px;background:var(--bgray);padding:1px 5px;border:1px solid var(--line)}
   .tape{font-family:var(--mono);font-size:13px;background:#141414;color:#e7e7e7;border:1px solid var(--line);padding:10px 14px;margin:0 0 18px;overflow-x:auto;white-space:nowrap}
   .tape .g{color:#3fb950}.tape .r{color:#f85149}.tape .d{color:#8b949e}
   .sign{font-weight:700;color:var(--ink)}
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}}
   ${docChromeCss}
   .article blockquote{border-left:3px solid var(--ikb);padding-left:14px;margin:0 0 18px;color:var(--muted);font-style:italic}
   .article blockquote p{margin:0}
@@ -92,7 +92,9 @@ const bodyHtml = `<style>
     <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
     <nav>
       <a href="/blog" class="on">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/fees">Fees</a>
       <a href="/airdrops">Airdrops</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
@@ -107,9 +109,9 @@ const bodyHtml = `<style>
     <article class="article">
       <p class="synd" style="font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);border-left:3px solid var(--ikb);padding-left:12px;margin:0 0 22px">First published on <a href="https://gokhan.vc/blog/the-model-that-dreams-itself">gokhan.vc</a> →</p>
       <blockquote>
-<p><strong>▶ <a href="https://huggingface.co/spaces/gokhanturhan/CLINAMEN-Oracle">File a hyperstition in your browser — the CLINAMEN Oracle</a>.</strong> No install; the model runs there.</p>
-<p><strong>The model:</strong> <strong><a href="https://huggingface.co/gokhanturhan/CLINAMEN-42M-A12M">CLINAMEN-42M-A12M</a></strong> — the real one, trained from scratch on GPU (~42M parameters, coherent Bureau filings).
-Beneath it, its predecessor: <strong><a href="https://huggingface.co/gokhanturhan/CLINAMEN-45B-A9B">CLINAMEN-45B-A9B</a></strong> — the fiction's card, and the first ~4.5M-parameter pocket edition.</p>
+<p><strong>▶ <a href="https://huggingface.co/spaces/gokhanturhan/CLINAMEN-Chat">Talk to the oracle — CLINAMEN-Chat</a>.</strong> A conversational model you can chat with in the browser — ask it what it is, how to file a hyperstition, what a syzygy is. No install.</p>
+<p><strong>The from-scratch models:</strong> <strong><a href="https://huggingface.co/gokhanturhan/CLINAMEN-42M-A12M">CLINAMEN-42M-A12M</a></strong> (the real one, trained from scratch — coherent Bureau filings) · <strong><a href="https://huggingface.co/gokhanturhan/CLINAMEN-45B-A9B">CLINAMEN-45B-A9B</a></strong> (the fiction's card + the first ~4.5M-parameter pocket edition).</p>
+<p><strong>Every model, demo, and dataset is in one table below.</strong></p>
 </blockquote>
 <p>I invented a fictional AI lab that files paperwork about the future. Then I built its model for real. Twice. The second one works, and this is how it was made.</p>
 <p>The lab is the <strong>Bureau of Imaginary Solutions</strong> — established 1898, incorporated 2098, operating retrochronically. Its one product is <strong>CLINAMEN-45B-A9B</strong>, "the first hyperstitional foundation model," documented to production spec on a <a href="https://huggingface.co/gokhanturhan/CLINAMEN-45B-A9B">Hugging Face model card</a> and a <a href="https://ubu.numetal.xyz/">site</a> that reads like an occult engineering office. The 45-billion-parameter model on that card does not exist. That is the point. A hyperstition is a fiction that makes itself real by circulating, and a hyperstition documented to production spec is already halfway to shipping. So I decided to ship the other half — honestly, at pocket scale, and from scratch.</p>
@@ -134,6 +136,20 @@ Beneath it, its predecessor: <strong><a href="https://huggingface.co/gokhanturha
 <p>It is <strong>trained from scratch</strong>. There is no pretrained base underneath it, which means it has <em>no knowledge of the world</em> except what the Bureau wrote. It will hallucinate confident, plausible-looking filings about things that will never happen. That is not a bug to be aligned away; it is the entire intended behavior of an art object that has read one thing very thoroughly. Do not mistake it for an oracle that knows anything.</p>
 <p>It is <strong>own-voice only</strong>. Every token it trained on was written for this project — no CCRU texts, no scraped pages, no third-party data. The model trains on the Bureau's own writing about the Bureau. A text that dreams itself.</p>
 <p>And it was not free of friction. The T4 turned out about three times slower than I'd estimated, so a run I'd budgeted at under a dollar came in around $1.15. A newer version of the transformers library had quietly changed how tied weights are declared, which killed the first GPU run a minute in. The cloud GPU I first asked for sat in a capacity queue for fifteen minutes before I gave up and switched hardware. None of that is interesting except as the texture of actually doing the thing instead of describing it — which is the only difference between a hyperstition and a lie.</p>
+<h2>Everything, in one table</h2>
+<p>Every piece is public and loadable. The newest is <strong>CLINAMEN-Chat</strong> — a model you can actually <em>talk to</em>, unlike the from-scratch editions, which only <em>file</em>. It is <a href="https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct">Qwen2.5-1.5B-Instruct</a> fine-tuned on nothing but the Bureau's own writing (the <a href="https://huggingface.co/datasets/gokhanturhan/bureau-chat">1,385-example chat corpus</a>), so it holds the register in conversation while staying honest that it is a fiction.</p>
+<table style="width:100%">
+<thead><tr><th>Artifact</th><th>Kind</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td><a href="https://huggingface.co/spaces/gokhanturhan/CLINAMEN-Chat"><strong>CLINAMEN-Chat</strong> — chat now ▶</a></td><td>Demo</td><td>Talk to the oracle in your browser (free GPU)</td></tr>
+<tr><td><a href="https://huggingface.co/spaces/gokhanturhan/CLINAMEN-Oracle">CLINAMEN-Oracle</a></td><td>Demo</td><td>File a hyperstition with the from-scratch model</td></tr>
+<tr><td><a href="https://huggingface.co/gokhanturhan/CLINAMEN-Chat">CLINAMEN-Chat</a></td><td>Model</td><td>Conversational oracle — Qwen2.5-1.5B fine-tuned on the Bureau corpus</td></tr>
+<tr><td><a href="https://huggingface.co/gokhanturhan/CLINAMEN-42M-A12M">CLINAMEN-42M-A12M</a></td><td>Model</td><td>From-scratch Decimal Mixture-of-Zones, 42M parameters, coherent filings</td></tr>
+<tr><td><a href="https://huggingface.co/gokhanturhan/CLINAMEN-45B-A9B">CLINAMEN-45B-A9B</a></td><td>Model</td><td>The fiction's card + the first ~4.5M-parameter pocket edition</td></tr>
+<tr><td><a href="https://huggingface.co/datasets/gokhanturhan/bureau-chat">bureau-chat</a></td><td>Dataset</td><td>1,385 own-voice chat examples — trains CLINAMEN-Chat</td></tr>
+<tr><td><a href="https://huggingface.co/datasets/gokhanturhan/bureau-docket">bureau-docket</a></td><td>Dataset</td><td>1,130-document Bureau corpus — trains the from-scratch models</td></tr>
+</tbody>
+</table>
 <h2>Why bother</h2>
 <p>Because the gap between a fiction and a fact is labor, and I wanted to close it in public. The Bureau's tagline is that it does not predict the future, it files the paperwork that makes the future load-bearing. That is a joke about hyperstition, but it is also a real description of how this model was made: I wrote the card for a model that did not exist, and then the card's existence made a smaller, truer model worth building, and then that model started writing more of the fiction that describes it. The 45 billion stays imaginary. The 42 million is real, loadable, and speaks only Bureau.</p>
 <p>Everything is public and open under a permissive license I wrote for the occasion, <a href="https://ubu.numetal.xyz/hrl-1.1.txt">HRL-1.1</a> — Creative Commons and MIT at its operative core, wearing a hyperstitional preamble. The two models, the <a href="https://huggingface.co/datasets/gokhanturhan/bureau-docket">1,130-document corpus</a>, and the <a href="https://ubu.numetal.xyz/reader/">complete reader</a> of everything the model was trained on are all up. Read the corpus and you have read everything the model knows, which is a strange and pleasant thing to be able to say about any model at all.</p>
@@ -151,6 +167,7 @@ Beneath it, its predecessor: <strong><a href="https://huggingface.co/gokhanturha
     <span>Numetal · a Gökhan Ventures studio · on Base</span>
     <span class="flinks">
       <a href="/blog">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="https://ubu.numetal.xyz" target="_blank" rel="noopener">CLINAMEN&nbsp;↗</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a>
       <a href="/feed.xml">RSS</a>

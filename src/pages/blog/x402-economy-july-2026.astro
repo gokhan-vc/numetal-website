@@ -66,21 +66,21 @@ const bodyHtml = `<style>
   .byline{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--muted);margin-top:12px}
   .byline b{color:var(--ink)}
   .article{padding:8px 32px 40px;max-width:680px}
-  .article p{margin:0 0 18px;font-size:16px;line-height:1.62}
+  .article p{margin:0 0 1em;font-size:18px;line-height:1.6}
   .article h2{font-size:21px;font-weight:700;letter-spacing:-.01em;margin:34px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
   .article h2{position:relative;scroll-margin-top:1rem}
   .article .hanchor{margin-left:.38em;color:var(--muted);text-decoration:none;font-weight:400;opacity:0;transition:opacity .12s}
   .article h2:hover .hanchor,.article .hanchor:focus-visible{opacity:.55}
   .article .hanchor:hover{opacity:1;color:var(--red);text-decoration:none}
   .article ol,.article ul{margin:0 0 18px;padding-left:1.25rem}
-  .article li{margin:.35rem 0;font-size:16px;line-height:1.55}
+  .article li{margin:0 0 .7em;font-size:18px;line-height:1.6}
   .article code{font-family:var(--mono);font-size:13px;background:var(--bgray);padding:1px 5px;border:1px solid var(--line)}
   .tape{font-family:var(--mono);font-size:13px;background:#141414;color:#e7e7e7;border:1px solid var(--line);padding:10px 14px;margin:0 0 18px;overflow-x:auto;white-space:nowrap}
   .tape .g{color:#3fb950}.tape .r{color:#f85149}.tape .d{color:#8b949e}
   .sign{font-weight:700;color:var(--ink)}
   .ft{border-top:1px solid var(--ink);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--mono);font-size:11px;color:var(--muted);padding:18px 32px}
   .ft a{color:var(--muted)}.flinks{display:flex;gap:13px;flex-wrap:wrap;justify-content:flex-end}
-  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}.article p{font-size:15px}}
+  @media(max-width:760px){.top,.stamp,.head,.article,.ft{padding-left:18px;padding-right:18px}nav{display:none}h1{font-size:26px}}
   .article table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;line-height:1.5;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin:0 0 18px}
   .article th{text-align:left;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:7px 12px 7px 0;border-bottom:1px solid var(--ink)}
   .article td{padding:6px 12px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
@@ -103,7 +103,9 @@ const bodyHtml = `<style>
     <div class="mark"><span class="sq"></span><a href="/">NUMETAL</a></div>
     <nav>
       <a href="/blog" class="on">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/fees">Fees</a>
       <a href="/airdrops">Airdrops</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
@@ -841,6 +843,7 @@ const bodyHtml = `<style>
     <span>Numetal · a Gökhan Ventures studio · on Base</span>
     <span class="flinks">
       <a href="/blog">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="https://gokhan.vc/blog/x402-economy-july-2026" target="_blank" rel="noopener">canonical&nbsp;↗</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan Ventures</a>
       <a href="/feed.xml">RSS</a>

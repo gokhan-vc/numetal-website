@@ -36,12 +36,14 @@ export const subscribeBlockHtml = `
       <div class="foot-sub-row">
         <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" aria-label="Email" class="foot-sub-input">
         <input type="hidden" name="site" value="numetal">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAEG8CWZN8yq8G3kt" data-theme="auto" data-size="flexible"></div>
         <div class="foot-sub-actions">
           <button type="submit" class="foot-sub-btn">Subscribe</button>
           <button type="button" class="foot-sub-btn foot-sub-btn--xmtp" data-xmtp-btn data-xmtp-site="numetal">Connect wallet (XMTP)</button>
         </div>
       </div>
     </form>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <p class="foot-sub-status" data-xmtp-status role="status" aria-live="polite"></p>
     <p class="foot-sub-rss"><strong>Two RSS feeds</strong> — <a href="/feed.xml">this&nbsp;site</a> · <a href="https://api.gokhan.vc/feed.xml">everything</a> (all studio sites).</p>
   </div>`;

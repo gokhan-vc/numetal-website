@@ -54,6 +54,7 @@ const bodyHtml = `<style>
       <a href="/blog">Blog</a>
       <a href="/newsletter" class="on">Newsletter</a>
       <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/fees">Fees</a>
       <a href="https://gokhan.vc" target="_blank" rel="noopener">Gökhan&nbsp;Ventures&nbsp;↗</a>
     </nav>
@@ -78,12 +79,18 @@ const bodyHtml = `<style>
         <input type="hidden" name="site" value="numetal">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" required placeholder="you@example.com" autocomplete="email">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAEG8CWZN8yq8G3kt" data-theme="auto" data-size="flexible"></div>
         <button type="submit" title="Subscribe via api.gokhan.vc (site=numetal)">Subscribe</button>
       </form>
+      <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
       <p class="nl-more">
-        Latest: <a href="/blog/x402-economy-july-2026">The x402 economy — July 2026</a> · <a href="/blog">All posts</a>.
+        Latest: <a href="/blog/complementary-substitutions" data-latest-post>Complementary Substitutions</a> · <a href="/blog">All posts</a>.
         Public contact: <a href="mailto:contact@numetal.xyz">contact@numetal.xyz</a>.
       </p>
+      <p class="nl-more">
+        Feeds: <a href="/feed.xml">this site</a> · <a href="https://api.gokhan.vc/feed.xml">everything</a>.
+      </p>
+      <script src="/newsletter-latest.js" defer></script>
     </div>
   </main>
 
@@ -92,7 +99,9 @@ const bodyHtml = `<style>
     <span>Numetal · a Gökhan Ventures studio · on Base</span>
     <span class="flinks">
       <a href="/blog">Blog</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/">Studio</a>
+      <a href="/newsletter">Newsletter</a>
       <a href="/feed.xml">RSS</a>
       <a href="https://status.numetal.xyz" target="_blank" rel="noopener">Status</a>
       <a href="/terms">Terms</a>
