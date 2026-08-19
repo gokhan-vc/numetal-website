@@ -10,10 +10,11 @@ export const subscribeBlockCss = `
   .foot-sub-copy{margin:0 0 .3rem;font-size:.95em;line-height:1.45;max-width:62ch}
   .foot-sub-copy b,.foot-sub-copy strong{color:var(--ink,#141414);font-weight:600}
   .foot-sub-form{margin:0}
-  .foot-sub-row{display:flex;align-items:stretch;gap:8px;width:100%}
-  .foot-sub-input{flex:1;min-width:0;padding:10px 12px;border:1px solid currentColor;background:transparent;color:inherit;font:inherit;box-sizing:border-box}
+  .foot-sub-row{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%}
+  .foot-sub-input{display:block;width:100%;min-width:12rem;flex:none;padding:10px 12px;border:1px solid currentColor;background:transparent;color:inherit;font:inherit;box-sizing:border-box}
   .foot-sub-input:focus-visible{outline:2px solid var(--ink,#141414);outline-offset:2px}
-  .foot-sub-actions{display:flex;flex-shrink:0;gap:8px;align-items:stretch}
+  .foot-sub-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;width:100%}
+  .cf-turnstile,.cf-turnstile iframe{display:block;width:100%;max-width:100%}
   .foot-sub-btn{padding:10px 18px;border:1px solid currentColor;background:transparent;color:inherit;font:inherit;cursor:pointer;white-space:nowrap}
   .foot-sub-btn:hover,.foot-sub-btn:focus-visible{border-color:var(--ink,#141414);color:var(--ink,#141414)}
   .foot-sub-btn--xmtp{font-family:var(--mono,ui-monospace,monospace);font-size:.92em}
