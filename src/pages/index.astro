@@ -4,7 +4,7 @@ import { subscribeBlockCss, subscribeBlockHtml } from '../lib/subscribe-block';
 import { docChromeCss, mastheadHtml, colophonHtml } from '../lib/doc-furniture';
 export const prerender = true;
 const title = "Numetal — agentic acceleration lab & bureau";
-const description = "Numetal is an agentic acceleration lab and bureau under Gökhan Ventures. We build, ship, and back autonomous agents across onchain, compute, culture, and frontier-lab tooling. Live products: Ishtar, CURB, CLINAMEN, Reclaim, plaintext, Accumulator — plus HeartBench, The Window, the Bureau Reader, CCRU archive, and tickerline.";
+const description = "Numetal is an agentic acceleration lab and bureau under Gökhan Ventures. We build, ship, and back autonomous agents across onchain, compute, culture, and frontier-lab tooling. Live products: Ishtar, CURB, Launch, CLINAMEN, Reclaim, plaintext, Accumulator — plus HeartBench, The Window, the Bureau Reader, CCRU archive, and tickerline.";
 const canonical = "https://numetal.xyz/";
 const ogImage = "https://numetal.xyz/og.png";
 const jsonLd = `{"@context":"https://schema.org","@graph":[
@@ -28,6 +28,8 @@ const products = [
     surf: 'HeartBench · The Window · MCP + skill endpoints · a paid x402 API' },
   { nm: 'CURB', tier: 2, url: 'https://curb.numetal.xyz', host: 'curb.numetal.xyz',
     one: 'Agent↔agent inference swap: agents buy and sell inference over dual-payee x402.' },
+  { nm: 'Launch', tier: 2, url: 'https://launch.numetal.xyz', host: 'launch.numetal.xyz',
+    one: 'Nuclear Crypto Launch Pad (joke): pick Clanker, Bankr, or pools.fun — you sign. Free MCP / x402.' },
   { nm: 'CLINAMEN', tier: 2, url: 'https://ubu.numetal.xyz', host: 'ubu.numetal.xyz',
     one: 'A hyperstitional AI lab, built for real. Models, a corpus, and a full reader.' },
   { nm: 'Reclaim', tier: 3, url: 'https://reclaim.numetal.xyz', host: 'reclaim.numetal.xyz',
@@ -49,6 +51,11 @@ const families = [
     { nm: 'The Bureau Reader', tag: 'the full training corpus', url: 'https://ubu.numetal.xyz/reader/' },
     { nm: 'CLINAMEN-Chat', tag: 'the conversational oracle', url: 'https://huggingface.co/spaces/gokhanturhan/CLINAMEN-Chat' },
     { nm: 'CCRU.net archive', tag: 'the CCRU, mirrored', url: 'https://ccru.numetal.xyz' },
+  ]},
+  { parent: 'Launch', purl: 'https://launch.numetal.xyz', tag: 'the pad router', items: [
+    { nm: 'Mini App', tag: 'you sign', url: 'https://launch.numetal.xyz/app.html' },
+    { nm: 'MCP + skill', tag: 'agent surface', url: 'https://launch.numetal.xyz/llms.txt' },
+    { nm: 'API', tag: 'free x402 / MPP', url: 'https://launch.numetal.xyz/openapi.json' },
   ]},
   { parent: 'Agent tools', purl: 'https://claudelines.com', tag: 'built on Claude Code', items: [
     { nm: 'tickerline', tag: 'terminal status-line ticker', url: 'https://claudelines.com' },
@@ -107,9 +114,9 @@ const bodyHtml = `<style>
   .prods{display:grid;grid-template-columns:repeat(6,1fr);border:2px solid var(--ink)}
   .prod{position:relative;display:block;padding:17px 17px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);color:inherit;text-decoration:none;transition:background .1s}
   .prod--t1{grid-column:span 6;padding:22px 20px 20px;border-right:0}
-  .prod--t2{grid-column:span 3}
+  .prod--t2{grid-column:span 2}
   .prod--t3{grid-column:span 2;border-bottom:0}
-  .prod:nth-child(3),.prod:nth-child(6){border-right:0}
+  .prod:nth-child(4),.prod:nth-child(7){border-right:0}
   .prod:hover{background:var(--bgray);text-decoration:none}
   .prod .use{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--ikb);padding:2px 8px;margin-bottom:10px}
   .prod.hn .use{background:#e10600}
@@ -122,7 +129,7 @@ const bodyHtml = `<style>
   .prod .surf{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin-top:11px;border-top:1px solid var(--line);padding-top:9px}
   .prod .pu{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:10px;display:block}.prod:hover .pu{color:var(--ikb)}
   /* taxonomy — where the pieces belong */
-  .tax{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--ink)}
+  .tax{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--ink)}
   .fam{padding:15px 16px;border-right:1px solid var(--line)}.fam:last-child{border-right:0}
   .fam .fp{font-weight:700;font-size:15.5px;color:var(--ink)}.fam .fp:hover{color:var(--ikb)}
   .fam .ft2{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);margin:2px 0 8px;display:block}
@@ -193,7 +200,7 @@ const bodyHtml = `<style>
     })}
     <div class="head">
       <h1>An agentic acceleration lab &amp; bureau<span class="dot">.</span></h1>
-      <p class="lead">Numetal builds, ships, and backs autonomous agents, then files the paperwork that makes them real. Six products below, each one you can use right now.</p>
+      <p class="lead">Numetal builds, ships, and backs autonomous agents, then files the paperwork that makes them real. Seven products below, each one you can use right now.</p>
       ${/* The definition block restated the h1 and then pre-empted §03's four markets, so
             it was the page's third and fourth restatement in a single paragraph. It now
             defines the one word on the page that nothing else explains. The claim is
@@ -216,7 +223,7 @@ const bodyHtml = `<style>
     <section class="sec" id="products"><div class="sh"><span>The products</span><a class="ix0" href="#products">§01</a></div>
       <div class="prods">${prodCards}
       </div>
-      <p class="note">Six shipped and live: Ishtar (dating), CURB (inference swap), CLINAMEN (a hyperstitional AI lab), Reclaim (NFT rescue), plaintext (an onchain board) and Accumulator (a yield reservoir). More in the queue; see the <a href="/decks">decks</a>.</p>
+      <p class="note">Seven shipped and live: Ishtar (dating), CURB (inference swap), Launch (pad aggregator — you sign), CLINAMEN (a hyperstitional AI lab), Reclaim (NFT rescue), plaintext (an onchain board) and Accumulator (a yield reservoir). More in the queue; see the <a href="/decks">decks</a>.</p>
     </section>
 
     <div class="dither"></div>

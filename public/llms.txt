@@ -4,6 +4,8 @@
 
 ## Links
 - [Numetal](https://numetal.xyz): the studio landing
+- [Launch](https://launch.numetal.xyz): Nuclear Crypto Launch Pad — pad aggregator, you sign
+- [Launch API](https://launch.numetal.xyz/openapi.json): free MCP / REST / x402 (amount 0)
 - [Fee engine](https://numetal.xyz/fees): live $NUMETAL buybacks and burns, straight from Base
 - [Gökhan Ventures](https://gokhan.vc): the parent studio
 - [Terms of Service](https://numetal.xyz/terms)
