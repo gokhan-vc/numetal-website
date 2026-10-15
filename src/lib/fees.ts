@@ -125,6 +125,7 @@ export async function getData(): Promise<any> {
 export async function getBurns(env: any): Promise<any[]> {
   const cache = cacheStore();
   const key = new Request('https://numetal.xyz/__burns_v6');
+  const lastKey = new Request('https://numetal.xyz/__burns_lastgood_v1');
   if (cache) { const hit = await cache.match(key); if (hit) { try { return await hit.json(); } catch {} } }
   const WETH = '0x4200000000000000000000000000000000000006';
   const SWAPS = ['0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67', '0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822'];
@@ -156,6 +157,18 @@ export async function getBurns(env: any): Promise<any[]> {
   // metered Alchemy key (env.BASE_RPC_URL) — limits cost-amplification. Pair with a
   // Cloudflare WAF rate-limit rule on /fees/events for a hard ceiling. Burns are
   // infrequent, so a longer TTL costs no meaningful freshness.
-  if (out.length && cache) { try { await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=300' } })); } catch {} }
+  if (out.length && cache) {
+    try {
+      await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=300' } }));
+      await cache.put(lastKey, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=86400' } }));
+    } catch {}
+  } else if (!out.length && cache) {
+    try {
+      const lastGood = await cache.match(lastKey);
+      const fallback = lastGood ? await lastGood.json() : [];
+      await cache.put(key, new Response(JSON.stringify(fallback), { headers: { 'cache-control': 'public, max-age=60' } }));
+      return fallback;
+    } catch {}
+  }
   return out;
 }
