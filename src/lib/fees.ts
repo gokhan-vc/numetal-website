@@ -24,10 +24,29 @@ const BURN_LABELS: Record<string, string> = {
 };
 const pad = (a: string) => a.slice(2).toLowerCase().padStart(64, '0');
 const cacheStore = (): any => (globalThis as any).caches?.default;
+const BURNS_CACHE_TTL_SECONDS = 300;
+const BURNS_LAST_GOOD_TTL_SECONDS = 86400;
+const BURNS_ERROR_TTL_SECONDS = 30;
+let burnsInFlight: Promise<any[]> | null = null;
 
 export function sumHexBalances(values: readonly (string | null)[]): string | null {
   if (values.some((value) => value == null)) return null;
   return values.reduce((total, value) => total + BigInt(value as string), 0n).toString();
+}
+
+async function readCachedJson(cache: any, key: Request): Promise<any | null> {
+  try {
+    const hit = await cache.match(key);
+    return hit ? await hit.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+async function putCachedJson(cache: any, key: Request, value: any, maxAgeSeconds: number): Promise<void> {
+  try {
+    await cache.put(key, new Response(JSON.stringify(value), { headers: { 'cache-control': 'public, max-age=' + maxAgeSeconds } }));
+  } catch {}
 }
 
 async function ethCall(data: string): Promise<string | null> {
@@ -125,37 +144,63 @@ export async function getData(): Promise<any> {
 export async function getBurns(env: any): Promise<any[]> {
   const cache = cacheStore();
   const key = new Request('https://numetal.xyz/__burns_v6');
-  if (cache) { const hit = await cache.match(key); if (hit) { try { return await hit.json(); } catch {} } }
+  const lastKey = new Request('https://numetal.xyz/__burns_lastgood');
+  if (cache) {
+    const hit = await readCachedJson(cache, key);
+    if (Array.isArray(hit)) return hit;
+  }
+  if (burnsInFlight) return burnsInFlight;
+
+  burnsInFlight = (async () => {
+    try {
+      const out = await getBurnsFresh(env);
+      if (cache) {
+        await putCachedJson(cache, key, out, BURNS_CACHE_TTL_SECONDS);
+        if (out.length) await putCachedJson(cache, lastKey, out, BURNS_LAST_GOOD_TTL_SECONDS);
+      }
+      return out;
+    } catch {
+      if (cache) {
+        const last = await readCachedJson(cache, lastKey);
+        const fallback = Array.isArray(last) ? last : [];
+        await putCachedJson(cache, key, fallback, BURNS_ERROR_TTL_SECONDS);
+        return fallback;
+      }
+      return [];
+    }
+  })().finally(() => {
+    burnsInFlight = null;
+  });
+
+  return burnsInFlight;
+}
+
+async function getBurnsFresh(env: any): Promise<any[]> {
   const WETH = '0x4200000000000000000000000000000000000006';
   const SWAPS = ['0xc42079f94a6350d7e6235f29174924f928cc2ac818eb64fed8004e115fbcca67', '0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822'];
   const rpc = async (m: string, p: any) => {
     const r = await fetch(env.BASE_RPC_URL, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: m, params: p }) });
-    return (await r.json() as any).result;
+    const j: any = await r.json();
+    if (!r.ok || j.error) throw new Error('rpc_error');
+    return j.result;
   };
   let out: any[] = [];
-  try {
-    const lists: any[] = await Promise.all(BURN_DESTS.map((dest) => rpc('alchemy_getAssetTransfers', [{ fromBlock: '0x0', toBlock: 'latest', toAddress: dest, contractAddresses: [NUM], category: ['erc20'], withMetadata: true, maxCount: '0x3e8', order: 'desc' }])));
-    const merged: any[] = [];
-    for (const tr of lists) merged.push(...(((tr && tr.transfers) || []).filter((t: any) => Number(t.value) >= 1)));
-    merged.sort((a, b) => String(b.metadata?.blockTimestamp || '').localeCompare(String(a.metadata?.blockTimestamp || '')));
-    const list = merged.slice(0, 50);
-    out = await Promise.all(list.map(async (t: any) => {
-      const from = (t.from || '').toLowerCase();
-      let buyback = false;
-      try {
-        const rc: any = await rpc('eth_getTransactionReceipt', [t.hash]);
-        const logs = (rc && rc.logs) || [];
-        buyback = logs.some((l: any) => (l.address || '').toLowerCase() === WETH || (l.topics && SWAPS.indexOf(l.topics[0]) >= 0));
-      } catch {}
-      return { ts: (t.metadata && t.metadata.blockTimestamp) || null, from: t.from, label: BURN_LABELS[from] || null, amount: t.value, tx: t.hash, type: buyback ? 'buyback-burn' : 'manual-burn' };
-    }));
-    // server-side XSS hardening: only keep canonical hex addresses + tx hashes
-    out = out.filter((e: any) => /^0x[0-9a-fA-F]{40}$/.test(e.from || '') && /^0x[0-9a-fA-F]{64}$/.test(e.tx || ''));
-  } catch {}
-  // 5-min edge cache bounds how often this unauthenticated, CORS-open route hits the
-  // metered Alchemy key (env.BASE_RPC_URL) — limits cost-amplification. Pair with a
-  // Cloudflare WAF rate-limit rule on /fees/events for a hard ceiling. Burns are
-  // infrequent, so a longer TTL costs no meaningful freshness.
-  if (out.length && cache) { try { await cache.put(key, new Response(JSON.stringify(out), { headers: { 'cache-control': 'public, max-age=300' } })); } catch {} }
+  const lists: any[] = await Promise.all(BURN_DESTS.map((dest) => rpc('alchemy_getAssetTransfers', [{ fromBlock: '0x0', toBlock: 'latest', toAddress: dest, contractAddresses: [NUM], category: ['erc20'], withMetadata: true, maxCount: '0x3e8', order: 'desc' }])));
+  const merged: any[] = [];
+  for (const tr of lists) merged.push(...(((tr && tr.transfers) || []).filter((t: any) => Number(t.value) >= 1)));
+  merged.sort((a, b) => String(b.metadata?.blockTimestamp || '').localeCompare(String(a.metadata?.blockTimestamp || '')));
+  const list = merged.slice(0, 50);
+  out = await Promise.all(list.map(async (t: any) => {
+    const from = (t.from || '').toLowerCase();
+    let buyback = false;
+    try {
+      const rc: any = await rpc('eth_getTransactionReceipt', [t.hash]);
+      const logs = (rc && rc.logs) || [];
+      buyback = logs.some((l: any) => (l.address || '').toLowerCase() === WETH || (l.topics && SWAPS.indexOf(l.topics[0]) >= 0));
+    } catch {}
+    return { ts: (t.metadata && t.metadata.blockTimestamp) || null, from: t.from, label: BURN_LABELS[from] || null, amount: t.value, tx: t.hash, type: buyback ? 'buyback-burn' : 'manual-burn' };
+  }));
+  // server-side XSS hardening: only keep canonical hex addresses + tx hashes
+  out = out.filter((e: any) => /^0x[0-9a-fA-F]{40}$/.test(e.from || '') && /^0x[0-9a-fA-F]{64}$/.test(e.tx || ''));
   return out;
 }
